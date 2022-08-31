@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">StarVoca</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_menu_voca">단어장</string>
+    <string name="main_menu_words">내 단어</string>
+    <string name="main_menu_learn">학습</string>
+    <string name="main_menu_community">커뮤니티</string>
+    <string name="main_menu_info">내 정보</string>
+    <string name="words_condition_hard">어려워요</string>
+    <string name="words_condition_usually">보통이에요</string>
+    <string name="words_condition_easy">이해했어요</string>
+
+    <string name="word_add_to_voca">단어장 등록</string>
+    <string name="words_sel_question">단어 편집</string>
+    <string name="voca_sel_question">단어장 편집</string>
+
+    // 타이틀
+    <string name="add_word">단어 추가</string>
+    <string name="edit_word">단어 수정</string>
+    <string name="edit_voca">단어장 수정</string>
+
+    // 단어
+    <string name="WordsAddToVoca">단어장에 등록하기</string>
+    <string name="edit">단어 수정하기</string>
+    <string name="delete">단어 삭제하기</string>
+
+    // 단어장
+
+    <string name="voca_info_edit">단어장 수정하기</string>
+    <string name="voca_delete">단어장 삭제하기</string>
+    <string name="voca_share">단어장 공유하기</string>
+
+</resources>

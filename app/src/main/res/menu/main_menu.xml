@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    // 메인 메뉴 하단 바
+    <item
+        android:id="@+id/main_menu_voca"
+        android:icon="@drawable/ic_voca"
+        android:title="@string/main_menu_voca"/>
+    <item
+        android:id="@+id/main_menu_words"
+        android:icon="@drawable/ic_words"
+        android:title="@string/main_menu_words"/>
+    <item
+        android:id="@+id/main_menu_learn"
+        android:icon="@drawable/ic_learn"
+        android:title="@string/main_menu_learn"/>
+    <item
+        android:id="@+id/main_menu_community"
+        android:icon="@drawable/ic_community"
+        android:title="@string/main_menu_community"/>
+    <item
+        android:id="@+id/main_menu_info"
+        android:icon="@drawable/ic_info"
+        android:title="@string/main_menu_info"/>
+    // 메인 메뉴 하단 바
+
+
+</menu>
