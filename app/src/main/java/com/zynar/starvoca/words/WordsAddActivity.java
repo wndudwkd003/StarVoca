@@ -1,11 +1,9 @@
 package com.zynar.starvoca.words;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,111 +16,81 @@ import java.util.List;
 
 public class WordsAddActivity extends AppCompatActivity {
 
-    // words아이템, DBHelper
-    private final WordsDatabase wordsDatabase = WordsDatabase.getInstance(WordsAddActivity.this);
-    private final WordsDao wordsDao = wordsDatabase.wordsDao();
-    private int intentType;
-    private int intentPos;
-    private List<WordsItem> wordsItems;
     private WordsItem wordsItem;
-
-    // 레이아웃
-    private MaterialToolbar toolbar;
     private EditText et_word;
     private EditText et_meaning;
     private EditText et_pronunciation;
     private EditText et_memo;
     private Spinner spinner_language;
-    private Button btn_save;
-
     private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words_add);
 
-        wordsItems = new ArrayList<>();
-
         // 인텐트 엑스트라
-
-        intentType = getIntent().getIntExtra("type", 0);
-        intentPos = getIntent().getIntExtra("position", 0);
+        int intentType = getIntent().getIntExtra("type", 0);
+        int intentPos = getIntent().getIntExtra("position", 0);
 
         // 레이아웃 설정
-        toolbar = findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        
         et_word = findViewById(R.id.et_word);
         et_meaning = findViewById(R.id.et_meaning);
         et_pronunciation = findViewById(R.id.et_pronunciation);
         et_memo = findViewById(R.id.et_memo);
         spinner_language = findViewById(R.id.spinner_language);
-        btn_save = findViewById(R.id.btn_save);
+        Button btn_save = findViewById(R.id.btn_save);
 
-        // 툴바 타이틀 변경
-        if (intentType == 0) toolbar.setTitle(R.string.add_word);
-        else if (intentType == 1) {
-            wordsItems = wordsDao.getWordsItems();
-            wordsItem = wordsItems.get(intentPos);
-
-            // 타이틀 수정
-            toolbar.setTitle(R.string.edit_word);
-
-            et_word.setText(wordsItem.getWord());
-            // 커서를 마지막으로 이동
-            et_word.setSelection(et_word.getText().length());
-
-            et_meaning.setText(wordsItem.getMeaning());
-            et_pronunciation.setText(wordsItem.getPronunciation());
-            et_memo.setText(wordsItem.getMemo());
-        }
-
-        // 툴바 뒤로가기 버튼 메소드
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
-
+        WordsDatabase wordsDatabase = WordsDatabase.getInstance(WordsAddActivity.this);
+        WordsDao wordsDao = wordsDatabase.wordsDao();
+        
         if (intentType == 0) {
-            btn_save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            // 단어 추가
+            btn_save.setOnClickListener(view -> {
+                toolbar.setTitle(R.string.add_word);
 
-                    // words add의 빈칸을 db에 넣음
-                    WordsItem wordsItem = new WordsItem();
-                    wordsItem.setWord(et_word.getText().toString());
-                    wordsItem.setMeaning(et_meaning.getText().toString());
-                    wordsItem.setPronunciation(et_pronunciation.getText().toString());
-                    wordsItem.setMemo(et_memo.getText().toString());
-                    wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
-                    wordsItem.setCondition(0);
+                WordsItem wordsItem = new WordsItem();
+                wordsItem.setWord(et_word.getText().toString());
+                wordsItem.setMeaning(et_meaning.getText().toString());
+                wordsItem.setPronunciation(et_pronunciation.getText().toString());
+                wordsItem.setMemo(et_memo.getText().toString());
+                wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
+                wordsItem.setCondition(0);
 
-                    wordsDao.insertWords(wordsItem);
+                wordsDao.insertWords(wordsItem);
 
-                    Toast.makeText(WordsAddActivity.this, "단어가 추가되었습니다.", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                }
+                Toast.makeText(WordsAddActivity.this, "단어가 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             });
         } else if(intentType == 1) {
-            btn_save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            // 단어 수정
+            btn_save.setOnClickListener(view -> {
+                toolbar.setTitle(R.string.edit_word);
 
-                    id = wordsItem.getId();
-                    // words add의 빈칸을 db에 넣음
-                    WordsItem wordsItem = new WordsItem();
-                    wordsItem.setId(id);
-                    wordsItem.setWord(et_word.getText().toString());
-                    wordsItem.setMeaning(et_meaning.getText().toString());
-                    wordsItem.setPronunciation(et_pronunciation.getText().toString());
-                    wordsItem.setMemo(et_memo.getText().toString());
-                    wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
-                    wordsItem.setCondition(0);
-
-                    wordsDao.updateWords(wordsItem);
-
-
-                    Toast.makeText(view.getContext(), "목록이 수정되었습니다.", Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                }
+                List<WordsItem> wordsItems = wordsDao.getWordsItems();
+                wordsItem = wordsItems.get(intentPos);
+                et_word.setText(wordsItem.getWord());
+                et_meaning.setText(wordsItem.getMeaning());
+                et_pronunciation.setText(wordsItem.getPronunciation());
+                et_memo.setText(wordsItem.getMemo());
+                id = wordsItem.getId();
+                
+                // words add의 빈칸을 db에 넣음
+                WordsItem wordsItem = new WordsItem();
+                wordsItem.setId(id);
+                wordsItem.setWord(et_word.getText().toString());
+                wordsItem.setMeaning(et_meaning.getText().toString());
+                wordsItem.setPronunciation(et_pronunciation.getText().toString());
+                wordsItem.setMemo(et_memo.getText().toString());
+                wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
+                wordsItem.setCondition(0);
+                wordsDao.updateWords(wordsItem);
+                
+                Toast.makeText(view.getContext(), "목록이 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             });
         }
     }
-
-
 }

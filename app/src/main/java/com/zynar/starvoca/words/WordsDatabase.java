@@ -19,7 +19,6 @@ public abstract class WordsDatabase extends RoomDatabase {
                     .fallbackToDestructiveMigration()   // 스키마(데이터베이스) 버전 변경 가능
                     .allowMainThreadQueries()   // 메인 쓰레드에서 IO를 가능 하게 함
                     .build();
-
         }
         return database;
     }

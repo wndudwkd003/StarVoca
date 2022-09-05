@@ -22,17 +22,9 @@ import java.util.List;
 public class VocaReadActivity extends AppCompatActivity {
 
     private List<VocaItem> vocaItems;
-    private VocaDatabase vocaDatabase;
-    private WordsDatabase wordsDatabase;
     private VocaDao vocaDao;
     private WordsDao wordsDao;
-    //
-    private List<WordsItem> wordsItems;
-
-    //
-    private MaterialToolbar toolbar;
     private RecyclerView recyclerView;
-
     private int parentPos;
 
     @Override
@@ -43,16 +35,15 @@ public class VocaReadActivity extends AppCompatActivity {
         Intent intent = getIntent();
         parentPos = intent.getIntExtra("parentPos", 0);
 
-        vocaDatabase = VocaDatabase.getInstance(this);
+        VocaDatabase vocaDatabase = VocaDatabase.getInstance(this);
         vocaDao = vocaDatabase.vocaDao();
         vocaItems = vocaDao.getVocaItems();
 
         VocaItem vocaItem = vocaItems.get(parentPos);
-        wordsDatabase = WordsDatabase.getInstance(this);
+        WordsDatabase wordsDatabase = WordsDatabase.getInstance(this);
         wordsDao = wordsDatabase.wordsDao();
-        //
 
-        toolbar = findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.main_menu_voca) + " - " + vocaItem.getVoca());
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
@@ -70,14 +61,13 @@ public class VocaReadActivity extends AppCompatActivity {
 
         List<WordsItem> wordsItemList = new ArrayList<>();
         for(int i : wordsId) {
-            WordsItem wordsItem = new WordsItem();
-            wordsItem = wordsDao.getWordsListForVoca(i);
+            WordsItem wordsItem = wordsDao.getWordsListForVoca(i);
             wordsItemList.add(wordsItem);
         }
-        wordsItems = wordsItemList;
+        //
         vocaItems = vocaDao.getVocaItems();
 
-        WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItems, vocaItems, this, 1);
+        WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItemList, vocaItems, this, 1);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(wordsRVAdapter);
