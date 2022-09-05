@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,27 +16,32 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zynar.starvoca.R;
+import com.zynar.starvoca.vocabulary.VocaDao;
+import com.zynar.starvoca.vocabulary.VocaDatabase;
 import com.zynar.starvoca.vocabulary.VocaItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHolder> {
 
     // 아이템
-    private ArrayList<WordsItem> wordsItems;
-    private List<VocaItem> vocaItems;
-    private Context context;
-    private WordsDBHelper wordsDBHelper;
+    private final WordsDatabase wordsDatabase;
+    private final List<WordsItem> wordsItems;
+    private final List<VocaItem> vocaItems;
+    private final Context context;
     private WordsItemDecoration wordsItemDecoration;
-    private int condition;
+    private final WordsDao wordsDao;
+    private final int condition;
 
-    public WordsRVAdapter(ArrayList<WordsItem> wordsItems, List<VocaItem> vocaItems, Context context, int i) {
+    public WordsRVAdapter(List<WordsItem> wordsItems, List<VocaItem> vocaItems, Context context, int i) {
+        this.wordsDatabase = WordsDatabase.getInstance(context);
         this.wordsItems = wordsItems;
         this.context = context;
         this.vocaItems = vocaItems;
-        this.wordsDBHelper = new WordsDBHelper(context);
+        this.wordsDao = wordsDatabase.wordsDao();
         this.condition = i;
     }
 
@@ -83,13 +87,13 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
         private boolean meaning_view_flag = false;
 
         // 뷰 홀더로 레이아웃 연결
-        private TextView tv_word;
-        private TextView tv_meaning;
-        private TextView tv_pronunciation;
-        private TextView tv_memo;
-        private TextView tv_condition;
-        private TextView tv_language;
-        private ImageButton imb_edit;
+        private final TextView tv_word;
+        private final TextView tv_meaning;
+        private final TextView tv_pronunciation;
+        private final TextView tv_memo;
+        private final TextView tv_condition;
+        private final TextView tv_language;
+        private final ImageButton imb_edit;
         private RecyclerView rv_check_box;
 
         public ViewHolder(@NonNull View itemView) {
@@ -151,9 +155,21 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
 
                             } else if(i == 2) {
                                 // 삭제하기
-                                wordsDBHelper.deleteWords(wordsItem.getId());
+
+                                VocaDatabase vocaDatabase = VocaDatabase.getInstance(context);
+                                VocaDao vocaDao = vocaDatabase.vocaDao();
+                                List<VocaItem> vocaItemList = vocaDao.getVocaItems();
+                                for(VocaItem vocaItem : vocaItemList) {
+                                    List<Integer> wordsId = new Gson().fromJson(vocaItem.getWordsId(), new TypeToken<List<Integer>>(){}.getType());
+                                    wordsId.remove(Integer.valueOf(wordsItem.getId()));
+                                    vocaItem.setWordsId(new Gson().toJson(wordsId));
+                                    vocaDao.updateVoca(vocaItem);
+                                }
+
+                                wordsDao.deleteWords(wordsItem);
                                 wordsItems.remove(pos);
                                 notifyItemRemoved(pos);
+
                                 Toast.makeText(context, "목록이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -168,10 +184,10 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     if(meaning_view_flag == false) {
-                        tv_meaning.setVisibility(view.VISIBLE);
+                        tv_meaning.setVisibility(View.VISIBLE);
                         meaning_view_flag = true;
                     } else {
-                        tv_meaning.setVisibility(view.GONE);
+                        tv_meaning.setVisibility(View.GONE);
                         meaning_view_flag = false;
                     }
 

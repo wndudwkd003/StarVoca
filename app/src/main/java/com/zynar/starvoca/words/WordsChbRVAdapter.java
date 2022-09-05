@@ -30,17 +30,17 @@ import java.util.List;
 public class WordsChbRVAdapter extends RecyclerView.Adapter<WordsChbRVAdapter.ViewHolder> {
 
     // 단어장들
-    private List<VocaItem> vocaItems;
-    private VocaDatabase vocaDatabase;
-    private VocaDao vocaDao;
-    private ArrayList<WordsItem> wordsItems;
-    private Context context;
+    private final List<VocaItem> vocaItems;
+    private final VocaDatabase vocaDatabase;
+    private final VocaDao vocaDao;
+    private final List<WordsItem> wordsItems;
+    private final Context context;
     private WordsItem wordsItem;
     //
-    private SparseBooleanArray sparseBooleanArray;
+    private final SparseBooleanArray sparseBooleanArray;
     int parentPos;
 
-    public WordsChbRVAdapter(List<VocaItem> vocaItems, ArrayList<WordsItem> wordsItems, Context context, int i) {
+    public WordsChbRVAdapter(List<VocaItem> vocaItems, List<WordsItem> wordsItems, Context context, int i) {
         this.vocaItems = vocaItems;
         this.context = context;
         this.wordsItems = wordsItems;
@@ -80,11 +80,7 @@ public class WordsChbRVAdapter extends RecyclerView.Adapter<WordsChbRVAdapter.Vi
         holder.chb_voca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!holder.chb_voca.isChecked()){
-                    sparseBooleanArray.put(vocaItems.get(pos).getId(), false);
-                } else {
-                    sparseBooleanArray.put(vocaItems.get(pos).getId(), true);
-                }
+                sparseBooleanArray.put(vocaItems.get(pos).getId(), holder.chb_voca.isChecked());
 
             }
         });
@@ -96,7 +92,7 @@ public class WordsChbRVAdapter extends RecyclerView.Adapter<WordsChbRVAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox chb_voca;
+        private final CheckBox chb_voca;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,7 +115,7 @@ public class WordsChbRVAdapter extends RecyclerView.Adapter<WordsChbRVAdapter.Vi
 
             // 체크되어있고 리스트에 wordId가 없으면 add
             if(isChecked == true && !wordsId.contains(wordsItem.getId())) {
-                wordsId.add(wordsItem.getId());
+                wordsId.add(0, wordsItem.getId());
             } else if (isChecked == false) {
                 wordsId.remove(Integer.valueOf(wordsItem.getId()));
             }

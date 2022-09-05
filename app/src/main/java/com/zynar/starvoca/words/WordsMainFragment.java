@@ -22,13 +22,16 @@ import java.util.List;
 
 public class WordsMainFragment extends Fragment {
 
-    // words아이템, DBHelper
-    private ArrayList<WordsItem> wordsItems;
-    private WordsDBHelper wordsDBHelper;
+    // words아이템
     private VocaDatabase vocaDatabase;
     private VocaDao vocaDao;
     private List<VocaItem> vocaItems;
-    // private WordsRVAdapter wordsRVAdapter;
+
+    // 룸 데이터베이스
+    private WordsDatabase wordsDatabase;
+    private WordsDao wordsDao;
+    private List<WordsItem> wordsItems;
+
 
     // 레이아웃
     private RecyclerView rv_words;
@@ -44,7 +47,6 @@ public class WordsMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_words_main, container, false);
     }
 
@@ -52,8 +54,16 @@ public class WordsMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // 룸 데이터 베이스
+        wordsDatabase = WordsDatabase.getInstance(getContext());
+        wordsDao = wordsDatabase.wordsDao();
+        wordsItems = new ArrayList<>();
+
+
+
+
+
         // 리사이클러뷰
-        wordsDBHelper = new WordsDBHelper(requireContext());
         wordsItems = new ArrayList<>();
         vocaDatabase = VocaDatabase.getInstance(getContext());
         vocaDao = vocaDatabase.vocaDao();
@@ -83,7 +93,7 @@ public class WordsMainFragment extends Fragment {
         super.onResume();
 
         // 저장되어있던 DB를 가져온다
-        wordsItems = wordsDBHelper.getWordsList();
+        wordsItems = wordsDao.getWordsItems();
         vocaItems = vocaDao.getVocaItems();
 
         WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItems, vocaItems, requireContext(), 0);

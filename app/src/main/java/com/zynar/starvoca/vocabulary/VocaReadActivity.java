@@ -10,8 +10,8 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zynar.starvoca.R;
-import com.zynar.starvoca.words.VocaIdCallBackListener;
-import com.zynar.starvoca.words.WordsDBHelper;
+import com.zynar.starvoca.words.WordsDao;
+import com.zynar.starvoca.words.WordsDatabase;
 import com.zynar.starvoca.words.WordsItem;
 import com.zynar.starvoca.words.WordsItemDecoration;
 import com.zynar.starvoca.words.WordsRVAdapter;
@@ -23,10 +23,11 @@ public class VocaReadActivity extends AppCompatActivity {
 
     private List<VocaItem> vocaItems;
     private VocaDatabase vocaDatabase;
+    private WordsDatabase wordsDatabase;
     private VocaDao vocaDao;
+    private WordsDao wordsDao;
     //
-    private ArrayList<WordsItem> wordsItems;
-    private WordsDBHelper wordsDBHelper;
+    private List<WordsItem> wordsItems;
 
     //
     private MaterialToolbar toolbar;
@@ -47,10 +48,8 @@ public class VocaReadActivity extends AppCompatActivity {
         vocaItems = vocaDao.getVocaItems();
 
         VocaItem vocaItem = vocaItems.get(parentPos);
-        //
-        wordsDBHelper = new WordsDBHelper(this);
-
-
+        wordsDatabase = WordsDatabase.getInstance(this);
+        wordsDao = wordsDatabase.wordsDao();
         //
 
         toolbar = findViewById(R.id.toolbar);
@@ -68,7 +67,14 @@ public class VocaReadActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         List<Integer> wordsId = new Gson().fromJson(vocaItems.get(parentPos).getWordsId(), new TypeToken<List<Integer>>(){}.getType());
-        wordsItems = wordsDBHelper.getWordsListForVoca(wordsId);
+
+        List<WordsItem> wordsItemList = new ArrayList<>();
+        for(int i : wordsId) {
+            WordsItem wordsItem = new WordsItem();
+            wordsItem = wordsDao.getWordsListForVoca(i);
+            wordsItemList.add(wordsItem);
+        }
+        wordsItems = wordsItemList;
         vocaItems = vocaDao.getVocaItems();
 
         WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItems, vocaItems, this, 1);

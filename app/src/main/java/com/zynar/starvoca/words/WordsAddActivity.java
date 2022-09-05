@@ -14,14 +14,16 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.zynar.starvoca.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WordsAddActivity extends AppCompatActivity {
 
     // words아이템, DBHelper
-    private WordsDBHelper wordsDBHelper;
+    private final WordsDatabase wordsDatabase = WordsDatabase.getInstance(WordsAddActivity.this);
+    private final WordsDao wordsDao = wordsDatabase.wordsDao();
     private int intentType;
     private int intentPos;
-    private ArrayList<WordsItem> wordsItems;
+    private List<WordsItem> wordsItems;
     private WordsItem wordsItem;
 
     // 레이아웃
@@ -33,6 +35,7 @@ public class WordsAddActivity extends AppCompatActivity {
     private Spinner spinner_language;
     private Button btn_save;
 
+    private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class WordsAddActivity extends AppCompatActivity {
         wordsItems = new ArrayList<>();
 
         // 인텐트 엑스트라
-        this.wordsDBHelper = new WordsDBHelper(this);
+
         intentType = getIntent().getIntExtra("type", 0);
         intentPos = getIntent().getIntExtra("position", 0);
 
@@ -57,7 +60,7 @@ public class WordsAddActivity extends AppCompatActivity {
         // 툴바 타이틀 변경
         if (intentType == 0) toolbar.setTitle(R.string.add_word);
         else if (intentType == 1) {
-            wordsItems = wordsDBHelper.getWordsList();
+            wordsItems = wordsDao.getWordsItems();
             wordsItem = wordsItems.get(intentPos);
 
             // 타이틀 수정
@@ -81,7 +84,15 @@ public class WordsAddActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     // words add의 빈칸을 db에 넣음
-                    wordsDBHelper.insertWords(et_word.getText().toString(), et_meaning.getText().toString(), et_pronunciation.getText().toString(), et_memo.getText().toString(), spinner_language.getSelectedItem().toString(), 0);
+                    WordsItem wordsItem = new WordsItem();
+                    wordsItem.setWord(et_word.getText().toString());
+                    wordsItem.setMeaning(et_meaning.getText().toString());
+                    wordsItem.setPronunciation(et_pronunciation.getText().toString());
+                    wordsItem.setMemo(et_memo.getText().toString());
+                    wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
+                    wordsItem.setCondition(0);
+
+                    wordsDao.insertWords(wordsItem);
 
                     Toast.makeText(WordsAddActivity.this, "단어가 추가되었습니다.", Toast.LENGTH_SHORT).show();
                     onBackPressed();
@@ -92,14 +103,19 @@ public class WordsAddActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
+                    id = wordsItem.getId();
                     // words add의 빈칸을 db에 넣음
-                    wordsDBHelper.updateWords(wordsItem.getId(), et_word.getText().toString(), et_meaning.getText().toString(), et_pronunciation.getText().toString(), et_memo.getText().toString(), spinner_language.getSelectedItem().toString(), wordsItem.getCondition());
-
+                    WordsItem wordsItem = new WordsItem();
+                    wordsItem.setId(id);
                     wordsItem.setWord(et_word.getText().toString());
                     wordsItem.setMeaning(et_meaning.getText().toString());
                     wordsItem.setPronunciation(et_pronunciation.getText().toString());
                     wordsItem.setMemo(et_memo.getText().toString());
                     wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
+                    wordsItem.setCondition(0);
+
+                    wordsDao.updateWords(wordsItem);
+
 
                     Toast.makeText(view.getContext(), "목록이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                     onBackPressed();

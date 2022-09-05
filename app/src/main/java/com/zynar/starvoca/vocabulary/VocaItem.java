@@ -3,8 +3,6 @@ package com.zynar.starvoca.vocabulary;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class VocaItem {

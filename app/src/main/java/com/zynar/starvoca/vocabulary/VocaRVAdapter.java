@@ -31,8 +31,8 @@ import java.util.List;
 
 public class VocaRVAdapter extends RecyclerView.Adapter<VocaRVAdapter.ViewHolder> {
 
-    private List<VocaItem> vocaItems;
-    private Context context;
+    private final List<VocaItem> vocaItems;
+    private final Context context;
 
     public VocaRVAdapter(List<VocaItem> vocaItems, Context context) {
         this.vocaItems = vocaItems;
@@ -62,11 +62,11 @@ public class VocaRVAdapter extends RecyclerView.Adapter<VocaRVAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_voca;
-        private TextView tv_explanation;
-        private ToggleButton tgb_favorites;
-        private ImageButton imb_edit;
-        private TextView tv_voca_count;
+        private final TextView tv_voca;
+        private final TextView tv_explanation;
+        private final ToggleButton tgb_favorites;
+        private final ImageButton imb_edit;
+        private final TextView tv_voca_count;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

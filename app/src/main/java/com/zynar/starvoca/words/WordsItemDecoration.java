@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zynar.starvoca.R;
 
 public class WordsItemDecoration extends RecyclerView.ItemDecoration {
-    private int size;
+    private final int size;
 
     public WordsItemDecoration(Context context) {
-        this.size = context.getResources().getDimensionPixelSize(R.dimen.layout_margin);;
+        this.size = context.getResources().getDimensionPixelSize(R.dimen.layout_margin);
     }
 
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {

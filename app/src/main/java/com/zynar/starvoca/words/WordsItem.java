@@ -1,7 +1,12 @@
 package com.zynar.starvoca.words;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class WordsItem {
-    private int id; // 고유 id
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0; // 고유 id
     private String word;    // 단어 타이틀
     private String meaning; // 단어 뜻
     private String pronunciation;   // 단어 발음

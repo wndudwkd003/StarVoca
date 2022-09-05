@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 @Database(entities = {VocaItem.class}, version = 1)
 public abstract class VocaDatabase extends RoomDatabase {
     private static VocaDatabase database;
-    private static String DATABASE_NAME = "StarVoca_Voca";
+    private static final String DATABASE_NAME = "StarVoca_Voca";
 
     public synchronized static VocaDatabase getInstance(Context context)
     {
