@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
-import com.zynar.starvoca.vocabulary.VocaDao;
-import com.zynar.starvoca.vocabulary.VocaDatabase;
 import com.zynar.starvoca.vocabulary.VocaItem;
 
 import java.util.List;
@@ -97,9 +96,8 @@ public class WordsChbRVAdapter extends RecyclerView.Adapter<WordsChbRVAdapter.Vi
             }
 
             vocaItem.setWordsId(new Gson().toJson(wordsId));
-            VocaDatabase vocaDatabase = VocaDatabase.getInstance(context);
-            VocaDao vocaDao = vocaDatabase.vocaDao();
-            vocaDao.updateVoca(vocaItem);
+            AppDatabase db = AppDatabase.getInstance(context);
+            db.vocaDao().updateVoca(vocaItem);
             notifyItemChanged(pos);
             notifyItemRemoved(pos);
         }

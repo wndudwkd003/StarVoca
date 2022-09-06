@@ -38,7 +38,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\n단어"
+                android:text="단어"
+                android:layout_marginTop="10dp"
                 android:textStyle="bold"
                 android:textColor="#2C2C2C"
                 android:textSize="15sp" />
@@ -55,7 +56,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\n의미"
+                android:layout_marginTop="10dp"
+                android:text="의미"
                 android:textStyle="bold"
                 android:textColor="#2C2C2C"
                 android:textSize="15sp" />
@@ -72,7 +74,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\n발음"
+                android:layout_marginTop="10dp"
+                android:text="발음"
                 android:textStyle="bold"
                 android:textColor="#2C2C2C"
                 android:textSize="15sp" />
@@ -89,7 +92,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\n메모"
+                android:layout_marginTop="10dp"
+                android:text="메모"
                 android:textStyle="bold"
                 android:textColor="#2C2C2C"
                 android:textSize="15sp" />
@@ -106,7 +110,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\n언어"
+                android:layout_marginTop="10dp"
+                android:text="언어"
                 android:textStyle="bold"
                 android:textColor="#2C2C2C"
                 android:textSize="15sp" />

@@ -17,9 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
-import com.zynar.starvoca.vocabulary.VocaDao;
-import com.zynar.starvoca.vocabulary.VocaDatabase;
 import com.zynar.starvoca.vocabulary.VocaItem;
 
 import java.util.List;
@@ -135,20 +134,20 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
 
                     } else if (i == 2) {
                         // 삭제하기
-                        VocaDatabase vocaDatabase = VocaDatabase.getInstance(context);
-                        VocaDao vocaDao = vocaDatabase.vocaDao();
-                        List<VocaItem> vocaItemList = vocaDao.getVocaItems();
+
+                        AppDatabase db = AppDatabase.getInstance(context);
+
+                        List<VocaItem> vocaItemList = db.vocaDao().getVocaItems();
                         for (VocaItem vocaItem : vocaItemList) {
                             List<Integer> wordsId = new Gson().fromJson(vocaItem.getWordsId(), new TypeToken<List<Integer>>() {
                             }.getType());
                             wordsId.remove(Integer.valueOf(wordsItem.getId()));
                             vocaItem.setWordsId(new Gson().toJson(wordsId));
-                            vocaDao.updateVoca(vocaItem);
+                            db.vocaDao().updateVoca(vocaItem);
                         }
 
-                        WordsDatabase wordsDatabase = WordsDatabase.getInstance(context);
-                        WordsDao wordsDao = wordsDatabase.wordsDao();
-                        wordsDao.deleteWords(wordsItem);
+
+                        db.wordsDao().deleteWords(wordsItem);
                         wordsItems.remove(pos);
                         notifyItemRemoved(pos);
                         Toast.makeText(context, "목록이 삭제되었습니다.", Toast.LENGTH_SHORT).show();

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
 
 import java.util.List;
@@ -84,9 +85,8 @@ public class VocaRVAdapter extends RecyclerView.Adapter<VocaRVAdapter.ViewHolder
                         context.startActivity(intent);
                     } else if (i == 1) {
                         // 삭제하기
-                        VocaDatabase vocaDatabase = VocaDatabase.getInstance(context);
-                        VocaDao vocaDao = vocaDatabase.vocaDao();
-                        vocaDao.deleteVoca(vocaItems.get(pos));
+                        AppDatabase db = AppDatabase.getInstance(context);
+                        db.vocaDao().deleteVoca(vocaItems.get(pos));
                         vocaItems.remove(pos);
                         notifyItemRemoved(pos);
                         Toast.makeText(context, "목록이 삭제되었습니다.", Toast.LENGTH_SHORT).show();

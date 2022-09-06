@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.words.WordsItemDecoration;
 
@@ -23,9 +24,8 @@ import java.util.List;
 public class VocaMainFragment extends Fragment {
 
     private RecyclerView rv_voca;
-    private VocaDao vocaDao;
     private List<VocaItem> vocaItems;
-
+    private AppDatabase db;
     public VocaMainFragment() {
         // Required empty public constructor
     }
@@ -40,8 +40,7 @@ public class VocaMainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Dao
-        VocaDatabase vocaDatabase = VocaDatabase.getInstance(getContext());
-        vocaDao = vocaDatabase.vocaDao();
+        db = AppDatabase.getInstance(requireContext());
         vocaItems = new ArrayList<>();
 
         // 인터페이스, 레이아웃 객체 할당
@@ -64,7 +63,7 @@ public class VocaMainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // 저장된 db를 불러온다
-        vocaItems = vocaDao.getVocaItems();
+        vocaItems = db.vocaDao().getVocaItems();
         VocaRVAdapter vocaRVAdapter = new VocaRVAdapter(vocaItems, getContext());
 
         rv_voca.setHasFixedSize(true);

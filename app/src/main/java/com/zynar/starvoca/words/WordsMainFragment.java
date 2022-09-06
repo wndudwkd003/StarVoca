@@ -12,9 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
-import com.zynar.starvoca.vocabulary.VocaDao;
-import com.zynar.starvoca.vocabulary.VocaDatabase;
 import com.zynar.starvoca.vocabulary.VocaItem;
 
 import java.util.ArrayList;
@@ -22,11 +21,10 @@ import java.util.List;
 
 public class WordsMainFragment extends Fragment {
 
+    private AppDatabase db;
     // words 데이터베이스
-    private WordsDao wordsDao;
     private List<WordsItem> wordsItems;
     // voca 데이터베이스
-    private VocaDao vocaDao;
     private List<VocaItem> vocaItems;
     // 레이아웃
     private RecyclerView rv_words;
@@ -43,16 +41,14 @@ public class WordsMainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
+        db = AppDatabase.getInstance(requireContext());
+
         // words 데이터베이스
-        WordsDatabase wordsDatabase = WordsDatabase.getInstance(getContext());
-        wordsDao = wordsDatabase.wordsDao();
         wordsItems = new ArrayList<>();
 
 
         // voca 데이터베이스
-        VocaDatabase vocaDatabase = VocaDatabase.getInstance(getContext());
-        vocaDao = vocaDatabase.vocaDao();
         vocaItems = new ArrayList<>();
 
         // 레이아웃 연결
@@ -76,8 +72,8 @@ public class WordsMainFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        wordsItems = wordsDao.getWordsItems();
-        vocaItems = vocaDao.getVocaItems();
+        wordsItems = db.wordsDao().getWordsItems();
+        vocaItems = db.vocaDao().getVocaItems();
 
         WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItems, vocaItems, requireContext(), 0);
         rv_words.setHasFixedSize(true);

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
 
 import java.util.ArrayList;
@@ -27,9 +28,8 @@ public class VocaAddActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        VocaDatabase vocaDatabase = VocaDatabase.getInstance(this);
-        VocaDao vocaDao = vocaDatabase.vocaDao();
-        List<VocaItem> vocaItems = vocaDao.getVocaItems();
+        AppDatabase appDatabase = AppDatabase.getInstance(this);
+        List<VocaItem> vocaItems = appDatabase.vocaDao().getVocaItems();
 
         et_voca = findViewById(R.id.et_voca);
         et_explanation = findViewById(R.id.et_explanation);
@@ -46,7 +46,7 @@ public class VocaAddActivity extends AppCompatActivity {
                 vocaItem.setExplanation(et_explanation.getText().toString());
                 vocaItem.setWordsId(new Gson().toJson(new ArrayList<Integer>()));
                 vocaItem.setFavorites(0);
-                vocaDao.insertVoca(vocaItem);
+                appDatabase.vocaDao().insertVoca(vocaItem);
                 Toast.makeText(VocaAddActivity.this, "새로운 단어장을 만들었습니다.", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             });
@@ -62,7 +62,7 @@ public class VocaAddActivity extends AppCompatActivity {
                 vocaItem.setVoca(et_voca.getText().toString());
                 vocaItem.setExplanation(et_explanation.getText().toString());
 
-                vocaDao.updateVoca(vocaItem);
+                appDatabase.vocaDao().updateVoca(vocaItem);
                 Toast.makeText(view.getContext(), "단어장이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             });
