@@ -22,19 +22,14 @@ import java.util.List;
 public class WordsMainFragment extends Fragment {
 
     private AppDatabase db;
-    // words 데이터베이스
-    private List<WordsItem> wordsItems;
-    // voca 데이터베이스
-    private List<VocaItem> vocaItems;
-    // 레이아웃
     private RecyclerView rv_words;
 
     public WordsMainFragment() {
         // Required empty public constructor
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_words_main, container, false);
     }
 
@@ -44,18 +39,10 @@ public class WordsMainFragment extends Fragment {
 
         db = AppDatabase.getInstance(requireContext());
 
-        // words 데이터베이스
-        wordsItems = new ArrayList<>();
-
-
-        // voca 데이터베이스
-        vocaItems = new ArrayList<>();
-
-        // 레이아웃 연결
         rv_words = view.findViewById(R.id.rv_words);
-        FloatingActionButton fab_add_words = view.findViewById(R.id.fab_words_add);
+        rv_words.addItemDecoration(new WordsItemDecoration(requireContext()));
 
-        // fab 버튼 클릭
+        FloatingActionButton fab_add_words = view.findViewById(R.id.fab_words_add);
         fab_add_words.setOnClickListener(view1 -> {
             Intent intent = new Intent(requireContext(), WordsAddActivity.class);
             intent.putExtra("type", 0);
@@ -63,18 +50,13 @@ public class WordsMainFragment extends Fragment {
 
         });
 
-        // 마진 적용
-        WordsItemDecoration wordsItemDecoration = new WordsItemDecoration(requireContext());
-        rv_words.addItemDecoration(wordsItemDecoration);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        wordsItems = db.wordsDao().getWordsItems();
-        vocaItems = db.vocaDao().getVocaItems();
-
+        List<WordsItem> wordsItems = db.wordsDao().getWordsItems();
+        List<VocaItem> vocaItems = db.vocaDao().getVocaItems();
         WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItems, vocaItems, requireContext(), 0);
         rv_words.setHasFixedSize(true);
         rv_words.setAdapter(wordsRVAdapter);

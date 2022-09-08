@@ -3,6 +3,7 @@ package com.zynar.starvoca.words;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,4 +170,6 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
             });
         }
     }
+
+
 }

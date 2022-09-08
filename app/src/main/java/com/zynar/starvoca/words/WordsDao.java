@@ -1,5 +1,6 @@
 package com.zynar.starvoca.words;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -25,4 +26,7 @@ public interface WordsDao {
 
     @Query("SELECT * FROM WordsItem WHERE id = :i ORDER BY id DESC")
     WordsItem getWordsListForVoca(int i);
+
+    @Query("SELECT * FROM WordsItem ORDER BY id DESC")
+    LiveData<List<WordsItem>> liveData_WordsItem();
 }

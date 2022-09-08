@@ -1,5 +1,6 @@
 package com.zynar.starvoca.words;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.zynar.starvoca.AppDatabase;
+import com.zynar.starvoca.DBAsyncTask;
 import com.zynar.starvoca.R;
 
 import java.util.List;
@@ -57,7 +59,8 @@ public class WordsAddActivity extends AppCompatActivity {
                 wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
                 wordsItem.setCondition(0);
 
-                db.wordsDao().insertWords(wordsItem);
+                //db.wordsDao().insertWords(wordsItem);
+                //new DBAsyncTask.WordsInsert(db.wordsDao()).execute(wordsItem);
 
                 Toast.makeText(WordsAddActivity.this, "단어가 추가되었습니다.", Toast.LENGTH_SHORT).show();
                 onBackPressed();
@@ -82,10 +85,12 @@ public class WordsAddActivity extends AppCompatActivity {
                 wordsItem.setLanguage(spinner_language.getSelectedItem().toString());
                 wordsItem.setCondition(0);
                 db.wordsDao().updateWords(wordsItem);
-                
+
                 Toast.makeText(view.getContext(), "목록이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             });
         }
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.zynar.starvoca.vocabulary;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,5 +23,7 @@ public interface VocaDao {
     // 조회
     @Query("SELECT * FROM VocaItem ORDER BY id DESC")    // 쿼리 : 데이터 베이스에 요청하는 명령문
     List<VocaItem> getVocaItems();
-    
+
+    @Query("SELECT * FROM VocaItem ORDER BY id DESC")
+    LiveData<List<VocaItem>> liveData_VocaItems();
 }
