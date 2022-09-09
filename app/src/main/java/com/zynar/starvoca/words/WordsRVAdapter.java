@@ -110,17 +110,16 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
                 builder.setTitle(R.string.words_sel_question);
                 builder.setItems(strChoiceItems, (dialogInterface, i) -> {
                     if (i == 0) {
-                        Dialog dialog = new Dialog(view.getContext(), android.R.style.Theme_Material_Light_Dialog);
+                        Dialog dialog = new Dialog(view.getContext());
                         dialog.setContentView(R.layout.custom_dialog_words_chb);
-                        dialog.setTitle(R.string.word_add_to_voca);
                         rv_check_box = dialog.findViewById(R.id.rv_check_box);
                         WordsChbRVAdapter wordsChbRVAdapter = new WordsChbRVAdapter(vocaItems, wordsItems, context, pos);
                         WordsItemDecoration wordsItemDecoration = new WordsItemDecoration(context);
                         rv_check_box.addItemDecoration(wordsItemDecoration);
                         rv_check_box.setHasFixedSize(true);
                         rv_check_box.setAdapter(wordsChbRVAdapter);
-                        Button btn_save = dialog.findViewById(R.id.btn_save);
-                        btn_save.setOnClickListener(view1 -> {
+                        TextView tv_save = dialog.findViewById(R.id.tv_save);
+                        tv_save.setOnClickListener(view1 -> {
                             dialog.onBackPressed();
                             wordsChbRVAdapter.getSparseBooleanArray();
                             Toast.makeText(context, "단어장이 수정되었습니다.", Toast.LENGTH_SHORT).show();
