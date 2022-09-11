@@ -24,11 +24,10 @@ import java.util.List;
 
 public class VocaRVAdapter extends RecyclerView.Adapter<VocaRVAdapter.ViewHolder> {
 
-    private final List<VocaItem> vocaItems;
+    private List<VocaItem> vocaItems;
     private final Context context;
 
-    public VocaRVAdapter(List<VocaItem> vocaItems, Context context) {
-        this.vocaItems = vocaItems;
+    public VocaRVAdapter(Context context) {
         this.context = context;
 
     }
@@ -38,6 +37,12 @@ public class VocaRVAdapter extends RecyclerView.Adapter<VocaRVAdapter.ViewHolder
     public VocaRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View holder = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_list_voca_item, parent, false);
         return new ViewHolder(holder);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setVocaItems(List<VocaItem> vocaItems) {
+        this.vocaItems = vocaItems;
+        notifyDataSetChanged();
     }
 
     @SuppressLint("SetTextI18n")
@@ -91,9 +96,9 @@ public class VocaRVAdapter extends RecyclerView.Adapter<VocaRVAdapter.ViewHolder
                         notifyItemRemoved(pos);
                         Toast.makeText(context, "목록이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
-                    } else if (i == 2) {
-                        // 단어장 공유
                     }
+                    // 단어장 공유
+
                 });
                 builder.show();
             });
