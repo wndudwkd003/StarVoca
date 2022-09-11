@@ -1,5 +1,6 @@
 package com.zynar.starvoca.words;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,15 +27,13 @@ import java.util.List;
 
 public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHolder> {
 
-    private final List<WordsItem> wordsItems;
-    private final List<VocaItem> vocaItems;
+    private List<WordsItem> wordsItems;
+    private List<VocaItem> vocaItems;
     private final Context context;
     private final int condition;
 
-    public WordsRVAdapter(List<WordsItem> wordsItems, List<VocaItem> vocaItems, Context context, int i) {
-        this.wordsItems = wordsItems;
+    public WordsRVAdapter(Context context, int i) {
         this.context = context;
-        this.vocaItems = vocaItems;
         this.condition = i; // 내 단어 탭에서 실행 0, 단어장에서 실행 1
     }
 
@@ -43,6 +42,18 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
     public WordsRVAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View holder = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_list_words_item, parent, false);
         return new ViewHolder(holder);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setWordsItems(List<WordsItem> wordsItems) {
+        this.wordsItems = wordsItems;
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setVocaItems(List<VocaItem> vocaItems) {
+        this.vocaItems = vocaItems;
+        notifyDataSetChanged();
     }
 
     @Override

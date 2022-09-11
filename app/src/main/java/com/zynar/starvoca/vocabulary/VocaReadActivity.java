@@ -64,7 +64,10 @@ public class VocaReadActivity extends AppCompatActivity {
         //
         vocaItems = db.vocaDao().getVocaItems();
 
-        WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItemList, vocaItems, this, 1);
+        WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(this, 1);
+        wordsRVAdapter.setWordsItems(wordsItemList);
+        wordsRVAdapter.setVocaItems(vocaItems);
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(wordsRVAdapter);

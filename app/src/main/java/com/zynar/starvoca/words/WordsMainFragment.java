@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WordsMainFragment extends Fragment {
-
-    private AppDatabase db;
-    private RecyclerView rv_words;
 
     public WordsMainFragment() {
         // Required empty public constructor
@@ -37,11 +36,29 @@ public class WordsMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = AppDatabase.getInstance(requireContext());
-
-        rv_words = view.findViewById(R.id.rv_words);
+        // recycler view
+        RecyclerView rv_words = view.findViewById(R.id.rv_words);
         rv_words.addItemDecoration(new WordsItemDecoration(requireContext()));
+        rv_words.setHasFixedSize(true);
 
+        // adapter
+        WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(requireContext(), 0);
+
+        // view model
+        WordsMainViewModel mainViewModel = new ViewModelProvider(this).get(WordsMainViewModel.class);
+
+        // 어댑터 초기 값
+        wordsRVAdapter.setWordsItems(mainViewModel.getWordsItems());
+        wordsRVAdapter.setVocaItems(mainViewModel.getVocaItems());
+
+        // set adapter
+        rv_words.setAdapter(wordsRVAdapter);
+
+        // observe
+        mainViewModel.liveData_WordsItem().observe(getViewLifecycleOwner(), wordsRVAdapter::setWordsItems);
+        mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), wordsRVAdapter::setVocaItems);
+
+        // words add fab
         FloatingActionButton fab_add_words = view.findViewById(R.id.fab_words_add);
         fab_add_words.setOnClickListener(view1 -> {
             Intent intent = new Intent(requireContext(), WordsAddActivity.class);
@@ -50,15 +67,5 @@ public class WordsMainFragment extends Fragment {
 
         });
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        List<WordsItem> wordsItems = db.wordsDao().getWordsItems();
-        List<VocaItem> vocaItems = db.vocaDao().getVocaItems();
-        WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(wordsItems, vocaItems, requireContext(), 0);
-        rv_words.setHasFixedSize(true);
-        rv_words.setAdapter(wordsRVAdapter);
     }
 }

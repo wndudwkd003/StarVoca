@@ -22,11 +22,12 @@
 
     <TextView
         android:id="@+id/tv_word"
-        android:layout_width="wrap_content"
+        android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
-        android:text="영단어가 들어갈 자리"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textColor="#000000"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +37,10 @@
         android:layout_marginTop="2dp"
         android:visibility="gone"
         android:id="@+id/tv_meaning"
-        android:layout_width="wrap_content"
+        android:layout_width="310dp"
         android:layout_height="wrap_content"
-        android:text="뜻이 들어갈 자리"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/tv_word"
         app:layout_constraintTop_toBottomOf="@+id/tv_word" />
@@ -46,9 +48,10 @@
     <TextView
         android:layout_marginTop="2dp"
         android:id="@+id/tv_pronunciation"
-        android:layout_width="wrap_content"
+        android:layout_width="310dp"
         android:layout_height="wrap_content"
-        android:text="발음이 들어갈 자리"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/tv_word"
         app:layout_constraintTop_toBottomOf="@+id/tv_meaning" />
@@ -56,9 +59,10 @@
     <TextView
         android:layout_marginTop="2dp"
         android:id="@+id/tv_memo"
-        android:layout_width="wrap_content"
+        android:layout_width="310dp"
         android:layout_height="wrap_content"
-        android:text="메모가 들어갈 자리"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/tv_word"
         app:layout_constraintTop_toBottomOf="@+id/tv_pronunciation" />
@@ -67,9 +71,10 @@
         android:visibility="invisible"
         android:layout_marginTop="2dp"
         android:id="@+id/tv_language"
-        android:layout_width="wrap_content"
+        android:layout_width="310dp"
         android:layout_height="wrap_content"
-        android:text="언어가 들어갈 자리"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/tv_word"
         app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
@@ -83,7 +88,8 @@
 
         android:src="@drawable/ic_headphones"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imb_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/imb_edit"
+        tools:ignore="ContentDescription" />
 
     <ImageButton
 
@@ -93,7 +99,8 @@
         android:backgroundTint="#00FFFFFF"
         android:src="@drawable/ic_keyboard_arrow_down"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_condition" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_condition"
+        tools:ignore="ContentDescription" />
 
 
 
