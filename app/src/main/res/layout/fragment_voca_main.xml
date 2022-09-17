@@ -20,11 +20,10 @@
         android:src="@drawable/ic_add_voca" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:paddingHorizontal="10dp"
         android:id="@+id/rv_voca"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/custom_list_voca_item" />
 

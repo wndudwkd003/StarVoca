@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StarVoca</string>
+    <string name="app_name">스타 보카</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="main_menu_voca">단어장</string>
