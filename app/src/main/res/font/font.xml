@@ -3,14 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <font
-        android:font="@font/monoplexKR_Bold"
+        android:font="@font/monoplex_medium"
         android:fontStyle="normal"
         android:fontWeight="400"/>
 
-    <font
-        android:font="@font/monoplexKR_BoldItalic"
-        android:fontStyle="normal"
-        android:fontWeight="400"/>
 
 
 </font-family>
