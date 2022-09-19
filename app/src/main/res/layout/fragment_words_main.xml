@@ -7,6 +7,7 @@
     tools:context=".words.WordsMainFragment"
     >
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_words_add"
         android:layout_width="wrap_content"
@@ -21,7 +22,6 @@
         android:src="@drawable/ic_add_words" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:paddingHorizontal="10dp"
         android:id="@+id/rv_words"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

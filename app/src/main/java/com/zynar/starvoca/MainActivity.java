@@ -3,6 +3,8 @@ package com.zynar.starvoca;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageButton imb_add_voca = findViewById(R.id.imb_add_voca);
+        ImageButton imb_add_words = findViewById(R.id.imb_add_words);
+
         // 툴바 초기화
         toolbar = findViewById(R.id.toolbar);
         // 바텀 네비게이션 초기화
@@ -44,18 +49,28 @@ public class MainActivity extends AppCompatActivity {
 
             if (itemId == R.id.main_menu_voca) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, vocaMainFragment).commit();
+                imb_add_voca.setVisibility(View.VISIBLE);
+                imb_add_words.setVisibility(View.GONE);
                 toolbar.setTitle(R.string.main_menu_voca);
             } else if (itemId == R.id.main_menu_words) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, wordsMainFragment).commit();
+                imb_add_voca.setVisibility(View.GONE);
+                imb_add_words.setVisibility(View.VISIBLE);
                 toolbar.setTitle(R.string.main_menu_words);
             } else if (itemId == R.id.main_menu_learn) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, learnMainFragment).commit();
+                imb_add_voca.setVisibility(View.GONE);
+                imb_add_words.setVisibility(View.GONE);
                 toolbar.setTitle(R.string.main_menu_learn);
             } else if (itemId == R.id.main_menu_community) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, communityFragment).commit();
+                imb_add_voca.setVisibility(View.GONE);
+                imb_add_words.setVisibility(View.GONE);
                 toolbar.setTitle(R.string.main_menu_community);
             } else if (itemId == R.id.main_menu_info) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, infoFragment).commit();
+                imb_add_voca.setVisibility(View.GONE);
+                imb_add_words.setVisibility(View.GONE);
                 toolbar.setTitle(R.string.main_menu_info);
             }
             return true;

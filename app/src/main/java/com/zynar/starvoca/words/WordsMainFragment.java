@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,8 +65,8 @@ public class WordsMainFragment extends Fragment {
             Intent intent = new Intent(requireContext(), WordsAddActivity.class);
             intent.putExtra("type", 0);
             startActivity(intent);
-
         });
 
     }
+
 }

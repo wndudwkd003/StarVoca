@@ -19,7 +19,43 @@
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextAppearance="?attr/textAppearanceSubtitle1" />
+            app:titleTextAppearance="?attr/textAppearanceSubtitle1" >
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/imb_add_voca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="#00FFFFFF"
+                android:minHeight="48dp"
+                android:src="@drawable/ic_words"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/imb_add_words"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="#00FFFFFF"
+                android:minHeight="48dp"
+                android:src="@drawable/ic_add_voca"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageButton
+                android:id="@+id/imb_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="#00FFFFFF"
+                android:minHeight="48dp"
+                android:src="@drawable/ic_delete"
+                tools:ignore="RtlHardcoded" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+
 
 
 
@@ -33,6 +69,26 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F6F6F6"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AD"
+                tools:ignore="HardcodedText"
+                android:textSize="11sp"
+                android:padding="5dp"
+                />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:paddingTop="5dp"
+            android:paddingHorizontal="5dp"
             android:id="@+id/fl_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
