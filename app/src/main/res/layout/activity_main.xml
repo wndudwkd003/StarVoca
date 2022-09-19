@@ -22,36 +22,53 @@
             app:titleTextAppearance="?attr/textAppearanceSubtitle1" >
 
             <ImageButton
+                android:layout_marginEnd="5dp"
+                android:maxHeight="35dp"
+                android:adjustViewBounds="true"
+                android:id="@+id/imb_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="#00FFFFFF"
+                android:src="@drawable/ic_baseline_tune_24"
+                tools:ignore="RtlHardcoded" />
+
+
+            <ImageButton
+                android:maxHeight="35dp"
+                android:adjustViewBounds="true"
                 android:visibility="gone"
                 android:id="@+id/imb_add_voca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:backgroundTint="#00FFFFFF"
-                android:minHeight="48dp"
-                android:src="@drawable/ic_words"
+                android:src="@drawable/ic_baseline_playlist_add_24"
                 tools:ignore="RtlHardcoded" />
 
             <ImageButton
+                android:maxHeight="35dp"
+                android:adjustViewBounds="true"
                 android:visibility="gone"
                 android:id="@+id/imb_add_words"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:backgroundTint="#00FFFFFF"
-                android:minHeight="48dp"
-                android:src="@drawable/ic_add_voca"
+                android:src="@drawable/ic_edit_note"
                 tools:ignore="RtlHardcoded" />
 
             <ImageButton
-                android:id="@+id/imb_del"
+                android:maxHeight="35dp"
+                android:adjustViewBounds="true"
+                android:id="@+id/imb_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:backgroundTint="#00FFFFFF"
-                android:minHeight="48dp"
-                android:src="@drawable/ic_delete"
+                android:src="@drawable/ic_search"
                 tools:ignore="RtlHardcoded" />
+
 
         </com.google.android.material.appbar.MaterialToolbar>
 
