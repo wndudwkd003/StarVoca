@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,8 +56,17 @@ public class WordsMainFragment extends Fragment {
         // set adapter
         rv_words.setAdapter(wordsRVAdapter);
 
+        TextView tv_isVoid = view.findViewById(R.id.tv_isVoid);
+
         // observe
-        mainViewModel.liveData_WordsItem().observe(getViewLifecycleOwner(), wordsRVAdapter::setWordsItems);
+        mainViewModel.liveData_WordsItem().observe(getViewLifecycleOwner(), wordsItems -> {
+            // VocaItems 비어있으면 단어장을 추가하라는 tv 출력
+            if(!wordsItems.isEmpty()) {
+                tv_isVoid.setVisibility(View.GONE);
+            } else tv_isVoid.setVisibility(View.VISIBLE);
+
+            wordsRVAdapter.setWordsItems(wordsItems);
+        });
         mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), wordsRVAdapter::setVocaItems);
 
         // words add fab

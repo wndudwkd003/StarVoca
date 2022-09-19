@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+
+            android:layout_marginVertical="30dp"
+            android:layout_gravity="center"
+            android:id="@+id/img_myinfo_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:background="#BFBFBF"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+        <Button
+            android:layout_marginTop="-15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:background="#00FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="35sp"
+            android:text="프로필 사진 변경"
+            android:textSize="11sp"/>
+
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#292929"
+            android:id="@+id/text_edit_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임"/>
+
+        <EditText
+            android:paddingStart="15sp"
+            android:paddingEnd="15sp"
+            android:layout_marginVertical="10dp"
+            android:textSize="13sp"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:background="@drawable/custom_bg_input_box"
+            />
+
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#292929"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="상태메시지"/>
+
+        <EditText
+            android:paddingStart="15sp"
+            android:paddingEnd="15sp"
+            android:textSize="13sp"
+            android:layout_marginVertical="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:background="@drawable/custom_bg_input_box"
+            />
+
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#292929"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이메일"/>
+
+        <EditText
+            android:paddingStart="15sp"
+            android:paddingEnd="15sp"
+            android:textSize="13sp"
+            android:layout_marginVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:background="@drawable/custom_bg_input_box"
+            />
+
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="#292929"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성별"/>
+
+        <RelativeLayout
+            android:layout_weight="2"
+            android:gravity="center"
+            android:layout_marginVertical="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/radio_edit_myinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:id="@+id/radio_btn_man"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="남자"
+                    android:textColor="@drawable/custom_radio_text" />
+
+                <RadioButton
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:id="@+id/radio_btn_girl"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="여자"
+                    android:textColor="@drawable/custom_radio_text" />
+
+                <RadioButton
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:id="@+id/radio_btn_private"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_radio_button"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="비공개"
+                    android:textColor="@drawable/custom_radio_text" />
+            </RadioGroup>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -22,20 +22,21 @@
             app:titleTextAppearance="?attr/textAppearanceSubtitle1" >
 
             <ImageButton
-                android:layout_marginEnd="5dp"
-                android:maxHeight="35dp"
+                android:layout_marginEnd="10dp"
+                android:maxHeight="30dp"
                 android:adjustViewBounds="true"
                 android:id="@+id/imb_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:backgroundTint="#00FFFFFF"
-                android:src="@drawable/ic_baseline_tune_24"
+                android:src="@drawable/ic_baseline_sort_24"
                 tools:ignore="RtlHardcoded" />
 
 
             <ImageButton
-                android:maxHeight="35dp"
+                android:layout_marginEnd="3dp"
+                android:maxHeight="30dp"
                 android:adjustViewBounds="true"
                 android:visibility="gone"
                 android:id="@+id/imb_add_voca"
@@ -47,7 +48,8 @@
                 tools:ignore="RtlHardcoded" />
 
             <ImageButton
-                android:maxHeight="35dp"
+                android:layout_marginEnd="3dp"
+                android:maxHeight="30dp"
                 android:adjustViewBounds="true"
                 android:visibility="gone"
                 android:id="@+id/imb_add_words"
@@ -59,7 +61,8 @@
                 tools:ignore="RtlHardcoded" />
 
             <ImageButton
-                android:maxHeight="35dp"
+                android:layout_marginEnd="3dp"
+                android:maxHeight="30dp"
                 android:adjustViewBounds="true"
                 android:id="@+id/imb_search"
                 android:layout_width="wrap_content"
@@ -72,22 +75,9 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-
-
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/coordinatorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="60dp">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -103,6 +93,15 @@
 
         </FrameLayout>
 
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
         <FrameLayout
             android:paddingTop="5dp"
             android:paddingHorizontal="5dp"
@@ -110,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

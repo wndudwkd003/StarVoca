@@ -30,5 +30,22 @@
     <string name="voca_info_edit">단어장 수정하기</string>
     <string name="voca_delete">단어장 삭제하기</string>
     <string name="voca_share">단어장 공유하기</string>
+    <string name="void_voca">단어장을 추가해보세요!</string>
+    <string name="void_words">단어를 추가해보세요!</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>

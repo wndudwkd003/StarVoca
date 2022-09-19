@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zynar.starvoca.R;
@@ -48,8 +49,22 @@ public class VocaMainFragment extends Fragment {
         // set adapter
         rv_voca.setAdapter(vocaRVAdapter);
 
+        // isVoid
+        TextView tv_isVoid = view.findViewById(R.id.tv_isVoid);
+
         // observe
-        mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), vocaRVAdapter::setVocaItems);
+        mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), vocaItems -> {
+            // VocaItems 비어있으면 단어장을 추가하라는 tv 출력
+            if(!vocaItems.isEmpty()) {
+                tv_isVoid.setVisibility(View.GONE);
+            } else tv_isVoid.setVisibility(View.VISIBLE);
+
+            vocaRVAdapter.setVocaItems(vocaItems);
+        });
+
+
+
+
 
         // voca add fab
         FloatingActionButton fab_add_voca = view.findViewById(R.id.fab_voca_add);
