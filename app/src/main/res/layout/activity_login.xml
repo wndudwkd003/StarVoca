@@ -11,7 +11,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Star Voca"
+        android:text="@string/app_name_eng"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="20sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        tools:ignore="HardcodedText" />
 
     <LinearLayout
         android:gravity="center"
@@ -52,9 +53,9 @@
             android:backgroundTint="#AE7DB6"
             android:textColor="@color/white"
             android:padding="15dp"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="이메일 로그인 하기"
+            android:text="@string/login_email"
             android:elevation="10dp"
             app:drawableLeftCompat="@drawable/ic_baseline_email_24" />
 
@@ -67,9 +68,9 @@
             android:backgroundTint="#AE7DB6"
             android:textColor="@color/white"
             android:padding="15dp"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="구글 로그인 하기"
+            android:text="@string/login_google"
             android:elevation="10dp"
             app:drawableLeftCompat="@drawable/ic_baseline_android_24" />
 
@@ -82,9 +83,9 @@
             android:backgroundTint="#AE7DB6"
             android:textColor="@color/white"
             android:padding="15dp"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="카톡 로그인 하기"
+            android:text="@string/login_katalk"
             android:elevation="10dp"
             app:drawableLeftCompat="@drawable/ic_baseline_chat_bubble_24" />
 
@@ -94,17 +95,19 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/monoplex_medium"
-            android:text="계정이 없다면 이메일로 가입하기"/>
+            android:text="@string/regis_email"/>
+
         <TextView
+            android:id="@+id/tv_no_login"
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/monoplex_medium"
-            android:text="계정 없이 계속하기"/>
+            android:text="@string/not_login"/>
 
         <TextView
             android:textColor="#836C6C6C"
@@ -114,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/monoplex_medium"
-            android:text="version 1.0.0"/>
+            android:text="@string/ver"/>
 
 
     </LinearLayout>

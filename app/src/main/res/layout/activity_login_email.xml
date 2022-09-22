@@ -30,7 +30,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Star Voca"
+        android:text="@string/app_name_eng"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="20sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        tools:ignore="HardcodedText" />
 
 
     <TextView
@@ -60,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="85dp"
-        android:text="이메일"
+        android:text="@string/email"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="@+id/et_email"
@@ -76,14 +77,16 @@
         android:inputType="textEmailAddress"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_email"
+        tools:ignore="LabelFor,RtlSymmetry"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/tv_pw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="패스워드"
+        android:text="@string/pw"
         android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -100,14 +103,16 @@
         android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pw" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_pw"
+        tools:ignore="LabelFor,RtlSymmetry"
+        android:importantForAutofill="no" />
 
     <Switch
         android:id="@+id/swch_auto_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="이메일 저장"
+        android:text="@string/save_email"
         app:layout_constraintEnd_toEndOf="@+id/et_pw"
         app:layout_constraintTop_toBottomOf="@+id/et_pw"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -117,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="자동 로그인"
+        android:text="@string/auto_login"
         app:layout_constraintEnd_toEndOf="@+id/et_pw"
         app:layout_constraintTop_toBottomOf="@+id/swch_auto_email"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -128,11 +133,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
         android:backgroundTint="@color/button"
-        android:text="로그인"
+        android:text="@string/login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_pw" />
 
+    <TextView
+        android:id="@+id/tv_forgot_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_forgot_pw"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/et_pw"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw" />
 
 
 

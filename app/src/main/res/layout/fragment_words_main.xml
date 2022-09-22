@@ -19,7 +19,8 @@
         app:backgroundTint="#00000000"
         app:fabCustomSize="55sp"
         app:maxImageSize="20sp"
-        android:src="@drawable/ic_add_words" />
+        android:src="@drawable/ic_add_words"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:visibility="gone"
@@ -31,6 +32,7 @@
         android:layout_gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:paddingHorizontal="7dp"
         android:id="@+id/rv_words"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

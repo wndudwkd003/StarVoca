@@ -15,6 +15,12 @@ public class UserAccount {
         this.gender = gender;
     }
 
+    private static final UserAccount singleton = new UserAccount();
+
+    public static UserAccount getInstance() {
+        return singleton;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -30,7 +36,6 @@ public class UserAccount {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public String getNickname() {
         return nickname;

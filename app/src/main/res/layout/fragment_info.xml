@@ -78,7 +78,7 @@
             android:background="#E4E4E4"/>
 
         <ListView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:listSelector="#00000000"
             android:divider="#00FFFFFF"
             android:dividerHeight="0dp"

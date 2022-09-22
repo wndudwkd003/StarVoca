@@ -14,10 +14,10 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="25dp"
         android:backgroundTint="#955ADD"
-        app:backgroundTint="#00000000"
         app:fabCustomSize="55sp"
         app:maxImageSize="35sp"
-        android:src="@drawable/ic_add_voca" />
+        android:src="@drawable/ic_add_voca"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:visibility="gone"
@@ -29,6 +29,7 @@
         android:layout_gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:paddingHorizontal="7dp"
         android:id="@+id/rv_voca"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
