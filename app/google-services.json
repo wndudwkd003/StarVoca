@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "242709203877",
+    "project_id": "star-voca",
+    "storage_bucket": "star-voca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242709203877:android:c0ac6c6c2dd6260a9eb64c",
+        "android_client_info": {
+          "package_name": "com.zynar.starvoca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242709203877-29fos04tjqit69gamr555hdinheqqvmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJQzOwk4X_0GB-wln4ypxMBrdEtAjp_AI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242709203877-29fos04tjqit69gamr555hdinheqqvmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
