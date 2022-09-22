@@ -48,4 +48,16 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
+    <string name="et_isEmpty">입력되지 않은 칸이 있습니다.</string>
+    <string name="email_not_protocol">이메일 형식이 올바르지 않습니다.</string>
+    <string name="pw_not_equals">비밀번호가 일치하지 않습니다.</string>
+    <string name="pw_not_protocol">비밀번호는 6~18자의 영문자와 1개 이상의 숫자와 문자가 포함되어야합니다.</string>
+    <string name="complete_register">회원가입에 성공했습니다! 이메일 인증을 완료해주세요.</string>
+    <string name="fail_register">회원가입에 실패했습니다.</string>
+    <string name="already_email">이미 사용 중인 이메일입니다.</string>
+    <string name="disconnect_sever">서버와의 연결이 끊겼습니다.</string>
+
+    <string name="complete_login">로그인에 성공했습니다.</string>
+    <string name="fail_login">로그인에 성공했습니다.</string>
+    <string name="fail_login_v_email">이메일 인증을 완료해주세요.</string>
 </resources>
