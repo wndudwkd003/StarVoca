@@ -5,14 +5,19 @@ public class UserAccount {
     private String email;
     private String nickname;
     private int gender;
+    private String message;
+    private int cntWords;
+    private int maxCntWords;
 
     public UserAccount() {}
 
-    public UserAccount(String uid, String email, String nickname, int gender) {
+    public UserAccount(String uid, String email, String nickname, int gender, String message, int maxCntWords) {
         this.uid = uid;
         this.email = email;
         this.nickname = nickname;
         this.gender = gender;
+        this.message = message;
+        this.maxCntWords = maxCntWords;
     }
 
     private static final UserAccount singleton = new UserAccount();
@@ -51,6 +56,22 @@ public class UserAccount {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getMaxCntWords() {
+        return maxCntWords;
+    }
+
+    public void setMaxCntWords(int maxCntWords) {
+        this.maxCntWords = maxCntWords;
     }
 
     @Override

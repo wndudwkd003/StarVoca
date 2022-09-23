@@ -18,21 +18,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.MainActivity;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.ActivityLoginBinding;
 import com.zynar.starvoca.databinding.ActivityLoginEmailBinding;
+import com.zynar.starvoca.words.WordsItem;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginEmailActivity extends AppCompatActivity {
     private ActivityLoginEmailBinding mBinding;
-    private UserAccount userAccount = UserAccount.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mBinding = ActivityLoginEmailBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
@@ -46,14 +49,23 @@ public class LoginEmailActivity extends AppCompatActivity {
 
         /* 로그인 버튼 */
         mBinding.btnLogin.setOnClickListener(v -> {
+            mBinding.btnLogin.bringToFront();
+
+            /* 로딩바 */
+            mBinding.includeProgress.clLayout.setVisibility(View.VISIBLE);
+
             String email = String.valueOf(mBinding.etEmail.getText());
             String pw = String.valueOf(mBinding.etPw.getText());
 
             /* 로그인 예외 */
             if(email.isEmpty() || pw.isEmpty()) {
                 Toast.makeText(this, R.string.et_isEmpty, Toast.LENGTH_SHORT).show();
+                mBinding.includeProgress.clLayout.setVisibility(View.GONE);
+
             } else if(!checkEmail(email)) {
                 Toast.makeText(this, R.string.email_not_protocol, Toast.LENGTH_SHORT).show();
+                mBinding.includeProgress.clLayout.setVisibility(View.GONE);
+
             } else {
                 firebaseAuth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
@@ -76,7 +88,14 @@ public class LoginEmailActivity extends AppCompatActivity {
                                     editor.apply();
 
                                     /* 불러온 데이터를 UserAccount 대입 */
-                                    userAccount = task1.getResult().getValue(UserAccount.class);
+                                    UserAccount userAccount = task1.getResult().getValue(UserAccount.class);
+
+                                    UserAccount.getInstance().setUid(userAccount.getUid());
+                                    UserAccount.getInstance().setEmail(userAccount.getEmail());
+                                    UserAccount.getInstance().setNickname(userAccount.getNickname());
+                                    UserAccount.getInstance().setGender(userAccount.getGender());
+                                    UserAccount.getInstance().setMessage(userAccount.getMessage());
+                                    UserAccount.getInstance().setMaxCntWords(userAccount.getMaxCntWords());
 
                                     /* 로그인 타입 Intent 전달 및 메인 액티비티 이동 */
                                     Intent intent = new Intent(LoginEmailActivity.this, MainActivity.class);
@@ -94,10 +113,12 @@ public class LoginEmailActivity extends AppCompatActivity {
 
                         } else {
                             Toast.makeText(this, R.string.fail_login_v_email, Toast.LENGTH_SHORT).show();
+                            mBinding.includeProgress.clLayout.setVisibility(View.GONE);
                         }
 
                     } else {
-                        Toast.makeText(this, R.string.complete_login, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.fail_login, Toast.LENGTH_SHORT).show();
+                        mBinding.includeProgress.clLayout.setVisibility(View.GONE);
                     }
                 });
 

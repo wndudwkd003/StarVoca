@@ -2,20 +2,16 @@ package com.zynar.starvoca;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zynar.starvoca.community.CommunityFragment;
-import com.zynar.starvoca.databinding.ActivityLoginBinding;
 import com.zynar.starvoca.databinding.ActivityMainBinding;
 import com.zynar.starvoca.info.InfoFragment;
 import com.zynar.starvoca.learn.LearnMainFragment;
@@ -26,8 +22,6 @@ import com.zynar.starvoca.words.WordsMainFragment;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-    // UserAccount
-    private UserAccount userAccount = UserAccount.getInstance();
     // Binding
     private ActivityMainBinding mBinding;
     // 메인 5개 메뉴 프래그먼트
@@ -119,76 +113,59 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sp.edit();
 
         /* SharedPreferences 저장되어있는 정보를 쓸 수 있게 불러옴 */
-        String uid, email, nickname;
-        int gender;
-        uid = sp.getString("uid", "");
-        email = sp.getString("email","");
-        nickname = sp.getString("nickname","");
-        gender = sp.getInt("gender", 2);
+        String uid = sp.getString("uid", "");
+        String email = sp.getString("email","");
+        String nickname = sp.getString("nickname","");
+        int gender = sp.getInt("gender", 2);
+        String message = sp.getString("message", "");
+        int maxCntWords = sp.getInt("maxCntWords", 100);
 
         if(uid.isEmpty()) {
             uid = UUID.randomUUID().toString();
             nickname = "닉네임"+uid.substring(0, 7);
+
+            editor.putString("loginType", "noLogin");
         }
 
         
         if(loginType.equals("noLogin")) {
             /*로그인 없이 앱 실행*/
-            userAccount.setUid(uid);
-            userAccount.setEmail(email);
-            userAccount.setNickname(nickname);
-            userAccount.setGender(gender);
-
-            setPreferencesEditor(
-                    userAccount.getUid(),
-                    userAccount.getEmail(),
-                    userAccount.getNickname(),
-                    userAccount.getGender()
-            );
-
-            editor.putString("loginType", "noLogin");
+            UserAccount.getInstance().setUid(uid);
+            UserAccount.getInstance().setEmail(email);
+            UserAccount.getInstance().setNickname(nickname);
+            UserAccount.getInstance().setGender(gender);
+            UserAccount.getInstance().setMessage(message);
+            UserAccount.getInstance().setMaxCntWords(maxCntWords);
 
         } else if(loginType.equals("email")) {
             /* 파이어베이스 이메일 로그인 하여 앱 실행 */
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
-            /* 데이터 베이스 정보 불러옴 */
-            dbRef.child("UserAccount").child("Email").child(firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()) {
-                    userAccount = task.getResult().getValue(UserAccount.class);
+            UserAccount userAccount = UserAccount.getInstance();
+            uid = userAccount.getUid();
+            email = userAccount.getEmail();
+            nickname = userAccount.getEmail();
+            gender = userAccount.getGender();
+            message = userAccount.getMessage();
+            maxCntWords = userAccount.getMaxCntWords();
 
-                    /* 불러온 정보 preferences 저장 */
-                    setPreferencesEditor(
-                            userAccount.getUid(),
-                            userAccount.getEmail(),
-                            userAccount.getNickname(),
-                            userAccount.getGender()
-                            );
-
-                    editor.putString("loginType", "email");
-                }
-            });
+            editor.putString("loginType", "email");
         }
 
+        /* 한번 진행 했기 때문에 오토 로그인 활성화 */
+        editor.putBoolean("autoLogin", true);
+
+        /* 불러온 정보 preferences 저장 */
+        editor.putString("uid", uid);
+        editor.putString("email", email);
+        editor.putString("nickname", nickname);
+        editor.putInt("gender", gender);
+        editor.putString("message", message);
+        editor.putInt("maxCntWords", maxCntWords);
         editor.apply();
 
         return loginType;
     }
 
-    private void setPreferencesEditor(String uid, String email, String nickname, int gender) {
-        SharedPreferences sp = getSharedPreferences("userShared", 0);
-        SharedPreferences.Editor editor = sp.edit();
-
-        /* 한번 진행 했기 때문에 오토 로그인 활성화 */
-        editor.putBoolean("autoLogin", true);
-
-        /* 사용자 정보를 SharedPreferences 저장 */
-        editor.putString("uid", uid);
-        editor.putString("email", email);
-        editor.putString("nickname", nickname);
-        editor.putInt("gender", gender);
-
-        editor.apply();
-    }
 }

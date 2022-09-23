@@ -50,8 +50,8 @@
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/font-v26/monoplex.xml" value="0.5838541666666667" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/font/font.xml" value="0.5828125" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/font/monoplex.xml" value="0.5828125" />
-        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_login.xml" value="0.5536458333333333" />
-        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_login_email.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_login_email.xml" value="0.37353433835845895" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_main.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_myinfo.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_register.xml" value="0.3126491646778043" />
@@ -68,7 +68,7 @@
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_community.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_csv.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_edit_myinfo.xml" value="0.5536458333333333" />
-        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_info.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_info.xml" value="0.5837387074357192" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_inquiry.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_learn_main.xml" value="0.2692502532928065" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_login_blank.xml" value="0.5536458333333333" />
@@ -76,6 +76,7 @@
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_pri.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_voca_main.xml" value="0.5" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_words_main.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/progress_layout.xml" value="0.43645833333333334" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/xml/root_preferences.xml" value="0.5536458333333333" />
       </map>
     </option>

@@ -1,6 +1,7 @@
 package com.zynar.starvoca.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,8 @@ import com.zynar.starvoca.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private ActivityLoginBinding mBinding;
+
     @SuppressLint("StaticFieldLeak")
     public static Activity loginActivity;
 
@@ -29,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityLoginBinding mBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        mBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
 
@@ -58,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
-        
+
         /* 로그인 없이 앱 시작 */
         mBinding.tvNoLogin.setOnClickListener(v ->{
             noLogin();
@@ -66,12 +70,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void autoEmailLogin() {
+        /* 자동 이메일 로그인 */
+
+        /* 로딩바 */
+        mBinding.includeProgress.clLayout.setVisibility(View.VISIBLE);
+
         SharedPreferences sp = getSharedPreferences("userShared", 0);
         String email = sp.getString("email", "");
         String pw = sp.getString("pw", "");
 
         if(email.isEmpty() || pw.isEmpty()) {
+            mBinding.includeProgress.clLayout.setVisibility(View.GONE);
             return;
         }
 
@@ -89,8 +104,16 @@ public class LoginActivity extends AppCompatActivity {
                         if(task1.isSuccessful()) {
 
                             /* 불러온 데이터를 UserAccount 대입 */
-                            UserAccount userAccount = UserAccount.getInstance();
-                            userAccount = task1.getResult().getValue(UserAccount.class);
+                            UserAccount userAccount = task1.getResult().getValue(UserAccount.class);
+
+                            UserAccount.getInstance().setUid(userAccount.getUid());
+                            UserAccount.getInstance().setEmail(userAccount.getEmail());
+                            UserAccount.getInstance().setNickname(userAccount.getNickname());
+                            UserAccount.getInstance().setGender(userAccount.getGender());
+                            UserAccount.getInstance().setMessage(userAccount.getMessage());
+                            UserAccount.getInstance().setMaxCntWords(userAccount.getMaxCntWords());
+
+                            mBinding.includeProgress.clLayout.setVisibility(View.GONE);
 
                             /* 로그인 타입 Intent 전달 및 메인 액티비티 이동 */
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -104,10 +127,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(this, R.string.fail_login_v_email, Toast.LENGTH_SHORT).show();
+                    mBinding.includeProgress.clLayout.setVisibility(View.GONE);
                 }
 
             } else {
-                Toast.makeText(this, R.string.complete_login, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.fail_login, Toast.LENGTH_SHORT).show();
+                mBinding.includeProgress.clLayout.setVisibility(View.GONE);
             }
         });
     }

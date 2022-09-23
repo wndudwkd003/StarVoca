@@ -4,123 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity"
-    android:background="#C5B8E3">
+    android:background="#C5B8E3"
+    tools:context=".login.LoginActivity">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name_eng"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/monoplex_medium"
+        android:gravity="center"
+        android:text="@string/app_name_eng"
+        android:textColor="@color/black"
         android:textSize="45sp"
-        android:textColor="@color/black"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/monoplex_medium"
-        android:text="내가 만드는 단어장"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="20sp"
+        android:text="내가 만드는 단어장"
         android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
         tools:ignore="HardcodedText" />
 
     <LinearLayout
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/tv_title2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title2">
 
         <Button
             android:id="@+id/btn_login_email"
-            android:maxHeight="60dp"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:backgroundTint="#AE7DB6"
-            android:textColor="@color/white"
-            android:padding="15dp"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="@string/login_email"
+            android:backgroundTint="#AE7DB6"
+            android:drawablePadding="10dp"
             android:elevation="10dp"
+            android:gravity="center"
+            android:maxHeight="60dp"
+            android:padding="15dp"
+            android:text="@string/login_email"
+            android:textColor="@color/white"
             app:drawableLeftCompat="@drawable/ic_baseline_email_24" />
 
         <Button
-            android:layout_marginTop="5dp"
             android:id="@+id/btn_login_google"
-            android:maxHeight="60dp"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:backgroundTint="#AE7DB6"
-            android:textColor="@color/white"
-            android:padding="15dp"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="@string/login_google"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#AE7DB6"
+            android:drawablePadding="10dp"
             android:elevation="10dp"
+            android:gravity="center"
+            android:maxHeight="60dp"
+            android:padding="15dp"
+            android:text="@string/login_google"
+            android:textColor="@color/white"
             app:drawableLeftCompat="@drawable/ic_baseline_android_24" />
 
         <Button
-            android:layout_marginTop="5dp"
             android:id="@+id/btn_login_kakaotalk"
-            android:maxHeight="60dp"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:backgroundTint="#AE7DB6"
-            android:textColor="@color/white"
-            android:padding="15dp"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:text="@string/login_katalk"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#AE7DB6"
+            android:drawablePadding="10dp"
             android:elevation="10dp"
+            android:gravity="center"
+            android:maxHeight="60dp"
+            android:padding="15dp"
+            android:text="@string/login_katalk"
+            android:textColor="@color/white"
             app:drawableLeftCompat="@drawable/ic_baseline_chat_bubble_24" />
 
         <TextView
             android:id="@+id/tv_register_email"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/monoplex_medium"
-            android:text="@string/regis_email"/>
+            android:gravity="center"
+            android:text="@string/regis_email" />
 
         <TextView
             android:id="@+id/tv_no_login"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/monoplex_medium"
-            android:text="@string/not_login"/>
+            android:gravity="center"
+            android:text="@string/not_login" />
 
         <TextView
-            android:textColor="#836C6C6C"
-            android:gravity="center"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/monoplex_medium"
-            android:text="@string/ver"/>
-
+            android:gravity="center"
+            android:text="@string/ver"
+            android:textColor="#836C6C6C" />
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/include_progress"
+        layout="@layout/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

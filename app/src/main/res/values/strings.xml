@@ -59,7 +59,7 @@
     <string name="disconnect_sever">서버와의 연결이 끊겼습니다.</string>
 
     <string name="complete_login">로그인에 성공했습니다.</string>
-    <string name="fail_login">로그인에 성공했습니다.</string>
+    <string name="fail_login">로그인에 실패했습니다.</string>
     <string name="fail_login_v_email">이메일 인증을 완료해주세요.</string>
     <string name="tv_forgot_pw">비밀번호 찾기</string>
     <string name="login_email">이메일 로그인 하기</string>

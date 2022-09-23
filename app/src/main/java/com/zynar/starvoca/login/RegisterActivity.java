@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                 firebaseAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(RegisterActivity.this, task -> {
                     if(task.isSuccessful()) {
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                        UserAccount userAccount = new UserAccount(firebaseUser.getUid(), email, nickname, gender);
+                        UserAccount userAccount = new UserAccount(firebaseUser.getUid(), email, nickname, gender, "", 100);
 
                         // 이메일 인증 보냄
                         firebaseUser.sendEmailVerification().addOnCompleteListener(task1 -> {
