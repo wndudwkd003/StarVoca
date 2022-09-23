@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zynar.starvoca.community.CommunityFragment;
+import com.zynar.starvoca.databinding.ActivityLoginBinding;
+import com.zynar.starvoca.databinding.ActivityMainBinding;
 import com.zynar.starvoca.info.InfoFragment;
 import com.zynar.starvoca.learn.LearnMainFragment;
 import com.zynar.starvoca.login.UserAccount;
@@ -24,12 +26,10 @@ import com.zynar.starvoca.words.WordsMainFragment;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-
     // UserAccount
     private UserAccount userAccount = UserAccount.getInstance();
-    // 툴바
-    private MaterialToolbar toolbar;
-
+    // Binding
+    private ActivityMainBinding mBinding;
     // 메인 5개 메뉴 프래그먼트
     private final VocaMainFragment vocaMainFragment = new VocaMainFragment();
     private final WordsMainFragment wordsMainFragment = new WordsMainFragment();
@@ -40,24 +40,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        /* 데이터 바인딩 */
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = mBinding.getRoot();
+        setContentView(view);
 
         /* 매인 엑티비티 시작 전 로그인 정보 설정 */
-        setUserAccount();
+        String loginType = setUserAccount();
 
-        ImageButton imb_add_voca = findViewById(R.id.imb_add_voca);
-        ImageButton imb_add_words = findViewById(R.id.imb_add_words);
-        ImageButton imb_search = findViewById(R.id.imb_search);
-        ImageButton imb_sort = findViewById(R.id.imb_sort);
+        /* loginType 변수를 번들로 info 프래그먼트에 전달 */
+        Bundle bundle = new Bundle();
+        bundle.putString("loginType", loginType);
+        infoFragment.setArguments(bundle);
+
+        /* ImageButton Init */
+        ImageButton imb_add_voca = mBinding.imbAddVoca;
+        ImageButton imb_add_words = mBinding.imbAddWords;
+        ImageButton imb_search = mBinding.imbSearch;
+        ImageButton imb_sort = mBinding.imbSort;
 
         // 툴바 초기화
-        toolbar = findViewById(R.id.toolbar);
-        // 바텀 네비게이션 초기화
-        // 바텀 네비게이션 메인 메뉴
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navi_main_menu);
+        MaterialToolbar toolbar = mBinding.toolbar;
 
         // 바텀 네비게이션 메뉴 클릭
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        mBinding.naviMainMenu.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
             if (itemId == R.id.main_menu_voca) {
@@ -99,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        bottomNavigationView.setSelectedItemId(R.id.main_menu_voca);
+        mBinding.naviMainMenu.setSelectedItemId(R.id.main_menu_voca);
 
 
     }
 
-    private void setUserAccount() {
+    private String setUserAccount() {
         /* 로그인 타입을 Intent를 통해서 받아옴 */
         String loginType = getIntent().getStringExtra("loginType");
 
@@ -140,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
             );
 
             editor.putString("loginType", "noLogin");
-            editor.apply();
 
         } else if(loginType.equals("email")) {
             /* 파이어베이스 이메일 로그인 하여 앱 실행 */
@@ -164,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        editor.apply();
+
+        return loginType;
     }
 
     private void setPreferencesEditor(String uid, String email, String nickname, int gender) {

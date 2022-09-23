@@ -39,13 +39,13 @@ public class InfoFragment extends Fragment{
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data);
         listView.setAdapter(adapter);
 
-        data.add("   내 정보 수정");
-        data.add("   단어 슬롯 구매");
-        data.add("   CSV 파일 관리");
-        data.add("   앱 환경설정");
-        data.add("   문의하기");
-        data.add("   개인정보처리방침");
-        data.add("   로그인");
+        data.add("내 정보 수정");
+        data.add("단어 슬롯 구매");
+        data.add("CSV 파일 관리");
+        data.add("앱 환경설정");
+        data.add("문의하기");
+        data.add("개인정보처리방침");
+        data.add("로그인");
         adapter.notifyDataSetChanged();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
