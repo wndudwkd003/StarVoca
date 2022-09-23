@@ -107,26 +107,6 @@
         tools:ignore="LabelFor,RtlSymmetry"
         android:importantForAutofill="no" />
 
-    <Switch
-        android:id="@+id/swch_auto_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/save_email"
-        app:layout_constraintEnd_toEndOf="@+id/et_pw"
-        app:layout_constraintTop_toBottomOf="@+id/et_pw"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-    <Switch
-        android:id="@+id/swch_auto_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/auto_login"
-        app:layout_constraintEnd_toEndOf="@+id/et_pw"
-        app:layout_constraintTop_toBottomOf="@+id/swch_auto_email"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
     <Button
         android:id="@+id/btn_login"
         android:layout_width="160dp"

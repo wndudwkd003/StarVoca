@@ -52,4 +52,14 @@ public class UserAccount {
     public void setGender(int gender) {
         this.gender = gender;
     }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "uid='" + uid + '\'' +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }
