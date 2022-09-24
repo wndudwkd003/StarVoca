@@ -3,20 +3,24 @@ package com.zynar.starvoca.info;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
@@ -25,6 +29,13 @@ import com.zynar.starvoca.login.LoginActivity;
 import com.zynar.starvoca.login.UserAccount;
 import com.zynar.starvoca.words.WordsItem;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +59,7 @@ public class InfoFragment extends Fragment{
         /* 로그인 타입을 메인 액티비티에서 받아옴 */
         String loginType = getArguments() != null ? getArguments().getString("loginType") : "";
 
+        /* 목록 리스트 */
         List<String> data = new ArrayList<>();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data);
@@ -56,31 +68,32 @@ public class InfoFragment extends Fragment{
         /* 내 정보 프래그먼트 탭 목록 */
         data.add("내 정보 수정");
         data.add("단어 슬롯 구매");
+        data.add("클라우드 백업");
         data.add("CSV 파일 관리");
         data.add("앱 환경설정");
         data.add("문의하기");
-        data.add("개인정보처리방침");
         data.add("로그인");
         if(loginType.equals("noLogin")) data.set(6, "로그인");
         else data.set(6, "로그아웃");
 
         adapter.notifyDataSetChanged();
 
-        mBinding.listMyinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 4) {
-                    inquiry();
-                } else if(i == 6) {
-                    String loginText = adapter.getItem(i);
-                    if(loginText.equals("로그아웃")) {
-                        logOut();
-                    } else {
-                        logIn();
-                    }
+        mBinding.listMyinfo.setOnItemClickListener((adapterView, view1, i, l) -> {
+            if (i == 0) {
+                if(loginType.equals("noLogin")) {
+                    Toast.makeText(requireContext(), "로그인 후 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(requireContext(), EditUserInfoActivity.class).putExtra("loginType", loginType));
                 }
-                else {
-                    startActivity(new Intent(requireContext(), MyinfoActivity.class).putExtra("list-pos", i));
+            }
+            else if (i == 5) {
+                inquiry();
+            } else if(i == 6) {
+                String loginText = adapter.getItem(i);
+                if(loginText.equals("로그아웃")) {
+                    logOut();
+                } else {
+                    logIn();
                 }
             }
         });
@@ -95,11 +108,20 @@ public class InfoFragment extends Fragment{
         List<WordsItem> list = db.wordsDao().getWordsItems();
 
         /* Info 프래그먼트의 유저 정보 세팅 */
+
+        /* 앱 내부 저장소에 있는 프로필 이미지를 불러옴 */
+        try {
+            File file = new File(requireContext().getFilesDir(), "UserProfile");
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            Glide.with(requireContext()).load(bitmap).into(mBinding.civProfile);
+        } catch (Exception e) {
+            Glide.with(requireContext()).load(R.drawable.ic_baseline_person_24).into(mBinding.civProfile);
+        }
+
         mBinding.tvNickname.setText(userAccount.getNickname());
         mBinding.tvId.setText(!userAccount.getEmail().equals("") ? userAccount.getEmail() : "비로그인");
         mBinding.tvMessage.setText(userAccount.getMessage());
         mBinding.tvWordsCnt.setText(list.size() + " / " + userAccount.getMaxCntWords());
-
     }
 
     private void logIn() {

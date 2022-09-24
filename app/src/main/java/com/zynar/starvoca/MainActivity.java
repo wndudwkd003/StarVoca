@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             UserAccount.getInstance().setMessage(message);
             UserAccount.getInstance().setMaxCntWords(maxCntWords);
 
-        } else if(loginType.equals("email")) {
+        } else if(loginType.equals("Email")) {
             /* 파이어베이스 이메일 로그인 하여 앱 실행 */
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             message = userAccount.getMessage();
             maxCntWords = userAccount.getMaxCntWords();
 
-            editor.putString("loginType", "email");
+            editor.putString("loginType", "Email");
         }
 
         /* 한번 진행 했기 때문에 오토 로그인 활성화 */

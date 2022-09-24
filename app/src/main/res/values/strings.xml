@@ -73,4 +73,5 @@
     <string name="save_email">이메일 저장</string>
     <string name="auto_login">자동 로그인</string>
     <string name="login">로그인</string>
+    <string name="change_profile">프로필 사진 변경</string>
 </resources>

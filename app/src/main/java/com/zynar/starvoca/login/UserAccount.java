@@ -1,12 +1,14 @@
 package com.zynar.starvoca.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class UserAccount {
     private String uid;
     private String email;
     private String nickname;
     private int gender;
     private String message;
-    private int cntWords;
     private int maxCntWords;
 
     public UserAccount() {}
@@ -82,5 +84,19 @@ public class UserAccount {
                 ", nickname='" + nickname + '\'' +
                 ", gender=" + gender +
                 '}';
+    }
+
+    public void setPreferences(Context context) {
+        SharedPreferences sp = context.getSharedPreferences("userShared", 0);
+        SharedPreferences.Editor editor = sp.edit();
+
+        /* 불러온 정보 preferences 저장 */
+        editor.putString("uid", uid);
+        editor.putString("email", email);
+        editor.putString("nickname", nickname);
+        editor.putInt("gender", gender);
+        editor.putString("message", message);
+        editor.putInt("maxCntWords", maxCntWords);
+        editor.apply();
     }
 }

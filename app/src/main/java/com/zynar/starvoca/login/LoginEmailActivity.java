@@ -99,7 +99,7 @@ public class LoginEmailActivity extends AppCompatActivity {
 
                                     /* 로그인 타입 Intent 전달 및 메인 액티비티 이동 */
                                     Intent intent = new Intent(LoginEmailActivity.this, MainActivity.class);
-                                    intent.putExtra("loginType", "email");
+                                    intent.putExtra("loginType", "Email");
                                     startActivity(intent);
 
                                     /* 로그인 선택 액티비티 제거 */

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         if(autoLogin) {
             if(loginType.equals("noLogin")) {
                 noLogin();
-            } else if(loginType.equals("email")) {
+            } else if(loginType.equals("Email")) {
                 autoEmailLogin();
             }
         }
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             /* 로그인 타입 Intent 전달 및 메인 액티비티 이동 */
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("loginType", "email");
+                            intent.putExtra("loginType", "Email");
                             startActivity(intent);
 
                             // 로그인 액티비티 제거
