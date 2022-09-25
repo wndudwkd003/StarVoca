@@ -57,4 +57,15 @@ public class VocaItem {
     public void setFavorites(int favorites) {
         this.favorites = favorites;
     }
+
+    @Override
+    public String toString() {
+        return "VocaItem{" +
+                "id=" + id +
+                ", voca='" + voca + '\'' +
+                ", explanation='" + explanation + '\'' +
+                ", wordsId='" + wordsId + '\'' +
+                ", favorites=" + favorites +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.zynar.starvoca.info;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -82,15 +84,31 @@ public class InfoFragment extends Fragment{
 
         mBinding.listMyinfo.setOnItemClickListener((adapterView, view1, i, l) -> {
             if (i == 0) {
+                /* 내 정보 수정 */
                 if(loginType.equals("noLogin")) {
                     Toast.makeText(requireContext(), "로그인 후 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     startActivity(new Intent(requireContext(), EditUserInfoActivity.class).putExtra("loginType", loginType));
                 }
+            }else if (i == 3) {
+                /* CSV 파일 관리 */
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("CSV 파일 관리");
+                String[] arr = {"내 기기에서 불러오기", "단어장 내보내기", "CSV 파일이란?"};
+                builder.setItems(arr, (dialogInterface, i1) -> {
+                    if(i1 == 0) {
+                        startActivity(new Intent(requireContext(), CsvLoadActivity.class));
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
             else if (i == 5) {
+                /* 문의하기 */
                 inquiry();
             } else if(i == 6) {
+                /* 로그인, 로그아웃 */
                 String loginText = adapter.getItem(i);
                 if(loginText.equals("로그아웃")) {
                     logOut();

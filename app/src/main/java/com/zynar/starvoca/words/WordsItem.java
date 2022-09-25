@@ -73,4 +73,17 @@ public class WordsItem {
     public void setCondition(int condition) {
         this.condition = condition;
     }
+
+    @Override
+    public String toString() {
+        return "WordsItem{" +
+                "id=" + id +
+                ", word='" + word + '\'' +
+                ", meaning='" + meaning + '\'' +
+                ", pronunciation='" + pronunciation + '\'' +
+                ", memo='" + memo + '\'' +
+                ", language='" + language + '\'' +
+                ", condition=" + condition +
+                '}';
+    }
 }
