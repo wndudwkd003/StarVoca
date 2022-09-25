@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,13 +42,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class InfoFragment extends Fragment{
-    private UserAccount userAccount = UserAccount.getInstance();
+    private final UserAccount userAccount = UserAccount.getInstance();
     private FragmentInfoBinding mBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mBinding = FragmentInfoBinding.inflate(inflater, container, false);
         return mBinding.getRoot();
@@ -149,14 +148,14 @@ public class InfoFragment extends Fragment{
         /* 로그인 */
 
         /* 자동 로그인 해제 */
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userShared", 0);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("userShared", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("autoLogin", false);
         editor.apply();
 
         Intent intent = new Intent(requireContext(), LoginActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
     }
 
     private void logOut() {
@@ -170,7 +169,7 @@ public class InfoFragment extends Fragment{
             requireContext().deleteFile("UserProfile");
         }
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userShared", 0);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("userShared", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("autoLogin", false);
         editor.putString("loginType", null);
@@ -185,7 +184,7 @@ public class InfoFragment extends Fragment{
 
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
     }
 
     private void inquiry() {
