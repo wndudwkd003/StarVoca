@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private String setUserAccount() {
         /* 로그인 타입을 Intent를 통해서 받아옴 */
         String loginType = getIntent().getStringExtra("loginType");
