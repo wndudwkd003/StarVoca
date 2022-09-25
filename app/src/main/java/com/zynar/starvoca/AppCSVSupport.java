@@ -16,22 +16,26 @@ import java.util.List;
 
 public class AppCSVSupport {
 
-    /* CSV 파일 SETTING */
-    public void setCsv(Context context) {
+    private VocaItem vocaItem = new VocaItem();
+    private List<WordsItem> wordsItems = new ArrayList<>();
+
+    /* CSV 파일 SETTING, return 값으로 불러오지 못한 단어들의 수를 반환 */
+    public int setCsv(Context context) {
+
+        /* 파일 불러옴 */
         InputStream is = context.getResources().openRawResource(R.raw.data);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, StandardCharsets.UTF_8)
         );
 
-        String line = "";
-        VocaItem vocaItem = new VocaItem();
-        List<WordsItem> wordsItems = new ArrayList<>();
+        String line;
+        int cnt = 0, passCnt = 0;
 
-        int cnt = 0;
         try {
             while ((line=reader.readLine()) != null) {
-                Log.d("test", "test");
-                String[] tokens = line.split(",");
+
+                /* ,을 기준으로 배열에 저장 */
+                String[] tokens = line.split(",", -1);
 
                 /* 단어장 정보 설정 */
                 if(cnt==1) {
@@ -49,21 +53,37 @@ public class AppCSVSupport {
                     wordsItem.setMemo(tokens[3]);
                     wordsItem.setLanguage(tokens[4]);
 
+                    /* 단어의 이름과 의미가 공백인지 체크 공백이면 건너뜀 */
+                    if(wordsItem.getWord().isEmpty() || wordsItem.getMeaning().isEmpty()) {
+                        passCnt++;
+                        continue;
+                    }
+
                     /* wordsItems add */
                     wordsItems.add(wordsItem);
                 }
-
                 cnt++;
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("test", e.getMessage() + "\n" + line);
         }
 
-        Log.d("test", vocaItem.toString());
-        for(WordsItem wordsItem : wordsItems) {
-            Log.d("test", wordsItem.toString());
-        }
+        return passCnt;
+    }
 
+    public VocaItem getVocaItem() {
+        return vocaItem;
+    }
+
+    public void setVocaItem(VocaItem vocaItem) {
+        this.vocaItem = vocaItem;
+    }
+
+    public List<WordsItem> getWordsItems() {
+        return wordsItems;
+    }
+
+    public void setWordsItems(List<WordsItem> wordsItems) {
+        this.wordsItems = wordsItems;
     }
 }
