@@ -84,7 +84,7 @@ public class InfoFragment extends Fragment{
                 String[] arr = {"내 기기에서 불러오기", "단어장 내보내기", "CSV 파일이란?"};
                 builder.setItems(arr, (dialogInterface, i1) -> {
                     if(i1 == 0) {
-                        startActivity(new Intent(requireContext(), CsvLoadActivity.class));
+                        startActivity(new Intent(requireContext(), CsvManagementActivity.class));
                     }
                 });
 

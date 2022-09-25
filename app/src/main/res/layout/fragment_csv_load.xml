@@ -1,31 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            app:title="내 기기에서 불러오기"
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:titleTextAppearance="?attr/textAppearanceSubtitle1">
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".info.CsvLoadFragment">
 
     <LinearLayout
         android:padding="10dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -74,5 +56,4 @@
 
     </LinearLayout>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
