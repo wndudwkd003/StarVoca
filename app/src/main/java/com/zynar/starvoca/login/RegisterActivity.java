@@ -1,16 +1,12 @@
 package com.zynar.starvoca.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.ActivityRegisterBinding;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                 firebaseAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(RegisterActivity.this, task -> {
                     if(task.isSuccessful()) {
                         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                        UserAccount userAccount = new UserAccount(firebaseUser.getUid(), email, nickname, gender, "", 100);
+                        UserAccount userAccount = new UserAccount(Objects.requireNonNull(firebaseUser).getUid(), email, nickname, gender, "", 100);
 
                         // 이메일 인증 보냄
                         firebaseUser.sendEmailVerification().addOnCompleteListener(task1 -> {
@@ -73,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(RegisterActivity.this, R.string.fail_register, Toast.LENGTH_SHORT).show();
-                        Log.d("test", task.getException().toString());
+                        Log.d("test", Objects.requireNonNull(task.getException()).toString());
                     }
                 });
             }

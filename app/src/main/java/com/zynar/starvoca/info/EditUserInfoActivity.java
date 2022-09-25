@@ -1,12 +1,5 @@
 package com.zynar.starvoca.info;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -16,19 +9,21 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.exifinterface.media.ExifInterface;
+
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +44,6 @@ import com.zynar.starvoca.login.UserAccount;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,14 +66,10 @@ public class EditUserInfoActivity extends AppCompatActivity {
         editSetInit();
 
         /* 프로필 사진 변경 */
-        mBinding.tvChangeProfile.setOnClickListener(v -> {
-            changeProfile();
-        });
+        mBinding.tvChangeProfile.setOnClickListener(v -> changeProfile());
 
         /* 입력된 정보를 업데이트 */
-        mBinding.tvSave.setOnClickListener(v -> {
-            updateUserInfo();
-        });
+        mBinding.tvSave.setOnClickListener(v -> updateUserInfo());
 
         /* 프로필 사진 초기화 */
         mBinding.tvResetProfile.setOnClickListener(v -> {
@@ -88,14 +78,10 @@ public class EditUserInfoActivity extends AppCompatActivity {
         });
 
         /* 회원 탈퇴 */
-        mBinding.tvUserDelete.setOnClickListener(v -> {
-            deleteUser();
-        });
+        mBinding.tvUserDelete.setOnClickListener(v -> deleteUser());
 
         /* 비밀번호 변경 */
-        mBinding.tvChangePw.setOnClickListener(v -> {
-            changePW();
-        });
+        mBinding.tvChangePw.setOnClickListener(v -> changePW());
     }
 
     private void changePW() {
@@ -136,21 +122,20 @@ public class EditUserInfoActivity extends AppCompatActivity {
             AuthCredential credential = EmailAuthProvider.getCredential(userAccount.getEmail(), nowPW);
 
             /* 재인증 로그인 */
-            firebaseUser.reauthenticate(credential).addOnCompleteListener(task -> {
-                if(task.isSuccessful()) {
+            if (firebaseUser != null) {
+                firebaseUser.reauthenticate(credential).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
 
-                    Dialog dialog1 = new Dialog(this);
-                    /* 다이얼로그 데이터 바인딩 */
-                    CustomQuestionDialogBinding dialog1Binding = CustomQuestionDialogBinding.inflate(getLayoutInflater());
-                    dialog1.setContentView(dialog1Binding.getRoot());
+                        Dialog dialog1 = new Dialog(this);
+                        /* 다이얼로그 데이터 바인딩 */
+                        CustomQuestionDialogBinding dialog1Binding = CustomQuestionDialogBinding.inflate(getLayoutInflater());
+                        dialog1.setContentView(dialog1Binding.getRoot());
 
-                    dialog1Binding.tvTitle.setText("정말로 변경하시겠습니까?");
-                    dialog1Binding.tvContent.setText("확인을 누르시면 다시 로그인합니다.");
+                        dialog1Binding.tvTitle.setText("정말로 변경하시겠습니까?");
+                        dialog1Binding.tvContent.setText("확인을 누르시면 다시 로그인합니다.");
 
-                    /* 확인 버튼 */
-                    dialog1Binding.btnSave.setOnClickListener(v -> {
-
-                        firebaseUser.updatePassword(changePW).addOnCompleteListener(task1 -> {
+                        /* 확인 버튼 */
+                        dialog1Binding.btnSave.setOnClickListener(v -> firebaseUser.updatePassword(changePW).addOnCompleteListener(task1 -> {
                             if(task1.isSuccessful()) {
                                 /* pw 변경 완료 */
                                 Toast.makeText(EditUserInfoActivity.this, "비밀번호가 변경되었습니다.", Toast.LENGTH_SHORT).show();
@@ -164,26 +149,21 @@ public class EditUserInfoActivity extends AppCompatActivity {
                                 dialog1.cancel();
                                 dialog.cancel();
                             }
-                        });
+                        }));
 
-                    });
+                        /* 취소 버튼 */
+                        dialog1Binding.btnCancel.setOnClickListener(v -> dialog1.onBackPressed());
 
-                    /* 취소 버튼 */
-                    dialog1Binding.btnCancel.setOnClickListener(v -> {
-                        dialog1.onBackPressed();
-                    });
-
-                    dialog1.show();
-                }
-                else Toast.makeText(EditUserInfoActivity.this, "패스워드를 정확하게 입력하세요.", Toast.LENGTH_SHORT).show();
-            });
+                        dialog1.show();
+                    }
+                    else Toast.makeText(EditUserInfoActivity.this, "패스워드를 정확하게 입력하세요.", Toast.LENGTH_SHORT).show();
+                });
+            }
 
         });
 
         /* 취소 버튼 */
-        dialogBinding.btnCancel.setOnClickListener(v ->{
-            dialog.onBackPressed();
-        });
+        dialogBinding.btnCancel.setOnClickListener(v -> dialog.onBackPressed());
 
         dialog.show();
     }
@@ -213,73 +193,71 @@ public class EditUserInfoActivity extends AppCompatActivity {
             AuthCredential credential = EmailAuthProvider.getCredential(userAccount.getEmail(), pw);
 
             /* 재인증 로그인 */
-            firebaseUser.reauthenticate(credential).addOnCompleteListener(task -> {
-                if(task.isSuccessful()) {
+            if (firebaseUser != null) {
+                firebaseUser.reauthenticate(credential).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()) {
 
-                    Dialog dialog1 = new Dialog(this);
-                    /* 다이얼로그 데이터 바인딩 */
-                    CustomQuestionDialogBinding dialog1Binding = CustomQuestionDialogBinding.inflate(getLayoutInflater());
-                    dialog1.setContentView(dialog1Binding.getRoot());
+                        Dialog dialog1 = new Dialog(this);
+                        /* 다이얼로그 데이터 바인딩 */
+                        CustomQuestionDialogBinding dialog1Binding = CustomQuestionDialogBinding.inflate(getLayoutInflater());
+                        dialog1.setContentView(dialog1Binding.getRoot());
 
-                    dialog1Binding.tvTitle.setText("정말로 탈퇴하시겠습니까?");
-                    dialog1Binding.tvContent.setText("회원 탈퇴하셔도 비로그인으로 앱을 사용하실 수 있습니다.");
+                        dialog1Binding.tvTitle.setText("정말로 탈퇴하시겠습니까?");
+                        dialog1Binding.tvContent.setText("회원 탈퇴하셔도 비로그인으로 앱을 사용하실 수 있습니다.");
 
-                    /* 확인 버튼 */
-                    dialog1Binding.btnSave.setOnClickListener(v -> {
-                        /* 데이터 베이스 삭제 */
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                        databaseReference.child("UserAccount").child(getIntent().getStringExtra("loginType")).child(userAccount.getUid()).removeValue();
+                        /* 확인 버튼 */
+                        dialog1Binding.btnSave.setOnClickListener(v -> {
+                            /* 데이터 베이스 삭제 */
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                            databaseReference.child("UserAccount").child(getIntent().getStringExtra("loginType")).child(userAccount.getUid()).removeValue();
 
-                        /* 유저 인증 데이터 삭제 */
-                        firebaseUser.delete();
+                            /* 유저 인증 데이터 삭제 */
+                            firebaseUser.delete();
 
-                        /* 유저 프로필 사진 삭제 */
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                        storageReference.child("UserAccount").child(getIntent().getStringExtra("loginType")).child(userAccount.getUid()).delete();
+                            /* 유저 프로필 사진 삭제 */
+                            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                            storageReference.child("UserAccount").child(getIntent().getStringExtra("loginType")).child(userAccount.getUid()).delete();
 
-                        /* 탈퇴 완료 */
-                        Toast.makeText(EditUserInfoActivity.this, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                            /* 탈퇴 완료 */
+                            Toast.makeText(EditUserInfoActivity.this, "탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
-                        /* 사용자 정보 제거 */
-                        File file = new File(getFilesDir(), "UserProfile");
-                        if(file.isFile()) {
-                            deleteFile("UserProfile");
-                        }
+                            /* 사용자 정보 제거 */
+                            File file = new File(getFilesDir(), "UserProfile");
+                            if(file.isFile()) {
+                                deleteFile("UserProfile");
+                            }
 
-                        SharedPreferences sharedPreferences = getSharedPreferences("userShared", 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("autoLogin", false);
-                        editor.putString("loginType", null);
-                        editor.putString("uid", null);
-                        editor.putString("email", null);
-                        editor.putString("pw", null);
-                        editor.putString("nickname", null);
-                        editor.apply();
+                            SharedPreferences sharedPreferences = getSharedPreferences("userShared", 0);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean("autoLogin", false);
+                            editor.putString("loginType", null);
+                            editor.putString("uid", null);
+                            editor.putString("email", null);
+                            editor.putString("pw", null);
+                            editor.putString("nickname", null);
+                            editor.apply();
 
-                        /* 앱 재시작 */
-                        PackageManager packageManager = getPackageManager();
-                        Intent intent = packageManager.getLaunchIntentForPackage(getPackageName());
-                        ComponentName componentName = intent.getComponent();
-                        Intent mainIntent = Intent.makeRestartActivityTask(componentName);
-                        startActivity(mainIntent);
-                        System.exit(0);
-                    });
+                            /* 앱 재시작 */
+                            PackageManager packageManager = getPackageManager();
+                            Intent intent = packageManager.getLaunchIntentForPackage(getPackageName());
+                            ComponentName componentName = intent.getComponent();
+                            Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+                            startActivity(mainIntent);
+                            System.exit(0);
+                        });
 
-                    /* 취소 버튼 */
-                    dialog1Binding.btnCancel.setOnClickListener(v -> {
-                        dialog1.onBackPressed();
-                    });
+                        /* 취소 버튼 */
+                        dialog1Binding.btnCancel.setOnClickListener(v -> dialog1.onBackPressed());
 
-                    dialog1.show();
-                }
-                else Toast.makeText(EditUserInfoActivity.this, "패스워드를 정확하게 입력하세요.", Toast.LENGTH_SHORT).show();
-            });
+                        dialog1.show();
+                    }
+                    else Toast.makeText(EditUserInfoActivity.this, "패스워드를 정확하게 입력하세요.", Toast.LENGTH_SHORT).show();
+                });
+            }
 
         });
 
-        dialogBinding.btnCancel.setOnClickListener(v -> {
-            dialog.onBackPressed();
-        });
+        dialogBinding.btnCancel.setOnClickListener(v -> dialog.onBackPressed());
 
         dialog.show();
     }
@@ -340,8 +318,14 @@ public class EditUserInfoActivity extends AppCompatActivity {
 
                         /* 실제 경로를 받아옴 */
                         String filePath = PathUtil.getPath(this, uri);
-                        ExifInterface oldExif = new ExifInterface(filePath);
-                        String exifOrientation  = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION);
+                        ExifInterface oldExif = null;
+                        if (filePath != null) {
+                            oldExif = new ExifInterface(filePath);
+                        }
+                        String exifOrientation  = null;
+                        if (oldExif != null) {
+                            exifOrientation = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION);
+                        }
 
                         /* 비트맵을 압축하는 과정에서 Exif 정보가 날아감 */
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);

@@ -1,17 +1,16 @@
 package com.zynar.starvoca.vocabulary;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
-import com.zynar.starvoca.words.WordsDao;
 import com.zynar.starvoca.words.WordsItem;
 import com.zynar.starvoca.words.WordsItemDecoration;
 import com.zynar.starvoca.words.WordsRVAdapter;

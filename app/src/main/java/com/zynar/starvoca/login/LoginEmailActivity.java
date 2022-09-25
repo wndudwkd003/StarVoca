@@ -1,31 +1,22 @@
 package com.zynar.starvoca.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.MainActivity;
 import com.zynar.starvoca.R;
-import com.zynar.starvoca.databinding.ActivityLoginBinding;
 import com.zynar.starvoca.databinding.ActivityLoginEmailBinding;
-import com.zynar.starvoca.words.WordsItem;
 
-import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,7 +61,7 @@ public class LoginEmailActivity extends AppCompatActivity {
                 firebaseAuth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(task -> {
                     if(task.isSuccessful()) {
                         /* 파이어베이스 로그인 계정 일치하고 이메일 인증 까지 완료 */
-                        if(firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        if(Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()) {
 
                             // 로그인 성공
                             Toast.makeText(this, R.string.complete_login, Toast.LENGTH_SHORT).show();
@@ -90,7 +81,7 @@ public class LoginEmailActivity extends AppCompatActivity {
                                     /* 불러온 데이터를 UserAccount 대입 */
                                     UserAccount userAccount = task1.getResult().getValue(UserAccount.class);
 
-                                    UserAccount.getInstance().setUid(userAccount.getUid());
+                                    UserAccount.getInstance().setUid(Objects.requireNonNull(userAccount).getUid());
                                     UserAccount.getInstance().setEmail(userAccount.getEmail());
                                     UserAccount.getInstance().setNickname(userAccount.getNickname());
                                     UserAccount.getInstance().setGender(userAccount.getGender());

@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                 android:layout_marginTop="18dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="닉네임"
+                android:text="@string/nickname"
                 android:textColor="#1B1B1B"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -52,7 +53,7 @@
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
-                android:text="아이디"
+                android:text="@string/id"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname"
                 app:layout_constraintStart_toStartOf="@id/tv_nickname"
                 />
@@ -63,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="상태 메시지"
+                android:text="@string/message"
                 android:textColor="#555555"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -79,7 +80,7 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/tv_nickname"
                 app:layout_constraintTop_toBottomOf="@id/tv_message"
-                android:text="내 단어"
+                android:text="@string/words"
                 android:textColor="#555555"
                 android:textSize="13sp"
                 android:textStyle="bold" />

@@ -1,19 +1,14 @@
 package com.zynar.starvoca.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.zynar.starvoca.MainActivity;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.ActivityLoginBinding;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,9 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /* 이메일 로그인 */
-        mBinding.btnLoginEmail.setOnClickListener(v -> {
-            emailLogin();
-        });
+        mBinding.btnLoginEmail.setOnClickListener(v -> emailLogin());
 
         /* 이메일 가입 */
         mBinding.tvRegisterEmail.setOnClickListener(v -> {
@@ -64,9 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         /* 로그인 없이 앱 시작 */
-        mBinding.tvNoLogin.setOnClickListener(v ->{
-            noLogin();
-        });
+        mBinding.tvNoLogin.setOnClickListener(v -> noLogin());
 
     }
 
@@ -94,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithEmailAndPassword(email, pw).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
-                if(firebaseAuth.getCurrentUser().isEmailVerified()) {
+                if(Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()) {
                     // 로그인 성공
                     Toast.makeText(this, R.string.complete_login, Toast.LENGTH_SHORT).show();
 
@@ -106,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                             /* 불러온 데이터를 UserAccount 대입 */
                             UserAccount userAccount = task1.getResult().getValue(UserAccount.class);
 
-                            UserAccount.getInstance().setUid(userAccount.getUid());
+                            UserAccount.getInstance().setUid(Objects.requireNonNull(userAccount).getUid());
                             UserAccount.getInstance().setEmail(userAccount.getEmail());
                             UserAccount.getInstance().setNickname(userAccount.getNickname());
                             UserAccount.getInstance().setGender(userAccount.getGender());
