@@ -50,7 +50,7 @@
         <TextView
             android:fontFamily="@font/monoplex_medium"
             android:id="@+id/tv_reset_profile"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:textSize="11sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -204,6 +204,7 @@
         </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="5dp"
             android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -229,6 +230,17 @@
                 android:fontFamily="@font/monoplex_medium"
                 android:textColor="@color/gray"
                 android:text="회원 탈퇴"/>
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/tv_change_pw"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/tv_info"
+                android:textSize="10sp"
+                android:fontFamily="@font/monoplex_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:text="* 비밀번호 변경은 자동 저장됩니다."/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

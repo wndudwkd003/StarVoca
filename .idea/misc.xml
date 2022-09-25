@@ -53,17 +53,20 @@
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_edit_user_info.xml" value="0.4375" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_login_email.xml" value="0.37353433835845895" />
-        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_main.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_main.xml" value="0.4388609715242881" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_myinfo.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_register.xml" value="0.3126491646778043" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_voca_add.xml" value="0.5" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_voca_read.xml" value="0.2621580547112462" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/activity_words_add.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_change_pw_dialog.xml" value="0.43854166666666666" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_dialog_words_chb.xml" value="0.5" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_list_chb_voca_item.xml" value="0.45471014492753625" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_list_voca_item.xml" value="0.5" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_list_words_item.xml" value="0.5" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_question_dialog.xml" value="0.43854166666666666" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_radio_button.xml" value="0.5536458333333333" />
+        <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/custom_user_delete_dialog.xml" value="0.43854166666666666" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/dialog_edit.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_buy_slot.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/ymail/AndroidStudioProjects/StarVoca/app/src/main/res/layout/fragment_community.xml" value="0.5536458333333333" />
