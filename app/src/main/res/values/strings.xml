@@ -74,4 +74,5 @@
     <string name="auto_login">자동 로그인</string>
     <string name="login">로그인</string>
     <string name="change_profile">프로필 사진 변경</string>
+    <string name="reset_profile">프로필 사진 초기화</string>
 </resources>

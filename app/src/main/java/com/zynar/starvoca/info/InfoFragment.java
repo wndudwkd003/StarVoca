@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -33,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
@@ -104,20 +106,21 @@ public class InfoFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
+        /* 내 단어 갯수 가져옴 */
         AppDatabase db = AppDatabase.getInstance(requireContext());
         List<WordsItem> list = db.wordsDao().getWordsItems();
 
         /* Info 프래그먼트의 유저 정보 세팅 */
 
         /* 앱 내부 저장소에 있는 프로필 이미지를 불러옴 */
-        try {
-            File file = new File(requireContext().getFilesDir(), "UserProfile");
+        File file = new File(requireContext().getFilesDir(), "UserProfile");
+        if(file.isFile()) {
             Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-            Glide.with(requireContext()).load(bitmap).into(mBinding.civProfile);
-        } catch (Exception e) {
-            Glide.with(requireContext()).load(R.drawable.ic_baseline_person_24).into(mBinding.civProfile);
-        }
 
+            Glide.with(requireContext()).load(bitmap).into(mBinding.civProfile);
+        } else Glide.with(requireContext()).load(R.drawable.ic_baseline_person_24).into(mBinding.civProfile);
+
+        /* 유저 닉네임 등등 설정 */
         mBinding.tvNickname.setText(userAccount.getNickname());
         mBinding.tvId.setText(!userAccount.getEmail().equals("") ? userAccount.getEmail() : "비로그인");
         mBinding.tvMessage.setText(userAccount.getMessage());
@@ -141,7 +144,14 @@ public class InfoFragment extends Fragment{
     private void logOut() {
         /* 로그아웃 */
 
+
+
         /* 사용자 정보 제거 */
+        File file = new File(requireContext().getFilesDir(), "UserProfile");
+        if(file.isFile()) {
+            requireContext().deleteFile("UserProfile");
+        }
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userShared", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("autoLogin", false);
@@ -167,7 +177,7 @@ public class InfoFragment extends Fragment{
         String[] address = {"onheaven003@gmail.com"};
         email.putExtra(Intent.EXTRA_EMAIL, address);
         email.putExtra(Intent.EXTRA_SUBJECT, "[Star-Voca 문의사항] 제목없음");
-        email.putExtra(Intent.EXTRA_TEXT, "StarVoca 문의하기 입니다.\n상세히 작성해주시면 신속한 처리가 가능합니다.\n\n닉네임: \n날짜: "+time+"\n내용: ");
+        email.putExtra(Intent.EXTRA_TEXT, "StarVoca 문의하기 입니다.\n상세히 작성해주시면 신속한 처리가 가능합니다.\n\nuid: "+userAccount.getUid()+"\n닉네임: \n날짜: "+time+"\n내용: ");
         startActivity(email);
     }
 

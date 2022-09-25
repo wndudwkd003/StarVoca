@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,34 +22,26 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.zynar.starvoca.PathUtil;
+import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.ActivityEditUserInfoBinding;
 import com.zynar.starvoca.login.UserAccount;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EditUserInfoActivity extends AppCompatActivity {
 
+    private Uri uri = null;
     private ActivityEditUserInfoBinding mBinding;
-
-    /* 캐시 */
+    private boolean resetFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +63,10 @@ public class EditUserInfoActivity extends AppCompatActivity {
             updateUserInfo();
         });
 
+        mBinding.tvResetProfile.setOnClickListener(v -> {
+            resetFlag = true;
+            Glide.with(EditUserInfoActivity.this).load(R.drawable.ic_baseline_person_24).into(mBinding.civProfile);
+        });
     }
 
     private void changeProfile() {
@@ -86,17 +81,8 @@ public class EditUserInfoActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if(result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        Uri uri = result.getData().getData();
-                        try (FileOutputStream fos = openFileOutput("UserProfile", Context.MODE_PRIVATE)) {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        File file = new File(getFilesDir(), "UserProfile");
-                        Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-                        Glide.with(EditUserInfoActivity.this).load(bitmap).into(mBinding.civProfile);
+                        uri = result.getData().getData();
+                        Glide.with(EditUserInfoActivity.this).load(uri).into(mBinding.civProfile);
                     }
                 }
             });
@@ -119,6 +105,53 @@ public class EditUserInfoActivity extends AppCompatActivity {
             UserAccount.getInstance().setMessage(message);
             UserAccount.getInstance().setGender(gender);
 
+            if(resetFlag) {
+                /* 이미지 정보 제거 */
+                deleteFile("UserProfile");
+                StorageReference sgRef = FirebaseStorage.getInstance().getReference();
+                sgRef.child("UserAccount")
+                        .child(getIntent().getStringExtra("loginType"))
+                        .child(UserAccount.getInstance().getUid())
+                        .child("ProfileImage").delete();
+
+            } else {
+                /* 선택한 사진을 비트맵 -> 파일 변환 후 저장 */
+                try {
+                    if(uri != null) {
+                        FileOutputStream fos = openFileOutput("UserProfile", Context.MODE_PRIVATE);
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+
+                        /* 실제 경로를 받아옴 */
+                        String filePath = PathUtil.getPath(this, uri);
+                        ExifInterface oldExif = new ExifInterface(filePath);
+                        String exifOrientation  = oldExif.getAttribute(ExifInterface.TAG_ORIENTATION);
+
+                        /* 비트맵을 압축하는 과정에서 Exif 정보가 날아감 */
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
+                        /* 원본 Exif 제대로 복사함 */
+                        ExifInterface newExif = new ExifInterface(getFilesDir()+"/UserProfile");
+                        newExif.setAttribute(ExifInterface.TAG_ORIENTATION, exifOrientation);
+                        newExif.saveAttributes();
+
+                        /* 파이어베이스 이미지 업로드 */
+                        StorageReference sgRef = FirebaseStorage.getInstance().getReference();
+                        sgRef.child("UserAccount")
+                                .child(getIntent().getStringExtra("loginType"))
+                                .child(UserAccount.getInstance().getUid())
+                                .child("ProfileImage")
+                                .putFile(uri).addOnCompleteListener(task -> {
+                                    if(!task.isSuccessful()) {
+                                        Toast.makeText(this, "서버가 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                    Log.d("test", e.getMessage());
+                }
+            }
+
             /* 파이어베이스 업데이트 */
             DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
             dbRef.child("UserAccount")
@@ -133,12 +166,25 @@ public class EditUserInfoActivity extends AppCompatActivity {
                             Toast.makeText(this, "정보가 업데이트 되었습니다.", Toast.LENGTH_SHORT).show();
                             onBackPressed();
                         }
+                        else {
+                            Toast.makeText(this, "서버가 원활하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
             });
         }
     }
 
+
     private void editSetInit() {
         /* 유저의 정보를 Edit Text 저장 */
+
+        File file = new File(getFilesDir(), "UserProfile");
+        if(file.isFile()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            Glide.with(EditUserInfoActivity.this).load(bitmap).into(mBinding.civProfile);
+        } else {
+            Glide.with(EditUserInfoActivity.this).load(R.drawable.ic_baseline_person_24).into(mBinding.civProfile);
+        }
+
         UserAccount userAccount = UserAccount.getInstance();
         mBinding.etNickname.setText(userAccount.getNickname());
         mBinding.etMessage.setText(userAccount.getMessage());

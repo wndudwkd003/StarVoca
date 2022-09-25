@@ -1,16 +1,35 @@
 package com.zynar.starvoca;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.NotNull;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.zynar.starvoca.community.CommunityFragment;
 import com.zynar.starvoca.databinding.ActivityMainBinding;
 import com.zynar.starvoca.info.InfoFragment;
@@ -19,6 +38,17 @@ import com.zynar.starvoca.login.UserAccount;
 import com.zynar.starvoca.vocabulary.VocaMainFragment;
 import com.zynar.starvoca.words.WordsMainFragment;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private final CommunityFragment communityFragment = new CommunityFragment();
     private final InfoFragment infoFragment = new InfoFragment();
 
+    // 클래스를 선언
+    private PermissionSupport permission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         View view = mBinding.getRoot();
         setContentView(view);
 
+        /* 권한 요청 */
+        
         /* 매인 엑티비티 시작 전 로그인 정보 설정 */
         String loginType = setUserAccount();
 
@@ -105,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private String setUserAccount() {
         /* 로그인 타입을 Intent를 통해서 받아옴 */
         String loginType = getIntent().getStringExtra("loginType");
@@ -138,9 +176,6 @@ public class MainActivity extends AppCompatActivity {
             UserAccount.getInstance().setMaxCntWords(maxCntWords);
 
         } else if(loginType.equals("Email")) {
-            /* 파이어베이스 이메일 로그인 하여 앱 실행 */
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
             UserAccount userAccount = UserAccount.getInstance();
             uid = userAccount.getUid();
@@ -149,6 +184,35 @@ public class MainActivity extends AppCompatActivity {
             gender = userAccount.getGender();
             message = userAccount.getMessage();
             maxCntWords = userAccount.getMaxCntWords();
+
+
+            /* 파일이 있는지 확인 */
+            File file = new File(getFilesDir(), "UserProfile");
+            if(!file.isFile()) {
+                /* 파이어베이스 서버에서 프로필 이미지를 다운받음 */
+                try {
+                    /* 임시파일 생성 */
+                    File tempFile = File.createTempFile("images", "jpeg");
+                    StorageReference sgRef = FirebaseStorage.getInstance().getReference();
+                    sgRef.child("UserAccount")
+                            .child("Email")
+                            .child(userAccount.getUid())
+                            .child("ProfileImage").getFile(tempFile).addOnSuccessListener(taskSnapshot -> {
+
+                                try{
+                                    FileOutputStream fos = openFileOutput("UserProfile", Context.MODE_PRIVATE);
+                                    Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getPath());
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             editor.putString("loginType", "Email");
         }
