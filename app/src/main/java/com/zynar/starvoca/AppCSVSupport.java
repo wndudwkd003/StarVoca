@@ -30,7 +30,7 @@ public class AppCSVSupport {
         int cnt = 0;
         try {
             while ((line=reader.readLine()) != null) {
-
+                Log.d("test", "test");
                 String[] tokens = line.split(",");
 
                 /* 단어장 정보 설정 */
