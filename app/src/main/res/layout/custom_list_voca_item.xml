@@ -1,70 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_bg_gray_box"
-    android:paddingBottom="10dp">
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp"
+    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:contentPaddingBottom="15dp"
+    card_view:contentPaddingLeft="5dp"
+    card_view:contentPaddingRight="5dp"
+    card_view:contentPaddingTop="10dp"
+    >
 
-    <ToggleButton
-        android:id="@+id/tgb_favorites"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:textOn=""
-        android:textOff=""
-
-        android:backgroundTint="@color/gray"
-        android:background="@drawable/custon_tgb_favorites"
-        android:layout_marginRight="14dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_voca_count"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/custom_bg_input_box"
-        android:gravity="center"
-        android:text="0"
-        android:textSize="11sp"
-        android:layout_marginTop="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imb_edit"
-        android:paddingHorizontal="10dp"/>
 
-    <TextView
-        android:id="@+id/tv_voca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:text="단어장이 들어갈 자리"
-        android:textColor="#000000"
-        android:textSize="23sp"
+        >
+        <ToggleButton
+            android:id="@+id/tgb_favorites"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textOn=""
+            android:textOff=""
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:backgroundTint="@color/gray"
+            android:background="@drawable/custon_tgb_favorites"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:layout_marginTop="2dp"
-        android:id="@+id/tv_explanation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="설명이 들어갈 자리"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_voca"
-        app:layout_constraintTop_toBottomOf="@+id/tv_voca" />
+        <TextView
+            android:id="@+id/tv_voca_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/custom_bg_input_box"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="11sp"
+            android:layout_marginTop="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imb_edit"
+            android:paddingHorizontal="10dp"/>
+
+        <TextView
+            android:fontFamily="@font/monoplex_medium"
+            android:id="@+id/tv_voca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:text="단어장이 들어갈 자리"
+            android:textColor="#000000"
+            android:textSize="20sp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:paddingBottom="5dp"
+            android:fontFamily="@font/monoplex_medium"
+            android:id="@+id/tv_explanation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설명이 들어갈 자리"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_voca"
+            app:layout_constraintTop_toBottomOf="@+id/tv_voca" />
 
 
-    <ImageButton
-        android:id="@+id/imb_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/ic_keyboard_arrow_down"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tgb_favorites" />
+        <ImageButton
+            android:id="@+id/imb_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/ic_keyboard_arrow_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tgb_favorites" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -185,7 +185,7 @@ public class InfoFragment extends Fragment{
         String[] address = {"onheaven003@gmail.com"};
         email.putExtra(Intent.EXTRA_EMAIL, address);
         email.putExtra(Intent.EXTRA_SUBJECT, "[Star-Voca 문의사항] 제목없음");
-        email.putExtra(Intent.EXTRA_TEXT, "StarVoca 문의하기 입니다.\n상세히 작성해주시면 신속한 처리가 가능합니다.\n\nuid: "+userAccount.getUid()+"\n닉네임: \n날짜: "+time+"\n내용: ");
+        email.putExtra(Intent.EXTRA_TEXT, "StarVoca 문의하기 입니다.\n상세히 작성해주시면 신속한 처리가 가능합니다.\n\nuid: "+userAccount.getUid()+"\n닉네임: "+ userAccount.getNickname() +"\n날짜: "+time+"\n내용: ");
         startActivity(email);
     }
 

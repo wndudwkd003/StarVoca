@@ -1,14 +1,19 @@
 package com.zynar.starvoca;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -38,21 +43,20 @@ public class MainActivity extends AppCompatActivity {
     private final CommunityFragment communityFragment = new CommunityFragment();
     private final InfoFragment infoFragment = new InfoFragment();
 
-    // 클래스를 선언
-    private PermissionSupport permission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         /* 데이터 바인딩 */
-        // Binding
         com.zynar.starvoca.databinding.ActivityMainBinding mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
 
-        /* 권한 요청 */
-        
+        /* 권한 */
+        AppSupport appSupport = new AppSupport();
+        appSupport.setPermission(MainActivity.this);
+
         /* 매인 엑티비티 시작 전 로그인 정보 설정 */
         String loginType = setUserAccount();
 
@@ -205,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
 
         return loginType;
     }
+
 
 }
 

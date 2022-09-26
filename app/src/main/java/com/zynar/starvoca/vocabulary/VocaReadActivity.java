@@ -45,9 +45,6 @@ public class VocaReadActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv_words);
 
-        // 마진
-        WordsItemDecoration wordsItemDecoration = new WordsItemDecoration(this);
-        recyclerView.addItemDecoration(wordsItemDecoration);
     }
 
     @Override

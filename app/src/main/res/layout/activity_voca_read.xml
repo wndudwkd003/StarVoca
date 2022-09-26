@@ -20,19 +20,57 @@
             app:title="단어장"
             app:titleTextAppearance="?attr/textAppearanceSubtitle1" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F6F6F6"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AD"
+                tools:ignore="HardcodedText"
+                android:textSize="11sp"
+                android:padding="5dp"
+                />
 
+        </FrameLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
-        android:id="@+id/rv_words"
+    <androidx.core.widget.NestedScrollView
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/custom_list_words_item"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="5dp"
+                android:paddingHorizontal="5dp"
+                android:id="@+id/rv_words"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/custom_list_words_item"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@+id/tv_words_cnt_label"
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="#E4E4E4" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

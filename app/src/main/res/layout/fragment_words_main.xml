@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".words.WordsMainFragment"
-    >
-
+    tools:context=".words.WordsMainFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_words_add"
@@ -31,12 +29,36 @@
         android:textSize="30sp"
         android:layout_gravity="center"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:clipToPadding="false"
-        android:id="@+id/rv_words"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/custom_list_words_item" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingHorizontal="5dp"
+                android:clipToPadding="false"
+                android:id="@+id/rv_words"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/custom_list_words_item" />
+
+            <View
+                app:layout_constraintTop_toBottomOf="@+id/tv_words_cnt_label"
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="#E4E4E4" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

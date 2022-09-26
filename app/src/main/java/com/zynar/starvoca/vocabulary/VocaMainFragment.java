@@ -34,7 +34,6 @@ public class VocaMainFragment extends Fragment {
 
         // recycler view
         RecyclerView rv_voca = view.findViewById(R.id.rv_voca);
-        rv_voca.addItemDecoration(new WordsItemDecoration(requireContext()));
         rv_voca.setHasFixedSize(true);
 
         // adapter

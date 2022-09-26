@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.zynar.starvoca.AppSupport;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.ActivityCsvManagementBinding;
 
@@ -19,6 +20,10 @@ public class CsvManagementActivity extends AppCompatActivity {
 
         mBinding = ActivityCsvManagementBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
+
+        /* 권한 */
+        AppSupport appSupport = new AppSupport();
+        appSupport.setPermission(CsvManagementActivity.this);
 
         wordsCnt = getIntent().getIntExtra("wordsCnt", 0);
 
