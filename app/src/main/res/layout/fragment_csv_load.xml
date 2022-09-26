@@ -1,59 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".info.CsvLoadFragment">
+    tools:context=".info.CsvLoadFragment"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:focusable="true">
 
-    <LinearLayout
-        android:padding="10dp"
+    <TextView
+        android:fontFamily="@font/monoplex_medium"
+        android:gravity="center_horizontal"
+        android:text="먼저 아래 설명을 보시고\n올바른 형식의 CSV 파일을 불러와주세요"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/btn_load_csv"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/monoplex_medium"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="#BFBFBF"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CSV 파일 불러오기"/>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/tv_words_cnt_label"
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="1dp"
+        android:layout_marginVertical="30dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="#E4E4E4" />
 
-        <TextView
-            android:fontFamily="@font/monoplex_medium"
-            android:gravity="center_horizontal"
-            android:text="먼저 아래 설명을 보시고\n올바른 형식의 CSV 파일을 불러와주세요"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-        <Button
-            android:id="@+id/btn_load_csv"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/monoplex_medium"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="#BFBFBF"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CSV 파일 불러오기"/>
-
-        <View
-            app:layout_constraintTop_toBottomOf="@+id/tv_words_cnt_label"
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="30dp"
-            android:layout_marginHorizontal="20dp"
-            android:background="#E4E4E4" />
-
-        <TextView
-            android:id="@+id/tv_tmp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="여기 일단 표시"/>
+    <TextView
+        android:id="@+id/tv_tmp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여기 일단 표시"/>
 
 
 
 
 
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

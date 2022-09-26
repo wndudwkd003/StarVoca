@@ -16,23 +16,15 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:fontFamily="@font/monoplex_medium"
-            android:id="@+id/tv_condition"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/custom_bg_input_box"
-            android:gravity="center"
-            android:text="@string/words_condition_hard"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <CheckBox
+            android:checked="true"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:fontFamily="@font/monoplex_medium"
@@ -93,28 +85,6 @@
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/tv_word"
             app:layout_constraintTop_toBottomOf="@+id/tv_memo" />
-
-        <ImageButton
-
-            android:id="@+id/imb_play_sound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/ic_headphones"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imb_edit"
-            tools:ignore="ContentDescription" />
-
-        <ImageButton
-
-            android:id="@+id/imb_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/ic_keyboard_arrow_down"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_condition"
-            tools:ignore="ContentDescription" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

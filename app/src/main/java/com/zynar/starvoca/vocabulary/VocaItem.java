@@ -1,5 +1,9 @@
 package com.zynar.starvoca.vocabulary;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -17,6 +21,7 @@ public class VocaItem {
     private String wordsId;
     // 즐겨찾기
     private int favorites;
+
 
     public int getId() {
         return id;
@@ -68,4 +73,5 @@ public class VocaItem {
                 ", favorites=" + favorites +
                 '}';
     }
+
 }

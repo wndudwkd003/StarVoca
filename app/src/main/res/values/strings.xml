@@ -87,4 +87,6 @@
     <string name="changedPw2">변경될 비밀번호 확인</string>
     <string name="checkedPw">비밀번호는 대(소)문자, 특수문자를 포함한 6~18자로 구성되어야합니다.</string>
     <string name="changePW">비밀번호 변경하기</string>
+    <string name="voca_name">단어장 이름</string>
+    <string name="explanation">설명</string>
 </resources>

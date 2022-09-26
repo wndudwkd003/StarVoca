@@ -31,13 +31,6 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fl_main, fragment).commit();
-
-    }
-
     // 메인 5개 메뉴 프래그먼트
     private final VocaMainFragment vocaMainFragment = new VocaMainFragment();
     private final WordsMainFragment wordsMainFragment = new WordsMainFragment();

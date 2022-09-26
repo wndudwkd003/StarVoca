@@ -33,13 +33,15 @@ import java.util.Date;
 import java.util.List;
 
 public class InfoFragment extends Fragment{
-    private final UserAccount userAccount = UserAccount.getInstance();
+    private UserAccount userAccount = UserAccount.getInstance();
     private FragmentInfoBinding mBinding;
-
+    private List<WordsItem> list = new ArrayList<>();
+    private AppDatabase db;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         mBinding = FragmentInfoBinding.inflate(inflater, container, false);
+        db = AppDatabase.getInstance(requireContext());
+        list = db.wordsDao().getWordsItems();
         return mBinding.getRoot();
     }
 
@@ -84,7 +86,8 @@ public class InfoFragment extends Fragment{
                 String[] arr = {"내 기기에서 불러오기", "단어장 내보내기", "CSV 파일이란?"};
                 builder.setItems(arr, (dialogInterface, i1) -> {
                     if(i1 == 0) {
-                        startActivity(new Intent(requireContext(), CsvManagementActivity.class));
+                        startActivity(new Intent(requireContext(), CsvManagementActivity.class)
+                                .putExtra("wordsCnt", UserAccount.getInstance().getMaxCntWords()-list.size()));
                     }
                 });
 
@@ -112,10 +115,10 @@ public class InfoFragment extends Fragment{
         super.onResume();
 
         /* 내 단어 갯수 가져옴 */
-        AppDatabase db = AppDatabase.getInstance(requireContext());
-        List<WordsItem> list = db.wordsDao().getWordsItems();
+        list = db.wordsDao().getWordsItems();
 
         /* Info 프래그먼트의 유저 정보 세팅 */
+        userAccount = UserAccount.getInstance();
 
         /* 앱 내부 저장소에 있는 프로필 이미지를 불러옴 */
         File file = new File(requireContext().getFilesDir(), "UserProfile");

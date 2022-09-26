@@ -1,10 +1,14 @@
 package com.zynar.starvoca.words;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class WordsItem {
+public class WordsItem implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id = 0; // 고유 id
     private String word;    // 단어 타이틀
@@ -17,6 +21,28 @@ public class WordsItem {
     public WordsItem() {
     }
 
+
+    protected WordsItem(Parcel in) {
+        id = in.readInt();
+        word = in.readString();
+        meaning = in.readString();
+        pronunciation = in.readString();
+        memo = in.readString();
+        language = in.readString();
+        condition = in.readInt();
+    }
+
+    public static final Creator<WordsItem> CREATOR = new Creator<WordsItem>() {
+        @Override
+        public WordsItem createFromParcel(Parcel in) {
+            return new WordsItem(in);
+        }
+
+        @Override
+        public WordsItem[] newArray(int size) {
+            return new WordsItem[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -85,5 +111,21 @@ public class WordsItem {
                 ", language='" + language + '\'' +
                 ", condition=" + condition +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(word);
+        dest.writeString(meaning);
+        dest.writeString(pronunciation);
+        dest.writeString(memo);
+        dest.writeString(language);
+        dest.writeInt(condition);
     }
 }

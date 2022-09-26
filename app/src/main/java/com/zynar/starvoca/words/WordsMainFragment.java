@@ -33,7 +33,6 @@ public class WordsMainFragment extends Fragment {
 
         // recycler view
         RecyclerView rv_words = view.findViewById(R.id.rv_words);
-        rv_words.addItemDecoration(new WordsItemDecoration(requireContext()));
         rv_words.setHasFixedSize(true);
 
         // adapter

@@ -1,33 +1,66 @@
 package com.zynar.starvoca.info;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zynar.starvoca.AppCSVSupport;
-import com.zynar.starvoca.R;
+import com.zynar.starvoca.OnBackPressedListener;
+import com.zynar.starvoca.databinding.FragmentCsvLoadApplyBinding;
+import com.zynar.starvoca.words.WordsItem;
 
-public class CsvLoadApplyFragment extends Fragment {
+import java.util.List;
 
-    public static CsvLoadApplyFragment newInstance(){
-        return new CsvLoadApplyFragment();
-    }
+public class CsvLoadApplyFragment extends Fragment{
+
+    private FragmentCsvLoadApplyBinding mBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_csv_load_apply, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBinding = FragmentCsvLoadApplyBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
-    private void loadCSV() {
-        /* csv 로드 버튼 클릭 */
-        AppCSVSupport appCSVSupport = new AppCSVSupport();
-        appCSVSupport.setCsv(requireContext());
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        if (getArguments() != null) {
+            /* 번들로 값 세팅 */
+            int failedCnt = getArguments().getInt("failedCnt");
+            String[] voca = getArguments().getStringArray("VocaItem");
+            String vocaName = voca[0];
+            String vocaExplanation = voca[1];
+
+            List<WordsItem> wordsItemList = getArguments().getParcelableArrayList("WordsItemList");
+
+            /* 화면 세팅 */
+            mBinding.etVoca.setText(vocaName);
+            mBinding.etExplanation.setText(vocaExplanation);
+
+            mBinding.tvFailedWords.setText("불러오지 못한 단어 " + failedCnt +"개");
+            mBinding.tvSelectWords.setText("저장 가능한 단어 " + ((CsvManagementActivity)requireActivity()).getWordsCnt() +
+                    " | 선택된 단어 " + wordsItemList.size() +"개");
+
+
+        }
+
+
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
     }
 }
