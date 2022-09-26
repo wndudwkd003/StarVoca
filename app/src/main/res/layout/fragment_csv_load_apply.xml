@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:clickable="true"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".info.CsvLoadApplyFragment"
     android:background="@color/white"
@@ -15,10 +15,11 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
+            android:clipToPadding="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_margin="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,13 +57,16 @@
                 android:paddingEnd="12dp"/>
 
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/tv_failed_words"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/monoplex_medium"
                 android:text="불러오지 못한 단어 0개"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
             <TextView
+                android:layout_marginStart="15dp"
                 android:id="@+id/tv_select_words"
                 android:fontFamily="@font/monoplex_medium"
                 android:text="저장 가능한 단어 0개 | 선택된 단어 0개"
@@ -85,18 +89,30 @@
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginVertical="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="30dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="#E4E4E4" />
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:clipToPadding="false"
                 android:paddingHorizontal="7dp"
                 android:id="@+id/rv_words"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/custom_list_words_select_item" />
+
+            <View
+                app:layout_constraintTop_toBottomOf="@+id/tv_words_cnt_label"
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="25dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="#E4E4E4" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

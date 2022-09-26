@@ -42,6 +42,8 @@ public class CsvLoadApplyFragment extends Fragment{
 
             List<WordsItem> wordsItemList = getArguments().getParcelableArrayList("WordsItemList");
 
+            Log.d("__star__", wordsItemList.toString());
+
             /* 화면 세팅 */
             mBinding.etVoca.setText(vocaName);
             mBinding.etExplanation.setText(vocaExplanation);
@@ -50,6 +52,10 @@ public class CsvLoadApplyFragment extends Fragment{
             mBinding.tvSelectWords.setText("저장 가능한 단어 " + ((CsvManagementActivity)requireActivity()).getWordsCnt() +
                     " | 선택된 단어 " + wordsItemList.size() +"개");
 
+            /* 리사이클러뷰 어댑터 */
+            WordsCsvRvAdapter wordsCsvRvAdapter = new WordsCsvRvAdapter(requireContext(), wordsItemList);
+            mBinding.rvWords.setHasFixedSize(true);
+            mBinding.rvWords.setAdapter(wordsCsvRvAdapter);
 
         }
 
