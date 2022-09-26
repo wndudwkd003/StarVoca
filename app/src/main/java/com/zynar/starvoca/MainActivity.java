@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,6 +30,14 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fl_main, fragment).commit();
+
+    }
+
     // 메인 5개 메뉴 프래그먼트
     private final VocaMainFragment vocaMainFragment = new VocaMainFragment();
     private final WordsMainFragment wordsMainFragment = new WordsMainFragment();
@@ -111,10 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         mBinding.naviMainMenu.setSelectedItemId(R.id.main_menu_voca);
 
-
     }
-
-
 
     private String setUserAccount() {
         /* 로그인 타입을 Intent를 통해서 받아옴 */
@@ -206,3 +214,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

@@ -1,4 +1,4 @@
-package com.zynar.starvoca.info;
+package com.zynar.starvoca;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.zynar.starvoca.AppCSVSupport;
 import com.zynar.starvoca.databinding.FragmentCsvLoadBinding;
 import com.zynar.starvoca.vocabulary.VocaItem;
 import com.zynar.starvoca.words.WordsItem;
@@ -20,9 +19,11 @@ import java.util.List;
 
 public class CsvLoadFragment extends Fragment {
     private FragmentCsvLoadBinding mBinding;
+    private MainActivity mainActivity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentCsvLoadBinding.inflate(inflater, container, false);
+        mainActivity = (MainActivity) getActivity();
         return mBinding.getRoot();
     }
 
@@ -44,8 +45,7 @@ public class CsvLoadFragment extends Fragment {
             Log.d("__star__", wordsItemList.toString());
             Log.d("__star__", vocaItem.toString());
 
-            CsvManagementActivity activity = new CsvManagementActivity();
-            activity.changeFrag(true);
+            mainActivity.replaceFragment(CsvLoadApplyFragment.newInstance());
 
         });
     }

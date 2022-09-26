@@ -1,4 +1,4 @@
-package com.zynar.starvoca.info;
+package com.zynar.starvoca;
 
 import android.os.Bundle;
 
