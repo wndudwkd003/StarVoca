@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.zynar.starvoca.AppDatabase;
-import com.zynar.starvoca.CsvManagementActivity;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.FragmentInfoBinding;
 import com.zynar.starvoca.login.LoginActivity;

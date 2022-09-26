@@ -1,4 +1,4 @@
-package com.zynar.starvoca;
+package com.zynar.starvoca.info;
 
 import android.os.Bundle;
 
@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.zynar.starvoca.AppCSVSupport;
+import com.zynar.starvoca.R;
 
 public class CsvLoadApplyFragment extends Fragment {
 
