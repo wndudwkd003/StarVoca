@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.zynar.starvoca.AppDatabase;
+import com.zynar.starvoca.VocaManager;
 import com.zynar.starvoca.vocabulary.VocaItem;
 
 import java.util.List;

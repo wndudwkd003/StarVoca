@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
+import com.zynar.starvoca.VocaManager;
 import com.zynar.starvoca.databinding.FragmentInfoBinding;
 import com.zynar.starvoca.login.LoginActivity;
 import com.zynar.starvoca.login.UserAccount;
@@ -35,13 +36,9 @@ import java.util.List;
 public class InfoFragment extends Fragment{
     private UserAccount userAccount = UserAccount.getInstance();
     private FragmentInfoBinding mBinding;
-    private List<WordsItem> list = new ArrayList<>();
-    private AppDatabase db;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentInfoBinding.inflate(inflater, container, false);
-        db = AppDatabase.getInstance(requireContext());
-        list = db.wordsDao().getWordsItems();
         return mBinding.getRoot();
     }
 
@@ -87,7 +84,7 @@ public class InfoFragment extends Fragment{
                 builder.setItems(arr, (dialogInterface, i1) -> {
                     if(i1 == 0) {
                         startActivity(new Intent(requireContext(), CsvManagementActivity.class)
-                                .putExtra("wordsCnt", UserAccount.getInstance().getMaxCntWords()-list.size()));
+                                .putExtra("wordsCnt", UserAccount.getInstance().getMaxCntWords()-VocaManager.getInstance().getWordsCnt()));
                     }
                 });
 
@@ -114,9 +111,6 @@ public class InfoFragment extends Fragment{
     public void onResume() {
         super.onResume();
 
-        /* 내 단어 갯수 가져옴 */
-        list = db.wordsDao().getWordsItems();
-
         /* Info 프래그먼트의 유저 정보 세팅 */
         userAccount = UserAccount.getInstance();
 
@@ -132,7 +126,7 @@ public class InfoFragment extends Fragment{
         mBinding.tvNickname.setText(userAccount.getNickname());
         mBinding.tvId.setText(!userAccount.getEmail().equals("") ? userAccount.getEmail() : "비로그인");
         mBinding.tvMessage.setText(userAccount.getMessage());
-        mBinding.tvWordsCnt.setText(list.size() + " / " + userAccount.getMaxCntWords());
+        mBinding.tvWordsCnt.setText(VocaManager.getInstance().getWordsCnt() + " / " + userAccount.getMaxCntWords());
     }
 
     private void logIn() {

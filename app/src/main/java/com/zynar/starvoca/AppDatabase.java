@@ -11,12 +11,17 @@ import com.zynar.starvoca.vocabulary.VocaItem;
 import com.zynar.starvoca.words.WordsDao;
 import com.zynar.starvoca.words.WordsItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Database(entities = {VocaItem.class, WordsItem.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase database;
     private static final String DATABASE_NAME = "StarVoca_Database";
 
+
+    /* 싱글톤 */
     public synchronized static AppDatabase getInstance(Context context)
     {
         if(database == null) {
@@ -30,4 +35,5 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract VocaDao vocaDao();
     public abstract WordsDao wordsDao();
+
 }

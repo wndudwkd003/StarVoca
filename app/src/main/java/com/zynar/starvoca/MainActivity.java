@@ -1,7 +1,5 @@
 package com.zynar.starvoca;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -49,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         /* 데이터 바인딩 */
-        com.zynar.starvoca.databinding.ActivityMainBinding mBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = mBinding.getRoot();
-        setContentView(view);
+        ActivityMainBinding mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+
 
         /* 권한 */
         AppSupport appSupport = new AppSupport();

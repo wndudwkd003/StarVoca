@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zynar.starvoca.R;
+import com.zynar.starvoca.VocaManager;
 
 public class WordsMainFragment extends Fragment {
 
@@ -57,9 +58,14 @@ public class WordsMainFragment extends Fragment {
                 tv_isVoid.setVisibility(View.GONE);
             } else tv_isVoid.setVisibility(View.VISIBLE);
 
-            wordsRVAdapter.setWordsItems(wordsItems);
+            VocaManager.getInstance().setWordsItemList(wordsItems);
+            wordsRVAdapter.setWordsItems(VocaManager.getInstance().getWordsItemList());
         });
-        mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), wordsRVAdapter::setVocaItems);
+
+        mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), vocaItems -> {
+            VocaManager.getInstance().setVocaItemList(vocaItems);
+            wordsRVAdapter.setVocaItems(VocaManager.getInstance().getVocaItemList());
+        });
 
         // words add fab
         FloatingActionButton fab_add_words = view.findViewById(R.id.fab_words_add);

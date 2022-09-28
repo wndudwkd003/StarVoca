@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zynar.starvoca.R;
+import com.zynar.starvoca.VocaManager;
 import com.zynar.starvoca.words.WordsItemDecoration;
 
 public class VocaMainFragment extends Fragment {
@@ -56,11 +57,9 @@ public class VocaMainFragment extends Fragment {
                 tv_isVoid.setVisibility(View.GONE);
             } else tv_isVoid.setVisibility(View.VISIBLE);
 
-            vocaRVAdapter.setVocaItems(vocaItems);
+            VocaManager.getInstance().setVocaItemList(vocaItems);
+            vocaRVAdapter.setVocaItems(VocaManager.getInstance().getVocaItemList());
         });
-
-
-
 
 
         // voca add fab
