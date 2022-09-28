@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/monoplex_medium"
+            android:gravity="center_horizontal"
+            android:text="단어장을 CSV 파일로 변환합니다."
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:layout_marginEnd="15dp"
+            android:layout_gravity="end"
+            android:textColor="@color/white"
+            android:backgroundTint="#ACACAC"
+            android:text="@string/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"/>
+
+
+        <View
+            app:layout_constraintTop_toBottomOf="@+id/tv_words_cnt_label"
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="#E4E4E4" />
+
+        <RadioGroup
+            android:id="@+id/rg_voca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:clipToPadding="false"
+                android:paddingHorizontal="7dp"
+                android:id="@+id/rv_words"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/custom_list_voca_select_item" />
+        </RadioGroup>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="25dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="#E4E4E4" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

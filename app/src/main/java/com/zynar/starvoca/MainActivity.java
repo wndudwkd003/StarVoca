@@ -50,13 +50,16 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
 
-
         /* 권한 */
         AppSupport appSupport = new AppSupport();
         appSupport.setPermission(MainActivity.this);
 
         /* 매인 엑티비티 시작 전 로그인 정보 설정 */
+        AppDatabase db = AppDatabase.getInstance(MainActivity.this);
         String loginType = setUserAccount();
+        VocaManager.getInstance().setVocaItemList(db.vocaDao().getVocaItems());
+        VocaManager.getInstance().setWordsItemList(db.wordsDao().getWordsItems());
+
 
         /* loginType 변수를 번들로 info 프래그먼트에 전달 */
         Bundle bundle = new Bundle();

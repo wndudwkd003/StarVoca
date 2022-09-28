@@ -84,7 +84,10 @@ public class InfoFragment extends Fragment{
                 builder.setItems(arr, (dialogInterface, i1) -> {
                     if(i1 == 0) {
                         startActivity(new Intent(requireContext(), CsvManagementActivity.class)
-                                .putExtra("wordsCnt", UserAccount.getInstance().getMaxCntWords()-VocaManager.getInstance().getWordsCnt()));
+                                .putExtra("ActiveFragment", "fragCsvLoad"));
+                    } else if(i1 == 1) {
+                        startActivity(new Intent(requireContext(), CsvManagementActivity.class)
+                                .putExtra("ActiveFragment", "fragShareVoca"));
                     }
                 });
 

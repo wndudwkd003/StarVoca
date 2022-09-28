@@ -9,7 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.zynar.starvoca.AppSupport;
 import com.zynar.starvoca.R;
+import com.zynar.starvoca.VocaManager;
 import com.zynar.starvoca.databinding.ActivityCsvManagementBinding;
+import com.zynar.starvoca.login.UserAccount;
 
 public class CsvManagementActivity extends AppCompatActivity {
     private int wordsCnt;
@@ -25,11 +27,20 @@ public class CsvManagementActivity extends AppCompatActivity {
         AppSupport appSupport = new AppSupport();
         appSupport.setPermission(CsvManagementActivity.this);
 
-        wordsCnt = getIntent().getIntExtra("wordsCnt", 0);
+        wordsCnt = UserAccount.getInstance().getMaxCntWords() - VocaManager.getInstance().getWordsCnt();
 
-        /* 일단 csv 파일 불러오는 프래그먼트 실행 */
-        CsvLoadFragment csvLoadFragment = new CsvLoadFragment();
-        getSupportFragmentManager().beginTransaction().replace(mBinding.flMain.getId(), csvLoadFragment).commit();
+
+        /* 인텐트 엑스트라에 맞는 프래그먼트 실행 */
+        String activeFragment = getIntent().getStringExtra("ActiveFragment");
+        if(activeFragment.equals("fragCsvLoad")) {
+            /* 프래그먼트 실행 */
+            CsvLoadFragment csvLoadFragment = new CsvLoadFragment();
+            getSupportFragmentManager().beginTransaction().replace(mBinding.flMain.getId(), csvLoadFragment).commit();
+        } else if(activeFragment.equals("fragShareVoca")) {
+            /* 프래그먼트 실행 */
+            CsvShareVocaFragment csvShareVocaFragment = new CsvShareVocaFragment();
+            getSupportFragmentManager().beginTransaction().replace(mBinding.flMain.getId(), csvShareVocaFragment).commit();
+        }
 
         /* 툴바 뒤로가기버튼 */
         mBinding.toolbar.setNavigationOnClickListener(v-> onBackPressed());
