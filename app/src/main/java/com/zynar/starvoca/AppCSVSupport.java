@@ -2,7 +2,9 @@ package com.zynar.starvoca;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,7 +29,9 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class AppCSVSupport implements DefaultLifecycleObserver {
 
@@ -38,118 +42,113 @@ public class AppCSVSupport implements DefaultLifecycleObserver {
 
     /* csv 파일 */
     private Uri uri;
+    private boolean permission;
+
+    public AppCSVSupport() {
+        /* 권한 체크 */
+        permission = isExternalStorageWritable() && isExternalStorageReadable();
+
+    }
+
+    public boolean isPermission() {
+        return permission;
+    }
+
+    public void setPermission(boolean permission) {
+        this.permission = permission;
+    }
 
     /* CSV 파일 SETTING, return 값으로 불러오지 못한 단어들의 수를 반환 */
     public int setCsv(Context context) {
 
-
-        /* 파일 불러옴 */
-        InputStream is = context.getResources().openRawResource(R.raw.data);
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, StandardCharsets.UTF_8)
-        );
-
-        String line;
-        int cnt = 0, passCnt = 0;
+        /* cnt = 단어장 이름과 단어들을 구별하기 위한반복 카운트
+        , passCnt = 양식에 맞지 않아 불러오지 못한 단어장 카운트 */
+        int cnt = -1, passCnt = 0;
 
         try {
-            while ((line=reader.readLine()) != null) {
+            /* 파일의 절대 주소를 불러옴 */
+            String filePath = PathUtil.getPath(context, uri);
+            CSVReader reader = new CSVReader(new FileReader(filePath));
 
-                /* ,을 기준으로 배열에 저장 */
-                String[] tokens = line.split(",", -1);
-
-                /* 단어장 정보 설정 */
-                if(cnt==1) {
-                    vocaItem.setVoca(tokens[0]);
-                } else if(cnt==2) {
-                    vocaItem.setExplanation(tokens[0]);
+            /* 한 줄씩 불러옴 */
+            String[] nextLine;
+            while((nextLine = reader.readNext()) != null) {
+                cnt++;
+                /* 한 줄의 csv 내용을 리스트에 넣음 */
+                List<String> line = new ArrayList<>();
+                for(int i=0; i<nextLine.length; i++) {
+                    line.add(nextLine[i]);
                 }
 
-                /* 단어 정보 설정 */
-                if(cnt >= 4){
-                    WordsItem wordsItem = new WordsItem();
-                    wordsItem.setWord(tokens[0]);
-                    wordsItem.setMeaning(tokens[1]);
-                    wordsItem.setPronunciation(tokens[2]);
-                    wordsItem.setMemo(tokens[3]);
-                    wordsItem.setLanguage(tokens[4]);
+                if(cnt == 1 || cnt == 2) {
+                    /* cnt = 1, 2이면 단어장 이름과 단어장 설명을 넣음 */
+                    vocaItem.setVoca(line.get(0));
+                } else if (cnt >= 4) {
+                    /* cnt >= 4면 단어로 간주 단어들의 정보를 넣음 */
 
-                    /* 단어의 이름과 의미가 공백인지 체크 공백이면 건너뜀 */
-                    if(wordsItem.getWord().isEmpty() || wordsItem.getMeaning().isEmpty()) {
+                    /* line의 0, 1의 요소가 비어있으면 불러오지 못한 단어로 간주 */
+                    if(line.get(0).isEmpty() || line.get(1).isEmpty()) {
                         passCnt++;
                         continue;
+                    } else {
+                        WordsItem wordsItem = new WordsItem();
+                        wordsItem.setWord(line.get(0));
+                        wordsItem.setMeaning(line.get(1));
+                        wordsItem.setPronunciation(line.get(2));
+                        wordsItem.setMemo(line.get(3));
+                        wordsItem.setLanguage(line.get(4).isEmpty() ? "english" : line.get(4));
+                        wordsItems.add(wordsItem);
                     }
-
-                    /* wordsItems add */
-                    wordsItems.add(wordsItem);
                 }
-                cnt++;
+
+                Log.d("__star__", line.toString());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        /* 파일 불러옴 *//*
-        CSVReader reader = null;
-        try {
-            String filePath = PathUtil.getPath(context, uri);
-            File file = new File(filePath);
-            FileReader fileReader = new FileReader(file);
-            reader = new CSVReader(fileReader);
-            Log.d("__star__", filePath);
-        } catch (URISyntaxException | FileNotFoundException e) {
+        } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
             Log.d("__star__", e.getMessage());
         }
 
-        String[] nextLine;
-        int cnt = 0, passCnt = 0;
-
-        try {
-            if (reader != null) {
-                while ((nextLine=reader.readNext()) != null) {
-                    for(int i=0; i<nextLine.length; i++) {
-                        Log.d("__star__", nextLine[i]);
-                    }
-
-
-                    *//* ,을 기준으로 배열에 저장 *//*
-                    String[] tokens = line.split(",", -1);
-
-                    *//* 단어장 정보 설정 *//*
-                    if(cnt==1) {
-                        vocaItem.setVoca(tokens[0]);
-                    } else if(cnt==2) {
-                        vocaItem.setExplanation(tokens[0]);
-                    }
-
-                    *//* 단어 정보 설정 *//*
-                    if(cnt >= 4){
-                        WordsItem wordsItem = new WordsItem();
-                        wordsItem.setWord(tokens[0]);
-                        wordsItem.setMeaning(tokens[1]);
-                        wordsItem.setPronunciation(tokens[2]);
-                        wordsItem.setMemo(tokens[3]);
-                        wordsItem.setLanguage(tokens[4]);
-
-                        *//* 단어의 이름과 의미가 공백인지 체크 공백이면 건너뜀 *//*
-                        if(wordsItem.getWord().isEmpty() || wordsItem.getMeaning().isEmpty()) {
-                            passCnt++;
-                            continue;
-                        }
-
-                        *//* wordsItems add *//*
-                        wordsItems.add(wordsItem);
-                    }
-                    cnt++;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         return passCnt;
+    }
+
+    public boolean isExternalStorageWritable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public boolean isExternalStorageReadable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) ||
+                Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED_READ_ONLY);
+    }
+
+
+    public String readCSVFile(String path){
+        String filedata = null;
+        File file=new File(path);
+        try {
+
+            Scanner scanner=new Scanner(file);
+            while (scanner.hasNextLine()){
+
+                String line=scanner.nextLine();
+                String [] splited=line.split(",");
+                String row="";
+                for (String s:splited){
+
+                    row=row+s+"  ";
+
+                }
+
+                filedata=filedata+row+"\n";
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.d("__star__", e.getMessage());
+        }
+
+        return filedata;
+
     }
 
     public Uri getUri() {

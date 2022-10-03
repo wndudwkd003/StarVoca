@@ -1,5 +1,7 @@
 package com.zynar.starvoca.info;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.os.Build.VERSION.SDK_INT;
 import static java.lang.Thread.sleep;
 
 import android.Manifest;
@@ -7,9 +9,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.DocumentsContract;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,33 +44,29 @@ import java.util.List;
 public class CsvLoadFragment extends Fragment {
     private FragmentCsvLoadBinding mBinding;
 
-    private AppCSVSupport appCSVSupport = new AppCSVSupport();
+    private final AppCSVSupport appCSVSupport = new AppCSVSupport();
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             uri -> {
+        if(uri != null) {
+            /* 파일 선택 uri 설정 */
+            appCSVSupport.setUri(uri);
 
-                /* 파일 선택 uri 설정 */
-                appCSVSupport.setUri(uri);
+            /* CSV 서포트 클래스 */
+            int failedCnt = appCSVSupport.setCsv(requireContext());
 
-                /* CSV 서포트 클래스 */
-                int failedCnt = appCSVSupport.setCsv(requireContext());
+            /* 번들로 값 전달 */
+            Bundle bundle = new Bundle();
+            bundle.putInt("failedCnt", failedCnt);
+            bundle.putStringArray("VocaItem", new String[]{appCSVSupport.getVocaItem().getVoca(), appCSVSupport.getVocaItem().getExplanation()});
+            bundle.putParcelableArrayList("WordsItemList", (ArrayList<? extends Parcelable>) appCSVSupport.getWordsItems());
 
-                /* 클래스에서 받은 데이터 세팅 */
-                List<WordsItem> wordsItemList = appCSVSupport.getWordsItems();
-                VocaItem vocaItem = appCSVSupport.getVocaItem();
+            /* 프래그먼트 생성 및 번들 세팅 */
+            CsvLoadApplyFragment csvLoadApplyFragment = new CsvLoadApplyFragment();
+            csvLoadApplyFragment.setArguments(bundle);
 
-
-                /* 번들로 값 전달 */
-                Bundle bundle = new Bundle();
-                bundle.putInt("failedCnt", failedCnt);
-                bundle.putStringArray("VocaItem", new String[]{vocaItem.getVoca(), vocaItem.getExplanation()});
-                bundle.putParcelableArrayList("WordsItemList", (ArrayList<? extends Parcelable>) wordsItemList);
-
-                /* 프래그먼트 생성 및 번들 세팅 */
-                CsvLoadApplyFragment csvLoadApplyFragment = new CsvLoadApplyFragment();
-                csvLoadApplyFragment.setArguments(bundle);
-
-                /* 단어장 생성 적용 프래그먼트로 이동 */
-                ((CsvManagementActivity)requireActivity()).replaceFragment(csvLoadApplyFragment);
+            /* 단어장 생성 적용 프래그먼트로 이동 */
+            ((CsvManagementActivity)requireActivity()).replaceFragment(csvLoadApplyFragment);
+        }
             });
 
     @Override
@@ -77,13 +78,19 @@ public class CsvLoadFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        /* 권한 설정 */
+        if(!appCSVSupport.isPermission()) {
+            AppSupport appSupport = new AppSupport();
+            appSupport.setPermission(requireActivity());
+        }
+
         /* 선택 버튼 */
         mBinding.btnLoadCsv.setOnClickListener(v -> {
             /* csv 파일 선택 */
             mGetContent.launch("text/*");
         });
     }
-
 
     @Override
     public void onDestroy() {
