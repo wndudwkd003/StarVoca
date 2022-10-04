@@ -6,16 +6,29 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.transition.Slide;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.OnBackPressedListener;
+import com.zynar.starvoca.R;
 import com.zynar.starvoca.databinding.FragmentCsvLoadApplyBinding;
+import com.zynar.starvoca.vocabulary.VocaItem;
 import com.zynar.starvoca.words.WordsItem;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CsvLoadApplyFragment extends Fragment{
@@ -23,7 +36,7 @@ public class CsvLoadApplyFragment extends Fragment{
     private FragmentCsvLoadApplyBinding mBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentCsvLoadApplyBinding.inflate(inflater, container, false);
         return mBinding.getRoot();
     }
@@ -34,6 +47,8 @@ public class CsvLoadApplyFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
+            AppDatabase db = AppDatabase.getInstance(requireContext());
+
             /* 번들로 값 세팅 */
             int failedCnt = getArguments().getInt("failedCnt");
             String[] voca = getArguments().getStringArray("VocaItem");
@@ -56,12 +71,90 @@ public class CsvLoadApplyFragment extends Fragment{
             WordsCsvRvAdapter wordsCsvRvAdapter = new WordsCsvRvAdapter(requireContext(), wordsItemList);
             mBinding.rvWords.setHasFixedSize(true);
             mBinding.rvWords.setAdapter(wordsCsvRvAdapter);
+
+            /* 확인 버튼 클릭 */
+            requireActivity().findViewById(R.id.tv_csv_save).setOnClickListener(v -> {
+                /*               */
+                /* 불러온 CSV 적용 */
+                /*               */
+                
+                if(mBinding.cbNoCreateVoca.isChecked()) {
+                    /* 단어장을 만들지 않고 바로 내 단에 넣음 */
+                    /* db에 넣음 */
+                    for(WordsItem item : wordsItemList) {
+                        db.wordsDao().insertWords(item);
+                    }
+
+                } else {
+                    /* db에 넣음 */
+                    int selCnt = 0;
+                    for(WordsItem item : wordsItemList) {
+                        db.wordsDao().insertWords(item);
+                        selCnt++;
+                    }
+
+                    /* 단어장을 만들고 거기에 넣음 */
+                    List<WordsItem> wordsItems = db.wordsDao().getWordsItems();
+                    int endId = 0;
+                    if(!wordsItems.isEmpty()) {
+                        WordsItem wordsItem = wordsItems.get(0);
+                        Log.d("__star__", wordsItem.toString());
+                        endId = wordsItem.getId();
+                    }
+
+
+                    /* words 아이디를 저장 */
+                    List<Integer> wordsId = new ArrayList<>();
+                    for(int i=endId - selCnt + 1; i<=endId; i++) {
+                        wordsId.add(i);
+                    }
+
+                    /* 단어장 등록 */
+                    VocaItem vocaItem = new VocaItem();
+                    vocaItem.setVoca(vocaName == null ? "새로 추가한 단어장" : vocaName);
+                    vocaItem.setExplanation(vocaExplanation == null ? "" : vocaExplanation);
+                    vocaItem.setWordsId(new Gson().toJson(wordsId));
+                    db.vocaDao().insertVoca(vocaItem);
+                }
+                
+
+                Toast.makeText(requireContext(), "내 단어가 업데이트 되었습니다.", Toast.LENGTH_SHORT).show();
+                ((CsvManagementActivity)requireActivity()).setFlag(true);
+                requireActivity().onBackPressed();
+            });
+
+            /* 체크 박스 클릭 */
+            mBinding.cbNoCreateVoca.setOnClickListener(v -> {
+                if(mBinding.cbNoCreateVoca.isChecked()) {
+                    /* 단어장 만들지 않기 */
+                    mBinding.cdVoca.setVisibility(View.GONE);
+                } else {
+                    /* 단어장 만들기*/
+                    Animation animation = new AlphaAnimation(0, 1);
+                    animation.setDuration(1000);
+                    mBinding.cdVoca.setAnimation(animation);
+                    mBinding.cdVoca.setVisibility(View.VISIBLE);
+                }
+            });
+
+        }
+        else {
+            Toast.makeText(requireContext(), "잘못된 파일입니다.", Toast.LENGTH_SHORT).show();
+            requireActivity().onBackPressed();
         }
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().findViewById(R.id.tv_csv_save).setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        requireActivity().findViewById(R.id.tv_csv_save).setVisibility(View.GONE);
         mBinding = null;
     }
 }

@@ -38,6 +38,7 @@
         <TextView
             android:fontFamily="@font/monoplex_medium"
             android:id="@+id/tv_word"
+            android:text="단어"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -53,6 +54,7 @@
             android:fontFamily="@font/monoplex_medium"
             android:visibility="gone"
             android:id="@+id/tv_meaning"
+            android:text="뜻"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:maxLines="2"
@@ -64,6 +66,7 @@
         <TextView
             android:fontFamily="@font/monoplex_medium"
             android:id="@+id/tv_pronunciation"
+            android:text="발음"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:maxLines="2"
@@ -76,6 +79,7 @@
             android:fontFamily="@font/monoplex_medium"
             android:id="@+id/tv_memo"
             android:layout_width="300dp"
+            android:text="메모"
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:ellipsize="end"

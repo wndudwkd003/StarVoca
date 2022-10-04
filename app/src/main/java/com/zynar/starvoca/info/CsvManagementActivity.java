@@ -16,6 +16,7 @@ import com.zynar.starvoca.login.UserAccount;
 public class CsvManagementActivity extends AppCompatActivity {
     private int wordsCnt;
     private ActivityCsvManagementBinding mBinding;
+    private boolean flag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,14 @@ public class CsvManagementActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(mBinding.flMain.getId(), fragment).addToBackStack(null).commit();
 
+    }
+
+    public boolean getFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public int getWordsCnt(){

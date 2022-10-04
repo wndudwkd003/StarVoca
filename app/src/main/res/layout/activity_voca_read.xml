@@ -43,7 +43,7 @@
     <androidx.core.widget.NestedScrollView
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -52,7 +52,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:paddingHorizontal="5dp"
+                android:paddingBottom="40dp"
                 android:id="@+id/rv_words"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +66,6 @@
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="#E4E4E4" />

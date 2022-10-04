@@ -76,11 +76,10 @@
 
         <TextView
             android:fontFamily="@font/monoplex_medium"
-            android:visibility="gone"
             android:id="@+id/tv_language"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:maxLines="2"
+            android:maxLines="1"
             android:ellipsize="end"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/tv_word"

@@ -50,7 +50,6 @@ public class AppSupport {
             }
         }
 
-
     }
 
     /* 권한 설정 */

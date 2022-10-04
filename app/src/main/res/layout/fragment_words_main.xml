@@ -41,6 +41,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:paddingHorizontal="5dp"
                 android:clipToPadding="false"
+                android:paddingBottom="40dp"
                 android:id="@+id/rv_words"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -52,7 +53,6 @@
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="#E4E4E4" />

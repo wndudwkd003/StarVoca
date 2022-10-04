@@ -16,46 +16,46 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.VocaManager;
+import com.zynar.starvoca.databinding.FragmentVocaMainBinding;
 import com.zynar.starvoca.words.WordsItemDecoration;
 
 public class VocaMainFragment extends Fragment {
 
-    public VocaMainFragment() {
-        // Required empty public constructor
-    }
+    /* 데이터 바인딩 */
+    private FragmentVocaMainBinding mBinding;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_voca_main, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBinding = FragmentVocaMainBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // recycler view
-        RecyclerView rv_voca = view.findViewById(R.id.rv_voca);
-        rv_voca.setHasFixedSize(true);
+        /* 단어장 리사이클러뷰 어댑터 */
+        VocaRVAdapter vocaRVAdapter = new VocaRVAdapter(requireContext());
 
-        // adapter
-        VocaRVAdapter vocaRVAdapter = new VocaRVAdapter(getContext());
+        // recycler view
+        mBinding.rvVoca.setHasFixedSize(true);
 
         // view model
+
         VocaMainViewModel mainViewModel = new ViewModelProvider(this).get(VocaMainViewModel.class);
         vocaRVAdapter.setVocaItems(mainViewModel.getVocaItems());
 
         // set adapter
-        rv_voca.setAdapter(vocaRVAdapter);
+        mBinding.rvVoca.setAdapter(vocaRVAdapter);
 
-        // isVoid
-        TextView tv_isVoid = view.findViewById(R.id.tv_isVoid);
 
         // observe
         mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), vocaItems -> {
             // VocaItems 비어있으면 단어장을 추가하라는 tv 출력
             if(!vocaItems.isEmpty()) {
-                tv_isVoid.setVisibility(View.GONE);
-            } else tv_isVoid.setVisibility(View.VISIBLE);
+                mBinding.tvIsVoid.setVisibility(View.GONE);
+            } else mBinding.tvIsVoid.setVisibility(View.VISIBLE);
 
             VocaManager.getInstance().setVocaItemList(vocaItems);
             vocaRVAdapter.setVocaItems(VocaManager.getInstance().getVocaItemList());
@@ -71,6 +71,5 @@ public class VocaMainFragment extends Fragment {
         });
 
     }
-
 }
 

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -66,6 +67,8 @@ public class CsvLoadFragment extends Fragment {
 
             /* 단어장 생성 적용 프래그먼트로 이동 */
             ((CsvManagementActivity)requireActivity()).replaceFragment(csvLoadApplyFragment);
+        } else {
+            Toast.makeText(requireContext(), "파일이 선택되지 않았습니다.", Toast.LENGTH_SHORT).show();
         }
             });
 
@@ -90,7 +93,15 @@ public class CsvLoadFragment extends Fragment {
             /* csv 파일 선택 */
             mGetContent.launch("text/*");
         });
+
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().findViewById(R.id.tv_csv_save).setVisibility(View.GONE);
+    }
+
 
     @Override
     public void onDestroy() {

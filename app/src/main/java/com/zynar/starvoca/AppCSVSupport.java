@@ -100,8 +100,6 @@ public class AppCSVSupport implements DefaultLifecycleObserver {
                         wordsItems.add(wordsItem);
                     }
                 }
-
-                Log.d("__star__", line.toString());
             }
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();

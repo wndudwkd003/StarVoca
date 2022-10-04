@@ -20,8 +20,7 @@ public class VocaItem {
     // 단어들 아이디 모음
     private String wordsId;
     // 즐겨찾기
-    private int favorites;
-
+    private int favorites = 0;
 
     public int getId() {
         return id;
