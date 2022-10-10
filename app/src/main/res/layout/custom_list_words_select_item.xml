@@ -21,6 +21,7 @@
         android:layout_height="wrap_content">
 
         <CheckBox
+            android:id="@+id/checkbox"
             android:checked="true"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"

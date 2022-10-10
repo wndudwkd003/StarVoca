@@ -46,6 +46,7 @@ public class CsvLoadApplyFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /* if문 안에 작성할 것 */
         if (getArguments() != null) {
             AppDatabase db = AppDatabase.getInstance(requireContext());
 
@@ -55,44 +56,51 @@ public class CsvLoadApplyFragment extends Fragment{
             String vocaName = voca[0];
             String vocaExplanation = voca[1];
 
+            /* 사용자가 csv로 불러온 단어 리스트 */
             List<WordsItem> wordsItemList = getArguments().getParcelableArrayList("WordsItemList");
 
             /* 화면 세팅 */
-            mBinding.etVoca.setText(vocaName);
-            mBinding.etExplanation.setText(vocaExplanation);
+            setUiText(failedCnt, vocaName, vocaExplanation, wordsItemList);
 
-            mBinding.tvFailedWords.setText("불러오지 못한 단어 "
-                    + failedCnt +"개");
-            mBinding.tvSelectWords.setText("저장 가능한 단어 "
-                    + ((CsvManagementActivity)requireActivity()).getWordsCnt()
-                    + " | 선택된 단어 " + wordsItemList.size() +"개");
+            /* 선택된 단어들의 id를 리스트로 관리 */
+            List<Integer> wordsIDs = new ArrayList<>();
+            for(int i=0; i< wordsItemList.size(); i++) {
+                wordsIDs.add(i);
+            }
 
             /* 리사이클러뷰 어댑터 */
             WordsCsvRvAdapter wordsCsvRvAdapter = new WordsCsvRvAdapter(requireContext(), wordsItemList);
             mBinding.rvWords.setHasFixedSize(true);
+
+            wordsCsvRvAdapter.setOnCheckBoxClickListener(new WordsCsvRvAdapter.CheckBoxClickListener() {
+                @Override
+                public void onClickCheckBox(int flag, int pos) {
+                    /* 체크박스를 눌렀을 때 리스너로 상태(눌렸는지, 위치)를 불러옴 */
+                    if(flag == 0) {
+                        /* 체크박스 해제 */
+                        wordsIDs.remove(pos);
+                    } else {
+                        wordsIDs.add(pos, pos);
+                    }
+                    Log.d("__star__", wordsIDs.toString());
+                }
+            });
             mBinding.rvWords.setAdapter(wordsCsvRvAdapter);
 
             /* 확인 버튼 클릭 */
             requireActivity().findViewById(R.id.tv_csv_save).setOnClickListener(v -> {
-                /*               */
                 /* 불러온 CSV 적용 */
-                /*               */
-                
-                if(mBinding.cbNoCreateVoca.isChecked()) {
-                    /* 단어장을 만들지 않고 바로 내 단에 넣음 */
-                    /* db에 넣음 */
-                    for(WordsItem item : wordsItemList) {
-                        db.wordsDao().insertWords(item);
-                    }
 
-                } else {
-                    /* db에 넣음 */
-                    int selCnt = 0;
-                    for(WordsItem item : wordsItemList) {
-                        db.wordsDao().insertWords(item);
-                        selCnt++;
-                    }
+                int selCnt = 0;
 
+                for(int i : wordsIDs) {
+                    /* wordsIDs의 선택된 words만 db에 저장 */
+                    WordsItem item = wordsItemList.get(i);
+                    db.wordsDao().insertWords(item);
+                    selCnt++;
+                }
+
+                if(!mBinding.cbNoCreateVoca.isChecked()) {
                     /* 단어장을 만들고 거기에 넣음 */
                     List<WordsItem> wordsItems = db.wordsDao().getWordsItems();
                     int endId = 0;
@@ -101,7 +109,6 @@ public class CsvLoadApplyFragment extends Fragment{
                         Log.d("__star__", wordsItem.toString());
                         endId = wordsItem.getId();
                     }
-
 
                     /* words 아이디를 저장 */
                     List<Integer> wordsId = new ArrayList<>();
@@ -115,15 +122,15 @@ public class CsvLoadApplyFragment extends Fragment{
                     vocaItem.setExplanation(vocaExplanation == null ? "" : vocaExplanation);
                     vocaItem.setWordsId(new Gson().toJson(wordsId));
                     db.vocaDao().insertVoca(vocaItem);
+
                 }
-                
 
                 Toast.makeText(requireContext(), "내 단어가 업데이트 되었습니다.", Toast.LENGTH_SHORT).show();
                 ((CsvManagementActivity)requireActivity()).setFlag(true);
                 requireActivity().onBackPressed();
             });
 
-            /* 체크 박스 클릭 */
+            /* 단어장 체크 박스 클릭 */
             mBinding.cbNoCreateVoca.setOnClickListener(v -> {
                 if(mBinding.cbNoCreateVoca.isChecked()) {
                     /* 단어장 만들지 않기 */
@@ -142,6 +149,18 @@ public class CsvLoadApplyFragment extends Fragment{
             Toast.makeText(requireContext(), "잘못된 파일입니다.", Toast.LENGTH_SHORT).show();
             requireActivity().onBackPressed();
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setUiText(int failedCnt, String vocaName, String vocaExplanation, List<WordsItem> wordsItemList) {
+        mBinding.etVoca.setText(vocaName);
+        mBinding.etExplanation.setText(vocaExplanation);
+
+        mBinding.tvFailedWords.setText("불러오지 못한 단어 "
+                + failedCnt +"개");
+        mBinding.tvSelectWords.setText("저장 가능한 단어 "
+                + ((CsvManagementActivity)requireActivity()).getWordsCnt()
+                + " | 선택된 단어 " + wordsItemList.size() +"개");
     }
 
     @Override
