@@ -1,6 +1,7 @@
 package com.zynar.starvoca.info;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -22,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.zynar.starvoca.AppDatabase;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.VocaManager;
+import com.zynar.starvoca.databinding.CustomDialogCsvHelperBinding;
+import com.zynar.starvoca.databinding.CustomQuestionDialogBinding;
 import com.zynar.starvoca.databinding.FragmentInfoBinding;
 import com.zynar.starvoca.login.LoginActivity;
 import com.zynar.starvoca.login.UserAccount;
@@ -88,6 +91,18 @@ public class InfoFragment extends Fragment{
                     } else if(i1 == 1) {
                         startActivity(new Intent(requireContext(), CsvManagementActivity.class)
                                 .putExtra("ActiveFragment", "fragShareVoca"));
+                    } else if(i1 == 2) {
+                        Dialog dialog = new Dialog(requireContext());
+                        /* 다이얼로그 데이터 바인딩 */
+                        CustomDialogCsvHelperBinding dialog1Binding = CustomDialogCsvHelperBinding.inflate(getLayoutInflater());
+                        dialog.setContentView(dialog1Binding.getRoot());
+
+
+
+                        /* 취소 버튼 */
+                        //dialog1Binding.btnCancel.setOnClickListener(v -> dialog.onBackPressed());
+
+                        dialog.show();
                     }
                 });
 

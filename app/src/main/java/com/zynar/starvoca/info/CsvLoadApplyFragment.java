@@ -82,7 +82,6 @@ public class CsvLoadApplyFragment extends Fragment{
                     } else {
                         wordsIDs.add(pos, pos);
                     }
-                    Log.d("__star__", wordsIDs.toString());
                 }
             });
             mBinding.rvWords.setAdapter(wordsCsvRvAdapter);
