@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C5B8E3"
+    android:background="#FFFFFF"
     tools:context=".login.LoginActivity">
 
     <TextView
@@ -28,7 +28,7 @@
         android:fontFamily="@font/monoplex_medium"
         android:gravity="center"
         android:text="내가 만드는 단어장"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

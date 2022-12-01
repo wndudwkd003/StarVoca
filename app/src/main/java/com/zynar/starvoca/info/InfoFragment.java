@@ -42,12 +42,6 @@ public class InfoFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentInfoBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         /* 로그인 타입을 메인 액티비티에서 받아옴 */
         String loginType = getArguments() != null ? getArguments().getString("loginType") : "";
@@ -122,6 +116,7 @@ public class InfoFragment extends Fragment{
                 }
             }
         });
+        return mBinding.getRoot();
     }
 
     @SuppressLint("SetTextI18n")
@@ -149,7 +144,6 @@ public class InfoFragment extends Fragment{
 
     private void logIn() {
         /* 로그인 */
-
         /* 자동 로그인 해제 */
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("userShared", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

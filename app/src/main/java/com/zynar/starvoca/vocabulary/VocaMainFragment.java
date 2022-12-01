@@ -39,25 +39,40 @@ public class VocaMainFragment extends Fragment {
         fromBottom = AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom_anim);
         toBottom = AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom_anim);
 
+        mBinding.fab.setOnClickListener(v -> {
+            onFabButton();
+        });
+
+        mBinding.fabDel.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "단어장 삭제", Toast.LENGTH_LONG).show();
+        });
+
+        mBinding.fabAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), VocaAddActivity.class);
+            intent.putExtra("type", 0);
+            startActivity(intent);
+        });
+
         return mBinding.getRoot();
     }
 
     private void onFabButton() {
         // floating button 클릭 애니메이션 효과
         if(!mFabFlag){
-            mBinding.fabVocaAdd.setVisibility(View.VISIBLE);
-            mBinding.fabVocaDel.setVisibility(View.VISIBLE);
-            mBinding.fabVocaAdd.startAnimation(fromBottom);
-            mBinding.fabVocaDel.setAnimation(fromBottom);
-            mBinding.fabVoca.setAnimation(rotateOpen);
+            mBinding.fabAdd.setVisibility(View.VISIBLE);
+            mBinding.fabDel.setVisibility(View.VISIBLE);
+            mBinding.fabAdd.startAnimation(fromBottom);
+            mBinding.fabDel.startAnimation(fromBottom);
+            mBinding.fab.startAnimation(rotateOpen);
         } else {
-            mBinding.fabVocaAdd.setVisibility(View.INVISIBLE);
-            mBinding.fabVocaDel.setVisibility(View.INVISIBLE);
-            mBinding.fabVocaAdd.startAnimation(toBottom);
-            mBinding.fabVocaDel.setAnimation(toBottom);
-            mBinding.fabVoca.setAnimation(rotateClose);
+            mBinding.fabAdd.setVisibility(View.INVISIBLE);
+            mBinding.fabDel.setVisibility(View.INVISIBLE);
+            mBinding.fabAdd.startAnimation(toBottom);
+            mBinding.fabDel.startAnimation(toBottom);
+            mBinding.fab.startAnimation(rotateClose);
         }
         mFabFlag = !mFabFlag;
+
     }
 
     @Override
@@ -89,19 +104,7 @@ public class VocaMainFragment extends Fragment {
         });
 
 
-        mBinding.fabVoca.setOnClickListener(v -> {
-            onFabButton();
-        });
 
-        mBinding.fabVocaDel.setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "단어장 삭제", Toast.LENGTH_LONG).show();
-        });
-
-        mBinding.fabVocaAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), VocaAddActivity.class);
-            intent.putExtra("type", 0);
-            startActivity(intent);
-        });
 
     }
 

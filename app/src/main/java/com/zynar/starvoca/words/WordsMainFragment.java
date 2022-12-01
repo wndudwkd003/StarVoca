@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +21,12 @@ import com.zynar.starvoca.R;
 import com.zynar.starvoca.VocaManager;
 import com.zynar.starvoca.databinding.FragmentVocaMainBinding;
 import com.zynar.starvoca.databinding.FragmentWordsMainBinding;
+import com.zynar.starvoca.vocabulary.VocaAddActivity;
 
 public class WordsMainFragment extends Fragment {
+
+    private Animation rotateOpen, rotateClose, fromBottom, toBottom;
+    private boolean mFabFlag = false;
 
     private FragmentWordsMainBinding mBinding;
     public WordsMainFragment() {
@@ -31,19 +36,15 @@ public class WordsMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-
         mBinding = FragmentWordsMainBinding.inflate(inflater, container, false);
-        return mBinding.getRoot();
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        rotateOpen = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_open_anim);
+        rotateClose = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_close_anim);
+        fromBottom = AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom_anim);
+        toBottom = AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom_anim);
 
         // recycler view
-        RecyclerView rv_words = view.findViewById(R.id.rv_words);
-        rv_words.setHasFixedSize(true);
+        mBinding.rvWords.setHasFixedSize(true);
 
         // adapter
         WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(requireContext(), 0);
@@ -56,16 +57,15 @@ public class WordsMainFragment extends Fragment {
         wordsRVAdapter.setVocaItems(mainViewModel.getVocaItems());
 
         // set adapter
-        rv_words.setAdapter(wordsRVAdapter);
+        mBinding.rvWords.setAdapter(wordsRVAdapter);
 
-        TextView tv_isVoid = view.findViewById(R.id.tv_isVoid);
 
         // observe
         mainViewModel.liveData_WordsItem().observe(getViewLifecycleOwner(), wordsItems -> {
             // VocaItems 비어있으면 단어장을 추가하라는 tv 출력
             if(!wordsItems.isEmpty()) {
-                tv_isVoid.setVisibility(View.GONE);
-            } else tv_isVoid.setVisibility(View.VISIBLE);
+                mBinding.tvIsVoid.setVisibility(View.GONE);
+            } else mBinding.tvIsVoid.setVisibility(View.VISIBLE);
 
             VocaManager.getInstance().setWordsItemList(wordsItems);
             wordsRVAdapter.setWordsItems(VocaManager.getInstance().getWordsItemList());
@@ -76,14 +76,46 @@ public class WordsMainFragment extends Fragment {
             wordsRVAdapter.setVocaItems(VocaManager.getInstance().getVocaItemList());
         });
 
-        // words add fab
-        FloatingActionButton fab_add_words = view.findViewById(R.id.fab_words_add);
-        fab_add_words.setOnClickListener(view1 -> {
+
+        mBinding.fab.setOnClickListener(v -> {
+            onFabButton();
+        });
+
+        mBinding.fabDel.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "단어장 삭제", Toast.LENGTH_LONG).show();
+        });
+
+        mBinding.fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), WordsAddActivity.class);
             intent.putExtra("type", 0);
             startActivity(intent);
         });
 
+        return mBinding.getRoot();
     }
 
+
+    private void onFabButton() {
+        // floating button 클릭 애니메이션 효과
+        if(!mFabFlag){
+            mBinding.fabAdd.setVisibility(View.VISIBLE);
+            mBinding.fabDel.setVisibility(View.VISIBLE);
+            mBinding.fabAdd.startAnimation(fromBottom);
+            mBinding.fabDel.startAnimation(fromBottom);
+            mBinding.fab.startAnimation(rotateOpen);
+        } else {
+            mBinding.fabAdd.setVisibility(View.INVISIBLE);
+            mBinding.fabAdd.setVisibility(View.INVISIBLE);
+            mBinding.fabAdd.startAnimation(toBottom);
+            mBinding.fabDel.startAnimation(toBottom);
+            mBinding.fab.startAnimation(rotateClose);
+        }
+        mFabFlag = !mFabFlag;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
+    }
 }

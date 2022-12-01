@@ -1,35 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".words.WordsMainFragment">
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_words_add"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="25dp"
-        android:backgroundTint="#955ADD"
-        app:backgroundTint="#00000000"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/dark_gray_1"
+        android:clickable="true"
+        android:focusable="true"
+        app:tint="@android:color/white"
+        android:src="@drawable/ic_edit_note"
         app:fabCustomSize="55sp"
-        app:maxImageSize="20sp"
-        android:src="@drawable/ic_add_words"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="24sp"
+        android:background="@color/trans"
+        app:rippleColor="#00000000"
         tools:ignore="ContentDescription" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:rippleColor="#00000000"
+        app:tint="@android:color/white"
+        android:backgroundTint="@color/dark_gray_1"
+        android:src="@drawable/ic_del_outline"
+        app:layout_constraintBottom_toTopOf="@id/fab"
+        app:layout_constraintEnd_toEndOf="@id/fab"
+        app:layout_constraintStart_toStartOf="@id/fab"
+        android:visibility="invisible"
+        app:fabCustomSize="55sp"
+        android:focusable="true"
+        android:clickable="true"
+        app:maxImageSize="24sp"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tint="@android:color/white"
+        android:layout_marginBottom="16dp"
+        app:rippleColor="#00000000"
+        android:backgroundTint="@color/dark_gray_1"
+        app:layout_constraintBottom_toTopOf="@id/fab_del"
+        app:layout_constraintEnd_toEndOf="@id/fab"
+        app:layout_constraintStart_toStartOf="@id/fab"
+        android:src="@drawable/ic_words"
+        app:fabCustomSize="55sp"
+        android:focusable="true"
+        android:clickable="true"
+        app:maxImageSize="24sp"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription" />
+
+
 
     <TextView
         android:visibility="gone"
         android:id="@+id/tv_isVoid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/void_words"
         android:textSize="30sp"
         android:layout_gravity="center"/>
 
     <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -61,4 +112,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
