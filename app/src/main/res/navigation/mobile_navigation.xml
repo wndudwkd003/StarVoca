@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/main_menu_voca">
+
+    <fragment
+        android:id="@+id/main_menu_voca"
+        android:name="com.zynar.starvoca.vocabulary.VocaMainFragment"
+        android:label="@string/main_menu_voca"
+        tools:layout="@layout/fragment_voca_main" />
+
+    <fragment
+        android:id="@+id/main_menu_words"
+        android:name="com.zynar.starvoca.words.WordsMainFragment"
+        android:label="@string/main_menu_words"
+        tools:layout="@layout/fragment_voca_main" />
+
+    <fragment
+        android:id="@+id/main_menu_learn"
+        android:name="com.zynar.starvoca.learn.LearnMainFragment"
+        android:label="@string/main_menu_learn"
+        tools:layout="@layout/fragment_voca_main" />
+
+    <fragment
+        android:id="@+id/main_menu_community"
+        android:name="com.zynar.starvoca.community.CommunityFragment"
+        android:label="@string/main_menu_community"
+        tools:layout="@layout/fragment_voca_main" />
+
+    <fragment
+        android:id="@+id/main_menu_info"
+        android:name="com.zynar.starvoca.info.InfoFragment"
+        android:label="@string/main_menu_info"
+        tools:layout="@layout/fragment_voca_main" />
+
+</navigation>

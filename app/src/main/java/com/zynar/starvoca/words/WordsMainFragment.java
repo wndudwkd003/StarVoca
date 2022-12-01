@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,16 +18,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zynar.starvoca.R;
 import com.zynar.starvoca.VocaManager;
+import com.zynar.starvoca.databinding.FragmentVocaMainBinding;
+import com.zynar.starvoca.databinding.FragmentWordsMainBinding;
 
 public class WordsMainFragment extends Fragment {
 
+    private FragmentWordsMainBinding mBinding;
     public WordsMainFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_words_main, container, false);
+
+
+
+        mBinding = FragmentWordsMainBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override

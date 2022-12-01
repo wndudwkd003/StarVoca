@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.StarVoca" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#737373</item>
-        <item name="colorPrimaryVariant">#8C8C8C</item>
+        <item name="colorPrimary">#353535</item>
+        <item name="colorPrimaryVariant">#3A3A3A</item>
         <item name="colorOnPrimary">#D8D8D8</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/button</item>
-        <item name="colorSecondaryVariant">#94679C</item>
+        <item name="colorSecondary">@color/dark_gray_1</item>
+        <item name="colorSecondaryVariant">@color/gray</item>
         <item name="colorOnSecondary">#E3E3E3</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>

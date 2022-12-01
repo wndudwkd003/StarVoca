@@ -15,6 +15,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.storage.FirebaseStorage;
@@ -75,6 +79,14 @@ public class MainActivity extends AppCompatActivity {
         // 툴바 초기화
         MaterialToolbar toolbar = mBinding.toolbar;
 
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.main_menu_voca, R.id.main_menu_words, R.id.main_menu_learn, R.id.main_menu_community, R.id.main_menu_info).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupWithNavController(mBinding.naviMainMenu, navController);
+        NavigationUI.setupWithNavController(mBinding.toolbar, navController, appBarConfiguration);
+
+/*
         // 바텀 네비게이션 메뉴 클릭
         mBinding.naviMainMenu.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -118,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        mBinding.naviMainMenu.setSelectedItemId(R.id.main_menu_voca);
+        mBinding.naviMainMenu.setSelectedItemId(R.id.main_menu_voca);*/
 
     }
 

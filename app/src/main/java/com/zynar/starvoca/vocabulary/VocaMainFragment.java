@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,11 +27,37 @@ public class VocaMainFragment extends Fragment {
     /* 데이터 바인딩 */
     private FragmentVocaMainBinding mBinding;
 
+    private Animation rotateOpen, rotateClose, fromBottom, toBottom;
+    private boolean mFabFlag = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentVocaMainBinding.inflate(inflater, container, false);
+
+        rotateOpen = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_open_anim);
+        rotateClose = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_close_anim);
+        fromBottom = AnimationUtils.loadAnimation(requireContext(), R.anim.from_bottom_anim);
+        toBottom = AnimationUtils.loadAnimation(requireContext(), R.anim.to_bottom_anim);
+
         return mBinding.getRoot();
+    }
+
+    private void onFabButton() {
+        // floating button 클릭 애니메이션 효과
+        if(!mFabFlag){
+            mBinding.fabVocaAdd.setVisibility(View.VISIBLE);
+            mBinding.fabVocaDel.setVisibility(View.VISIBLE);
+            mBinding.fabVocaAdd.startAnimation(fromBottom);
+            mBinding.fabVocaDel.setAnimation(fromBottom);
+            mBinding.fabVoca.setAnimation(rotateOpen);
+        } else {
+            mBinding.fabVocaAdd.setVisibility(View.INVISIBLE);
+            mBinding.fabVocaDel.setVisibility(View.INVISIBLE);
+            mBinding.fabVocaAdd.startAnimation(toBottom);
+            mBinding.fabVocaDel.setAnimation(toBottom);
+            mBinding.fabVoca.setAnimation(rotateClose);
+        }
+        mFabFlag = !mFabFlag;
     }
 
     @Override
@@ -42,13 +71,11 @@ public class VocaMainFragment extends Fragment {
         mBinding.rvVoca.setHasFixedSize(true);
 
         // view model
-
         VocaMainViewModel mainViewModel = new ViewModelProvider(this).get(VocaMainViewModel.class);
         vocaRVAdapter.setVocaItems(mainViewModel.getVocaItems());
 
         // set adapter
         mBinding.rvVoca.setAdapter(vocaRVAdapter);
-
 
         // observe
         mainViewModel.livedata_VocaItems().observe(getViewLifecycleOwner(), vocaItems -> {
@@ -62,14 +89,26 @@ public class VocaMainFragment extends Fragment {
         });
 
 
-        // voca add fab
-        FloatingActionButton fab_add_voca = view.findViewById(R.id.fab_voca_add);
-        fab_add_voca.setOnClickListener(view1 -> {
+        mBinding.fabVoca.setOnClickListener(v -> {
+            onFabButton();
+        });
+
+        mBinding.fabVocaDel.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "단어장 삭제", Toast.LENGTH_LONG).show();
+        });
+
+        mBinding.fabVocaAdd.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), VocaAddActivity.class);
             intent.putExtra("type", 0);
             startActivity(intent);
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBinding = null;
     }
 }
 
