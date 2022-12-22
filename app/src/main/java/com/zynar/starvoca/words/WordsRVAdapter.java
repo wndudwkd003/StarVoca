@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.zynar.starvoca.R;
 import com.zynar.starvoca.vocabulary.VocaItem;
 
 import java.util.List;
+import java.util.Locale;
 
 public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHolder> {
 
@@ -29,7 +32,7 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
     private List<VocaItem> vocaItems;
     private final Context context;
     private final int condition;
-
+    TextToSpeech tts;
     public WordsRVAdapter(Context context, int i) {
         this.context = context;
         this.condition = i; // 내 단어 탭에서 실행 0, 단어장에서 실행 1
@@ -63,21 +66,48 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
         holder.tv_memo.setText(wordsItems.get(position).getMemo());
         holder.tv_language.setText(wordsItems.get(position).getLanguage());
 
-        if(wordsItems.get(position).getCondition() == 0) {
+        if (wordsItems.get(position).getCondition() == 0) {
             holder.tv_condition.setText(R.string.words_condition_hard);
-        } else if(wordsItems.get(position).getCondition() == 1) {
+        } else if (wordsItems.get(position).getCondition() == 1) {
             holder.tv_condition.setText(R.string.words_condition_usually);
-        } else if(wordsItems.get(position).getCondition() == 2) {
+        } else if (wordsItems.get(position).getCondition() == 2) {
             holder.tv_condition.setText(R.string.words_condition_easy);
         }
 
         // 발음과 메모 없으면 숨기기
-        if(holder.tv_pronunciation.length() == 0) holder.tv_pronunciation.setVisibility(View.GONE);
-        if(holder.tv_memo.getText().length() == 0) holder.tv_memo.setVisibility(View.GONE);
+        if (holder.tv_pronunciation.length() == 0) holder.tv_pronunciation.setVisibility(View.GONE);
+        if (holder.tv_memo.getText().length() == 0) holder.tv_memo.setVisibility(View.GONE);
 
-        holder.imb_sound.setOnClickListener(v->{
+        // 사운드 버튼 클릭시
+        holder.imb_sound.setOnClickListener(v -> {
+            tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) { // OnInitListener를 통해서 TTS 초기화
+                    if (status == TextToSpeech.SUCCESS) {
+                        int result = tts.setLanguage(Locale.KOREA); // TTS언어 한국어로 설정
 
+                        if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
+                            Log.e("TTS", "This Language is not supported");
+                        } else {
+                            speakOut(position);// onInit에 음성출력할 텍스트를 넣어줌
+                        }
+                    } else {
+                        Log.e("TTS", "Initialization Failed!");
+                    }
+                }
+            });
         });
+    }
+
+    private void speakOut(int i){
+        CharSequence text = wordsItems.get(i).getWord();
+        tts.setPitch((float)1); // 음성 톤 높이 지정
+        tts.setSpeechRate((float)1); // 음성 속도 지정
+
+        // 첫 번째 매개변수: 음성 출력을 할 텍스트
+        // 두 번째 매개변수: 1. TextToSpeech.QUEUE_FLUSH - 진행중인 음성 출력을 끊고 이번 TTS의 음성 출력
+        //                 2. TextToSpeech.QUEUE_ADD - 진행중인 음성 출력이 끝난 후에 이번 TTS의 음성 출력
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "id1");
     }
 
     @Override
@@ -97,6 +127,7 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
         private final TextView tv_language;
         private final ImageButton imb_edit, imb_sound;
         private RecyclerView rv_check_box;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

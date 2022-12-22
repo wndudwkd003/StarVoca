@@ -2,6 +2,7 @@ package com.zynar.starvoca.words;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,6 @@ public class WordsMainFragment extends Fragment {
 
         // recycler view
         mBinding.rvWords.setHasFixedSize(true);
-
         // adapter
         WordsRVAdapter wordsRVAdapter = new WordsRVAdapter(requireContext(), 0);
 
@@ -58,6 +58,9 @@ public class WordsMainFragment extends Fragment {
 
         // set adapter
         mBinding.rvWords.setAdapter(wordsRVAdapter);
+
+
+
 
 
         // observe
@@ -102,11 +105,15 @@ public class WordsMainFragment extends Fragment {
             mBinding.fabDel.setVisibility(View.VISIBLE);
             mBinding.fabAdd.startAnimation(fromBottom);
             mBinding.fabDel.startAnimation(fromBottom);
+            mBinding.fabAdd.setClickable(true);
+            mBinding.fabDel.setClickable(true);
             mBinding.fab.startAnimation(rotateOpen);
         } else {
             mBinding.fabAdd.setVisibility(View.INVISIBLE);
             mBinding.fabAdd.setVisibility(View.INVISIBLE);
             mBinding.fabAdd.startAnimation(toBottom);
+            mBinding.fabAdd.setClickable(false);
+            mBinding.fabDel.setClickable(false);
             mBinding.fabDel.startAnimation(toBottom);
             mBinding.fab.startAnimation(rotateClose);
         }

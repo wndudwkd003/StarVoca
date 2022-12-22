@@ -91,8 +91,6 @@ public class InfoFragment extends Fragment{
                         CustomDialogCsvHelperBinding dialog1Binding = CustomDialogCsvHelperBinding.inflate(getLayoutInflater());
                         dialog.setContentView(dialog1Binding.getRoot());
 
-
-
                         /* 취소 버튼 */
                         //dialog1Binding.btnCancel.setOnClickListener(v -> dialog.onBackPressed());
 
@@ -102,6 +100,10 @@ public class InfoFragment extends Fragment{
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+            }
+            else if (i == 4) {
+                Intent intent = new Intent(requireContext(), SettingsActivity.class);
+                startActivity(intent);
             }
             else if (i == 5) {
                 /* 문의하기 */

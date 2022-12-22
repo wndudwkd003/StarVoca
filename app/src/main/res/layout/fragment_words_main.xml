@@ -41,7 +41,7 @@
         android:visibility="invisible"
         app:fabCustomSize="55sp"
         android:focusable="true"
-        android:clickable="true"
+        android:clickable="false"
         app:maxImageSize="24sp"
         tools:ignore="ContentDescription" />
 
@@ -59,7 +59,7 @@
         android:src="@drawable/ic_words"
         app:fabCustomSize="55sp"
         android:focusable="true"
-        android:clickable="true"
+        android:clickable="false"
         app:maxImageSize="24sp"
         android:visibility="invisible"
         tools:ignore="ContentDescription" />
