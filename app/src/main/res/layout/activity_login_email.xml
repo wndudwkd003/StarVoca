@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginEmailActivity"
-    android:background="@color/star">
+    tools:context=".login.LoginEmailActivity">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,8 +14,6 @@
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
-
-            android:background="@color/star"
             android:id="@+id/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Surface"
             android:layout_width="match_parent"
@@ -112,7 +109,7 @@
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="130dp"
-        android:backgroundTint="@color/button"
+        android:backgroundTint="@color/right_gray1"
         android:text="@string/login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

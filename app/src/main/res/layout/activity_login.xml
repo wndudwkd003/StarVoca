@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context=".login.LoginActivity">
 
     <TextView
@@ -50,7 +49,7 @@
             android:id="@+id/btn_login_email"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#AE7DB6"
+            android:backgroundTint="@color/gray"
             android:drawablePadding="10dp"
             android:elevation="10dp"
             android:gravity="center"
@@ -65,7 +64,7 @@
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#AE7DB6"
+            android:backgroundTint="@color/gray"
             android:drawablePadding="10dp"
             android:elevation="10dp"
             android:gravity="center"
@@ -75,50 +74,27 @@
             android:textColor="@color/white"
             app:drawableLeftCompat="@drawable/ic_baseline_android_24" />
 
-        <Button
-            android:id="@+id/btn_login_kakaotalk"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="#AE7DB6"
-            android:drawablePadding="10dp"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:maxHeight="60dp"
-            android:padding="15dp"
-            android:text="@string/login_katalk"
-            android:textColor="@color/white"
-            app:drawableLeftCompat="@drawable/ic_baseline_chat_bubble_24" />
-
         <TextView
+            android:drawableRight="@drawable/ic_baseline_chevron_right_24"
             android:id="@+id/tv_register_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:fontFamily="@font/monoplex_medium"
+            android:fontFamily="@font/ridibatang"
             android:gravity="center"
             android:text="@string/regis_email" />
 
         <TextView
+            android:drawableRight="@drawable/ic_baseline_chevron_right_24"
             android:id="@+id/tv_no_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/monoplex_medium"
+            android:fontFamily="@font/ridibatang"
             android:gravity="center"
             android:text="@string/not_login" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/monoplex_medium"
-            android:gravity="center"
-            android:text="@string/ver"
-            android:textColor="#836C6C6C" />
 
     </LinearLayout>
 

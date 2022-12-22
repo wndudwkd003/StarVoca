@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.RegisterActivity"
-    android:background="@color/star">
+    tools:context=".login.RegisterActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -15,8 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".login.RegisterActivity"
-            android:background="@color/star">
+            tools:context=".login.RegisterActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +23,6 @@
             app:liftOnScroll="true">
 
             <com.google.android.material.appbar.MaterialToolbar
-
-                android:background="@color/star"
                 android:id="@+id/toolbar"
                 style="@style/Widget.MaterialComponents.Toolbar.Surface"
                 android:layout_width="match_parent"
@@ -191,7 +187,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="남자"
-                android:textColor="@drawable/custom_radio_text_color"  />
+                android:textColor="@color/black"  />
 
             <RadioButton
                 android:layout_marginHorizontal="20dp"
@@ -205,7 +201,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="여자"
-                android:textColor="@drawable/custom_radio_text_color" />
+                android:textColor="@color/black" />
 
             <RadioButton
                 android:checked="true"
@@ -219,7 +215,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="비공개"
-                android:textColor="@drawable/custom_radio_text_color" />
+                android:textColor="@color/black" />
         </RadioGroup>
 
         <Button

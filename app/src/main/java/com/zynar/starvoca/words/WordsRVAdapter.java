@@ -74,6 +74,10 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
         // 발음과 메모 없으면 숨기기
         if(holder.tv_pronunciation.length() == 0) holder.tv_pronunciation.setVisibility(View.GONE);
         if(holder.tv_memo.getText().length() == 0) holder.tv_memo.setVisibility(View.GONE);
+
+        holder.imb_sound.setOnClickListener(v->{
+
+        });
     }
 
     @Override
@@ -91,7 +95,7 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
         private final TextView tv_memo;
         private final TextView tv_condition;
         private final TextView tv_language;
-        private final ImageButton imb_edit;
+        private final ImageButton imb_edit, imb_sound;
         private RecyclerView rv_check_box;
 
         public ViewHolder(@NonNull View itemView) {
@@ -103,6 +107,7 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
             tv_condition = itemView.findViewById(R.id.tv_condition);
             tv_language = itemView.findViewById(R.id.tv_language);
             imb_edit = itemView.findViewById(R.id.imb_edit);
+            imb_sound = itemView.findViewById(R.id.imb_play_sound);
 
             if (condition == 1) imb_edit.setVisibility(View.INVISIBLE);
 

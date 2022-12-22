@@ -9,10 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#989898</color>
     <color name="star">#C5B8E3</color>
-    <color name="button">#AE7DB6</color>
+    <color name="button">#A2A2A2</color>
 
 
     <color name="trans">#00FFFFFF</color>
     <color name="light_white_1">#E4E4E4</color>
     <color name="dark_gray_1">#515151</color>
+    <color name="right_gray1">#C6C6C6</color>
 </resources>
