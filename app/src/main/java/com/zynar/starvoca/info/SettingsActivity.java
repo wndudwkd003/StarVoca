@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import com.zynar.starvoca.R;
+
+import java.lang.reflect.Field;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -29,6 +32,16 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
+
+        /*Field field;
+        try{
+            field = PreferenceManager.class.getDeclaredField("mList");
+            field.setAccessible(true);
+            ((ListView) field.get(this)).setVerticalScrollBarEnabled(false);
+        } catch (Exception e) {}*/
+
+        ListView listView = (ListView)findViewById(android.R.id.list);
+        if (listView != null) listView.setVerticalScrollBarEnabled(false);
     }
 
 
@@ -59,6 +72,11 @@ public class SettingsActivity extends AppCompatActivity {
 
 
             return super.onCreateView(inflater, container, savedInstanceState);
+        }
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
         }
     }
 }
