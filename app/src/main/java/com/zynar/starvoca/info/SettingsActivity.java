@@ -1,7 +1,11 @@
 package com.zynar.starvoca.info;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -9,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import com.zynar.starvoca.R;
 
@@ -24,7 +29,6 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-
     }
 
 
@@ -34,13 +38,27 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
 
+        @NonNull
         @Override
-        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            final FrameLayout lv = (FrameLayout) view.findViewById(R.id.settings);
-            view.setVerticalScrollBarEnabled(false);
-            if (lv != null)
-                ViewCompat.setNestedScrollingEnabled(lv, false);
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+            SharedPreferences preferences;
+            preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+
+            /*Boolean darkTheme = preferences.getBoolean("notifi_theme", false);
+            Boolean adsNotifi = preferences.getBoolean("notifi_event", false);
+            Boolean wordsStudyNotifi = preferences.getBoolean("notifi_words", false);
+            Boolean notiNotifi = preferences.getBoolean("notifi_noti", false);
+            Boolean friendsAddNotifi = preferences.getBoolean("notifi_friends", false);
+            Boolean messageNotifi = preferences.getBoolean("notifi_message", false);
+            Boolean replyNotifi = preferences.getBoolean("notifi_comm_write_reply", false);
+            Boolean rreplyNotifi = preferences.getBoolean("notifi_comm_reply_reply", false);
+            String genderSound = preferences.getString("sound_gender", "");
+            String playSound = preferences.getString("sound_play", "");
+            Boolean checkNotifi = preferences.getBoolean("notifi_check", false);*/
+
+
+            return super.onCreateView(inflater, container, savedInstanceState);
         }
     }
 }

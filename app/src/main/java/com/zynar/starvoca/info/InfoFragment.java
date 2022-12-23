@@ -73,7 +73,12 @@ public class InfoFragment extends Fragment{
                 } else {
                     startActivity(new Intent(requireContext(), EditUserInfoActivity.class).putExtra("loginType", loginType));
                 }
-            }else if (i == 3) {
+            } else if (i==1){
+                Intent intent = new Intent(requireContext(), WordsSlotActivity.class);
+                startActivity(intent);
+            }
+
+            else if (i == 3) {
                 /* CSV 파일 관리 */
                 AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
                 builder.setTitle("CSV 파일 관리");

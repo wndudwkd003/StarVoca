@@ -29,6 +29,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".info.WordsSlotActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".info.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings">

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -102,11 +104,13 @@ public class WordsRVAdapter extends RecyclerView.Adapter<WordsRVAdapter.ViewHold
     private void speakOut(int i){
         CharSequence text = wordsItems.get(i).getWord();
         tts.setPitch((float)1); // 음성 톤 높이 지정
-        tts.setSpeechRate((float)1); // 음성 속도 지정
 
-        // 첫 번째 매개변수: 음성 출력을 할 텍스트
-        // 두 번째 매개변수: 1. TextToSpeech.QUEUE_FLUSH - 진행중인 음성 출력을 끊고 이번 TTS의 음성 출력
-        //                 2. TextToSpeech.QUEUE_ADD - 진행중인 음성 출력이 끝난 후에 이번 TTS의 음성 출력
+        SharedPreferences preferences;
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String chatSpeed = preferences.getString("sound_play", "1.0");
+
+        tts.setSpeechRate(Float.parseFloat(chatSpeed)); // 음성 속도 지정
+
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "id1");
     }
 

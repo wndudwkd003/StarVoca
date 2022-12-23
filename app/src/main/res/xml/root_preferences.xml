@@ -3,7 +3,7 @@
     <PreferenceCategory app:title="테마 설정">
         <SwitchPreferenceCompat
             app:defaultValue="false"
-            app:key="notifi_event"
+            app:key="notifi_theme"
             app:title="어두운 테마 사용" />
     </PreferenceCategory>
 
@@ -12,7 +12,7 @@
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="notifi_event"
-            app:title="정보 및 이벤트 알림" />
+            app:title="광고 정보 및 이벤트 알림" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
@@ -31,6 +31,12 @@
             app:key="notifi_friends"
             app:summary="친구 요청 및 수락을 알립니다"
             app:title="커뮤니티 친구 알림" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="notifi_message"
+            app:summary="쪽지를 수신하면 알립니다"
+            app:title="쪽지 수신 알림" />
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
