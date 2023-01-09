@@ -32,16 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
                     .replace(R.id.settings, new SettingsFragment())
                     .commit();
         }
-
-        /*Field field;
-        try{
-            field = PreferenceManager.class.getDeclaredField("mList");
-            field.setAccessible(true);
-            ((ListView) field.get(this)).setVerticalScrollBarEnabled(false);
-        } catch (Exception e) {}*/
-
-        ListView listView = (ListView)findViewById(android.R.id.list);
-        if (listView != null) listView.setVerticalScrollBarEnabled(false);
     }
 
 
@@ -77,6 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
+            getListView().setVerticalScrollBarEnabled(false); // scrollbar 제거
         }
     }
 }
